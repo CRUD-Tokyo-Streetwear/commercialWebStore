@@ -1,2 +1,6 @@
 # commercialWebStore
-Um site para administradores realizar tarefas de CRUD linkado a banco de dados.
+SISTEMA DE LOGIN 
+CRUD / TELA DE ADM 
+Site / Design do site / tela do usuario
+
+https://www.shui.com.br/
