@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastrar Administrador</title>
-  <link rel="icon" href="/images/Charlie.png">
+  <link rel="icon" href="images\Charlie.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
@@ -14,10 +14,10 @@
 
   <!--Imagem da Logo Principal-->
   <div class="d-flex justify-content-center mt-5">
-    <img src="/images/logoCharlie.png" class="img-fluid object-fit-cover" alt="logo do site Charlie" width="210px">
+    <img src="images\logoCharlie.png" class="img-fluid object-fit-cover" alt="logo do site Charlie" width="210px">
   </div>
 
-  <!--Formulário Login-->
+  <!--Formulário Cadastro de Admin-->
   <section>
     <div class="container p-5 d-flex justify-content-center col-12 col-sm-7 col-md-3 m-auto text-light"
       style="height:500px; border-radius:1rem; position:absolute; top: 50%; left: 50%; transform: translate(-50%, -44%); background-color: #0d0d0d;">
@@ -35,24 +35,24 @@
           <p class="text-center fs-5">Cadastrar Administrador</p>
         </div>
         <div>
-          <form action="">
+          <form action="envioCadastro.php" method="POST">
             <div class="mb-4">
-              <label class="form-label" for="user">Nome</label>
-              <input type="text" name="user" id="user" placeholder="Usuário" class="form-control">
+              <label class="form-label" for="name">Nome</label>
+              <input type="text" name="name" placeholder="Usuário" class="form-control" required>
             </div>
             <div class="mb-4">
               <label class="form-label" for="email">Email</label>
-              <input type="email" name="email" id="email" placeholder="E-mail" class="form-control">
+              <input type="email" name="email" placeholder="E-mail" class="form-control" required>
             </div>
             <div class="mb-4">
               <label class="form-label" for="passowrd">Senha</label>
-              <input type="password" name="passowrd" id="passowrd" placeholder="Senha" class="form-control">
+              <input type="password" name="password" placeholder="Senha" class="form-control" required>
             </div>
             <div class="text-center">
               <button type="submit" class="btn btn-primary col-6" style="border-radius: 20px;">
                 Cadastrar
               </button>
-              <a href="index.html" class="nav-link mt-3 text-light">
+              <a href="index.php" class="nav-link mt-3 text-light">
                 Login
               </a>
             </div>
