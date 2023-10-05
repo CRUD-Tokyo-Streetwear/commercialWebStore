@@ -52,7 +52,7 @@
               <button type="submit" class="btn btn-primary col-6" style="border-radius: 20px;">
                 Cadastrar
               </button>
-              <a href="login.php" class="nav-link mt-3 text-light">
+              <a href="index.php" class="nav-link mt-3 text-light">
                 Login
               </a>
             </div>
