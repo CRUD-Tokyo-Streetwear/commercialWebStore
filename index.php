@@ -15,7 +15,7 @@
 
   <!--Imagem da Logo Principal-->
   <div class="d-flex justify-content-center mt-5">
-    <img src="images\logoCharlie.png" class="img-fluid object-fit-cover" alt="logo Charlie" width="210px">
+    <img src="images\logoCharlieBranco.svg" class="img-fluid object-fit-cover" alt="logo Charlie" width="210px">
   </div>
 
   <!--Formulário Login de Admin-->
