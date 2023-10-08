@@ -12,7 +12,7 @@ $u = new Usuario; //instanciando classe
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastrar Administrador</title>
-  <link rel="icon" href="/images/Charlie.png">
+  <link rel="icon" href="images\Charlie.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
@@ -21,16 +21,16 @@ $u = new Usuario; //instanciando classe
 
   <!--Imagem da Logo Principal-->
   <div class="d-flex justify-content-center mt-5">
-    <img src="/images/logoCharlieBranco.svg" class="img-fluid object-fit-cover" alt="logo do site Charlie" width="210px">
+    <img src="images\logoCharlieBranco.svg" class="img-fluid object-fit-cover" alt="logo Charlie" width="210px">
   </div>
 
-  <!--Formulário Login-->
+  <!--Formulário Cadastro de Admin-->
   <section>
     <div class="container p-5 d-flex justify-content-center col-12 col-sm-7 col-md-3 m-auto text-light"
       style="height:500px; border-radius:1rem; position:absolute; top: 50%; left: 50%; transform: translate(-50%, -44%); background-color: #0d0d0d;">
       <div class="row">
         <div class="d-flex justify-content-center">
-          <svg class="mx-auto my-3 bi bi-person-circle" xmlns="http://www.w3.org/2000/svg" width="50" height="50"
+          <svg class="mx-auto my-3 bi bi-person-circle" xmlns="http://www.w3.org/2000/svg" width="50"
             fill="currentColor" viewBox="0 0 16 16" style="cursor: pointer; position: absolute;
          top: -48px;">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -45,22 +45,22 @@ $u = new Usuario; //instanciando classe
 
           <form method="POST">
             <div class="mb-4">
-              <label class="form-label" for="user">Nome</label>
-              <input type="text" name="user" id="user" placeholder="Usuário" class="form-control">
+              <label class="form-label" for="name">Nome</label>
+              <input type="text" name="name" placeholder="Usuário" class="form-control" required>
             </div>
             <div class="mb-4">
               <label class="form-label" for="email">Email</label>
-              <input type="email" name="email" id="email" placeholder="E-mail" class="form-control">
+              <input type="email" name="email" placeholder="E-mail" class="form-control" required>
             </div>
             <div class="mb-4">
               <label class="form-label" for="passowrd">Senha</label>
-              <input type="password" name="password" id="passowrd" placeholder="Senha" class="form-control">
+              <input type="password" name="password" placeholder="Senha" class="form-control" required>
             </div>
             <div class="text-center">
               <button type="submit" name="submit" class="btn btn-primary col-6" style="border-radius: 20px;">
                 Cadastrar
               </button>
-              <a href="index.html" class="nav-link mt-3 text-light">
+              <a href="index.php" class="nav-link mt-3 text-light">
                 Login
               </a>
             </div>
@@ -74,9 +74,9 @@ $u = new Usuario; //instanciando classe
 <?php 
 
 if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
-  if (!empty($_POST['user']) && !empty($_POST['email']) && !empty($_POST['password'])) { // Verifica se os campos estão preenchidos
+  if (!empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['password'])) { // Verifica se os campos estão preenchidos
 
-      $user = addslashes($_POST['user']);
+      $user = addslashes($_POST['name']);
       $email = addslashes($_POST['email']);
       $senha = addslashes($_POST['password']);
 

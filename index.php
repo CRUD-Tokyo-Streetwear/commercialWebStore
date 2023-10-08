@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!DOCTYPE html>                           <!--PÁGINA PRINCIPAL - TELA DE LOGIN-->
 <html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Charlie StreetWear</title>
-  <link rel="icon" href="/images/Charlie.png">
+  <link rel="icon" href="images\Charlie.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
@@ -15,16 +15,16 @@
 
   <!--Imagem da Logo Principal-->
   <div class="d-flex justify-content-center mt-5">
-    <img src="/images/logoCharlieBranco.svg" class="img-fluid object-fit-cover" alt="logo do site Charlie" width="300px">
+    <img src="images\logoCharlieBranco.svg" class="img-fluid object-fit-cover" alt="logo Charlie" width="210px">
   </div>
 
-  <!--Formulário Login-->
+  <!--Formulário Login de Admin-->
   <section>
     <div class="container p-5 d-flex justify-content-center col-12 col-sm-7 col-md-3 m-auto text-light"
       style="height:400px; border-radius:1rem; position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #0d0d0d;">
       <div class="row">
         <div class="d-flex justify-content-center">
-          <svg class="mx-auto my-3 bi bi-person-circle" xmlns="http://www.w3.org/2000/svg" width="50" height="50"
+          <svg class="mx-auto my-3 bi bi-person-circle" xmlns="http://www.w3.org/2000/svg" width="50"
             fill="currentColor" viewBox="0 0 16 16" style="cursor: pointer; position: absolute;
          top: -48px;">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -34,16 +34,16 @@
         </div>
           <p class="text-light text-center fs-5">Logar no sistema</p>
         <div>
-          <form action="">
+          <form action="" method="POST">
             <div class="mb-4">
-              <input type="text" name="user" id="user" placeholder="Usuário" class="form-control">
+              <input type="text" name="name" placeholder="Usuário" class="form-control">
             </div>
             <div class="mb-4">
-              <input type="password" name="passowrd" id="passowrd" placeholder="Senha" class="form-control">
+              <input type="password" name="passowrd" placeholder="Senha" class="form-control">
             </div>
             <div class="text-center">
               <button type="submit" class="btn btn-primary col-6" style="border-radius: 20px;">Entrar</button>
-              <a href="cadastrarAdmin.php" class="nav-link mt-3 text-light">
+              <a href="cadastro.php" class="nav-link mt-3 text-light">
                 Cadastrar-se
               </a>
             </div>
