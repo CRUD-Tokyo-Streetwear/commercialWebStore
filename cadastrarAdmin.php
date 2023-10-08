@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+<?php 
+
+require_once 'sistema/usuario.php'; // importando a classe do outro arquivo
+
+$u = new Usuario; //instanciando classe 
+
+?>
+
 <html lang="pt-BR">
 
 <head>
@@ -14,7 +21,7 @@
 
   <!--Imagem da Logo Principal-->
   <div class="d-flex justify-content-center mt-5">
-    <img src="/images/logoCharlie.png" class="img-fluid object-fit-cover" alt="logo do site Charlie" width="210px">
+    <img src="/images/logoCharlieBranco.svg" class="img-fluid object-fit-cover" alt="logo do site Charlie" width="210px">
   </div>
 
   <!--Formulário Login-->
@@ -35,7 +42,8 @@
           <p class="text-center fs-5">Cadastrar Administrador</p>
         </div>
         <div>
-          <form action="">
+
+          <form method="POST">
             <div class="mb-4">
               <label class="form-label" for="user">Nome</label>
               <input type="text" name="user" id="user" placeholder="Usuário" class="form-control">
@@ -46,10 +54,10 @@
             </div>
             <div class="mb-4">
               <label class="form-label" for="passowrd">Senha</label>
-              <input type="password" name="passowrd" id="passowrd" placeholder="Senha" class="form-control">
+              <input type="password" name="password" id="passowrd" placeholder="Senha" class="form-control">
             </div>
             <div class="text-center">
-              <button type="submit" class="btn btn-primary col-6" style="border-radius: 20px;">
+              <button type="submit" name="submit" class="btn btn-primary col-6" style="border-radius: 20px;">
                 Cadastrar
               </button>
               <a href="index.html" class="nav-link mt-3 text-light">
@@ -57,10 +65,35 @@
               </a>
             </div>
           </form>
+
         </div>
       </div>
     </div>
-  </section>
+  </section> 
+
+<?php 
+
+if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
+  if (!empty($_POST['user']) && !empty($_POST['email']) && !empty($_POST['password'])) { // Verifica se os campos estão preenchidos
+
+      $user = addslashes($_POST['user']);
+      $email = addslashes($_POST['email']);
+      $senha = addslashes($_POST['password']);
+
+      $u->conectar('charlie', 'localhost', 'root', ''); // Conecta ao banco de dados para utilizar os métodos
+
+      if ($u->cadastrar($user, $email, $senha)) { // Não houve erro e foi executado o método cadastrar
+          echo "CADASTRADO COM SUCESSO";
+      } else {
+          echo "USUÁRIO JÁ CADASTRADO"; // Usuário já está cadastrado
+      }
+  } else {
+      echo "PREENCHA TODOS OS CAMPOS";
+  }
+}
+  
+
+?>
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
