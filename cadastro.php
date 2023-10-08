@@ -14,7 +14,7 @@
 
   <!--Imagem da Logo Principal-->
   <div class="d-flex justify-content-center mt-5">
-    <img src="images\logoCharlie.png" class="img-fluid object-fit-cover" alt="logo do site Charlie" width="210px">
+    <img src="images\logoCharlie.png" class="img-fluid object-fit-cover" alt="logo Charlie" width="210px">
   </div>
 
   <!--Formulário Cadastro de Admin-->
@@ -23,7 +23,7 @@
       style="height:500px; border-radius:1rem; position:absolute; top: 50%; left: 50%; transform: translate(-50%, -44%); background-color: #0d0d0d;">
       <div class="row">
         <div class="d-flex justify-content-center">
-          <svg class="mx-auto my-3 bi bi-person-circle" xmlns="http://www.w3.org/2000/svg" width="50" height="50"
+          <svg class="mx-auto my-3 bi bi-person-circle" xmlns="http://www.w3.org/2000/svg" width="50"
             fill="currentColor" viewBox="0 0 16 16" style="cursor: pointer; position: absolute;
          top: -48px;">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
