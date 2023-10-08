@@ -103,8 +103,8 @@
     </div>
 
     <!--Tela central-->
-    <div class="d-flex align-items-center col col-11 mt-4" style="height: 100%;">
-      <div class="container col-2"></div> <!--Coluna que empurra o retângulo principal pro centro-->
+    <div id="main-menu" class="d-flex align-items-center  col-11 mt-4" style="height: 100%;">
+      <div class="container col-2 col-auto"></div> <!--Coluna que empurra o retângulo principal pro centro-->
       <div class="container d-flex justify-content-center bg-black" style="height: 80%;">
         <img src="images\logoCharlie.png" alt="Logo Charlie" style="width:400px; object-fit: contain;">
       </div>
