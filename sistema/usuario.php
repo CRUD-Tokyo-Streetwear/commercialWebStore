@@ -43,9 +43,9 @@ class Usuario{
 
         global $pdo;
 
-        $sql =  $pdo->prepare("SELECT ADM_ID from ADMINISTRADOR WHERE email= :e AND senha = :s");
+        $sql =  $pdo->prepare("SELECT ADM_ID from ADMINISTRADOR WHERE ADM_EMAIL= :e AND ADM_SENHA = :s");
         $sql->bindValue(":e",$email);
-        $sql->bindValue(":s", $senha);
+        $sql->bindValue(":s", md5($senha));
         $sql->execute();
         if($sql->rowCount() > 0 ){ //verificando se o usuario existe para logar
 
@@ -57,6 +57,24 @@ class Usuario{
         }else{
             return false; //usuario nao esta logado 
         }
+    }
+
+
+    public function listarNomeAdmin(){
+        global $pdo;
+
+        if(isset($_SESSION['ADM_ID'])){ // Verifique se a sessão está ativa
+            $sessao = $_SESSION['ADM_ID'];
+            $sql = $pdo->prepare("SELECT ADM_NOME FROM ADMINISTRADOR WHERE ADM_ID = :id");
+            $sql->bindValue(":id", $sessao);
+            $sql->execute();
+            
+            if($sql->rowCount() > 0) { // Verifique se o usuário existe no banco
+                $resultado = $sql->fetch(PDO::FETCH_ASSOC);
+                return $resultado['ADM_NOME']; // Retorna o nome do usuário
+            }
+        }
+        return false; // Retorna falso se a sessão não estiver ativa ou o usuário não existir
     }
 
 }

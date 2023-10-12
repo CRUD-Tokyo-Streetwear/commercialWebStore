@@ -1,3 +1,14 @@
+<?php 
+
+session_start(); 
+unset($_SESSION['ADM_ID']);
+
+require_once 'sistema/usuario.php'; // importando a classe do outro arquivo
+
+$u = new Usuario; //instanciando classe 
+
+?>
+
 <!DOCTYPE html>                           <!--PÁGINA PRINCIPAL - TELA DE LOGIN-->
 <html lang="pt-BR">
 
@@ -36,15 +47,15 @@
         <div>
           <form action="" method="POST">
             <div class="mb-4">
-              <input type="text" name="name" placeholder="Usuário" class="form-control">
+              <input type="text" name="email" placeholder="Email" class="form-control">
             </div>
             <div class="mb-4">
-              <input type="password" name="passowrd" placeholder="Senha" class="form-control">
+              <input type="password" name="password" placeholder="Senha" class="form-control">
             </div>
             <div class="text-center">
-              <button type="submit" class="btn btn-primary col-6" style="border-radius: 20px;">Entrar</button>
+              <button type="submit" name="submit" class="btn btn-primary col-6" style="border-radius: 20px;">Entrar</button>
               <a href="cadastro.php" class="nav-link mt-3 text-light">
-                Cadastrar-se
+                Cadastrar-se 
               </a>
             </div>
           </form>
@@ -52,6 +63,29 @@
       </div>
     </div>
   </section>
+
+  <?php 
+
+if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
+  if (!empty($_POST['email']) && !empty($_POST['password'])) { // Verifica se os campos estão preenchidos
+
+      $email = addslashes($_POST['email']);
+      $senha = addslashes($_POST['password']);
+
+      $u->conectar('charlie', 'localhost', 'root', ''); // Conecta ao banco de dados para utilizar os métodos
+
+      if ($u->logar($email, $senha)) { // Não houve erro e foi executado o método logar
+          header("location: pagInicio.php"); //direcionando para a area privada
+      } else {
+          echo "EMAIL OU SENHA INVALIDOS"; // nao foi possivel logar 
+      }
+  } else {
+      echo "PREENCHA TODOS OS CAMPOS";
+  }
+}
+
+?>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

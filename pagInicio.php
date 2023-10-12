@@ -1,3 +1,17 @@
+<?php 
+  session_start();
+
+  if(!isset($_SESSION['ADM_ID'])){
+    header("location: index.php");
+    exit;
+  }
+
+  require_once('sistema/usuario.php');
+  $u = new Usuario;
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -29,7 +43,13 @@
             <div class="d-flex flex-row align-items-center">
               <div class="dropdown">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                  <p class="m-0 pe-1">Ricardo Hemmel</p>
+                  <p class="m-0 pe-1">
+                    <?php
+                    $u->conectar('charlie', 'localhost', 'root', '');
+                    $nome = $u->listarNomeAdmin();
+                    echo $nome;
+                    ?>
+                    </p>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                   <li><a class="dropdown-item" href="#">Editar foto</a></li>
@@ -37,7 +57,7 @@
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Sair</a></li>
+                  <li><a class="dropdown-item" name="sair" href="sistema/sair.php">Sair</a></li>
                 </ul>
               </div>
             </div>
@@ -109,7 +129,6 @@
         <img src="images\logoCharlie.png" alt="Logo Charlie" style="width:400px; object-fit: contain;">
       </div>
     </div>
-
     <div></div>
 
     <!--Div de encerramento que orienta o Menu Lateral e a Tela de Ações-->

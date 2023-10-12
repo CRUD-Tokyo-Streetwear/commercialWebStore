@@ -1,5 +1,8 @@
 <?php 
 
+session_start(); 
+unset($_SESSION['ADM_ID']);
+
 require_once 'sistema/usuario.php'; // importando a classe do outro arquivo
 
 $u = new Usuario; //instanciando classe 
