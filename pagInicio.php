@@ -1,3 +1,11 @@
+<?php
+session_start();
+if((!isset($_SESSION['id'])) AND (!isset($_SESSION['user']))) {
+  header("Location: index.php");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -14,12 +22,12 @@
 <body class="bg-light overflow-y-hidden">
 
   <!--Barra de navegação-->
-  <nav class="navbar" style="background-color: black;">
+  <nav class="navbar bg-black">
     <div class="container-fluid text-light">
-      <a class="navbar-brand ">
+      <a class="navbar-brand ms-2">
         <img src="images\logoCharlie.png" alt="logo Charlie" class="p-2" width="180">
       </a>
-      <div class="d-flex justify-content-end me-5">
+      <div class="d-flex justify-content-end me-4">
         <div class="d-flex">
           <svg xmlns="http://www.w3.org/2000/svg" class="" fill="white" viewBox="0 0 16 16" style="cursor: pointer;" width="50">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -29,7 +37,11 @@
             <div class="d-flex flex-row align-items-center">
               <div class="dropdown">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                  <p class="m-0 pe-1">Ricardo Hemmel</p>
+                  <p class="m-0 pe-1">
+                    <?php 
+                    echo "$_SESSION[user]";
+                    ?>
+                  </p>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                   <li><a class="dropdown-item" href="#">Editar foto</a></li>
@@ -37,7 +49,7 @@
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Sair</a></li>
+                  <li><a class="dropdown-item" href="sair.php">Sair</a></li>
                 </ul>
               </div>
             </div>
@@ -49,17 +61,17 @@
   </nav>
 
   <!--Menu lateral-->
-  <div class="d-flex justify-content-between" style="height: calc(100vh - 93px);">
+  <div class="d-flex justify-content-between" style="height: calc(100vh - 93px);"> <!--Div de alinhamento - Menu lateral e tela central-->
     <div>
       <div class="row flex-nowrap">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark" style="position: fixed; left:0;">
+        <div class="col-auto col-md-12 col-xl-12 px-3" style="background-color: #0d0d0d;">
           <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
             <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
               <span class="fs-5 d-none d-sm-inline">Menu</span>
             </a>
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
               <li class="nav-item">
-                <a href="#" class="d-flex align-items-center nav-link align-middle px-0 text-light">
+                <a href="pagInicio.php" class="d-flex align-items-center nav-link align-middle px-0 text-light">
                   <img src="images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
                 </a>
               </li>
@@ -103,14 +115,11 @@
     </div>
 
     <!--Tela central-->
-    <div id="main-menu" class="d-flex align-items-center  col-11 mt-4" style="height: 100%;">
-      <div class="container col-2 col-auto"></div> <!--Coluna que empurra o retângulo principal pro centro-->
+    <div class="container d-flex align-items-center  col-11 mt-4" style="height: 100%;">
       <div class="container d-flex justify-content-center bg-black" style="height: 80%;">
         <img src="images\logoCharlie.png" alt="Logo Charlie" style="width:400px; object-fit: contain;">
       </div>
     </div>
-
-    <div></div>
 
     <!--Div de encerramento que orienta o Menu Lateral e a Tela de Ações-->
   </div>

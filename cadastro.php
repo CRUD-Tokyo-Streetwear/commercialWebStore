@@ -21,7 +21,7 @@ $u = new Usuario; //instanciando classe
 
   <!--Imagem da Logo Principal-->
   <div class="d-flex justify-content-center mt-5">
-    <img src="images\logoCharlieBranco.svg" class="img-fluid object-fit-cover" alt="logo Charlie" width="210px">
+    <img src="images\logoCharlieBranco.svg" class="img-fluid object-fit-cover" alt="logo Charlie" width="250px">
   </div>
 
   <!--Formulário Cadastro de Admin-->
