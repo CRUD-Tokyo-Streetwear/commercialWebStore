@@ -12,6 +12,7 @@ $conn = new PDO("mysql:host=$server; dbname=$dbname; user=$user; password=$passw
 function message($text, $type)
 {
   echo "<div class='alert alert-$type' role='alert'>
-    $text
-  </div>";
+        $text
+    </div>
+    <a href='index.php' class='btn btn-primary'>Ok</a>";
 }

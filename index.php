@@ -2,7 +2,7 @@
 session_start();
 ob_start(); //Limpa o buffer de saída evitando erro de redirecionamento de página usando "header()"
 unset($_SESSION['id'], $_SESSION['user']);
-include_once 'conexao.php';
+include('conexao.php');
 ?>
 
 <!DOCTYPE html> <!--PÁGINA PRINCIPAL - TELA DE LOGIN-->
@@ -20,33 +20,33 @@ include_once 'conexao.php';
 <body class="bg-black">
 
   <?php
-  //Pega os dados do formulário via método POST e trata os dados
+  //Recebe a lista enviada pelo formulário
   $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-  //Define o comando SQL para ser enviado pro BD
-  if (!empty($data['sendLogin'])) {
-    $query_user = "SELECT id, admin_user, admin_password
+  //Define o comando SQL após confirmar que o usuário enviou o formulário
+  if (!empty($data['submit'])) {
+    $sql = "SELECT id, admin_user, admin_password
     FROM adm
-    WHERE admin_user =:user 
+    WHERE admin_user =:user AND admin_password =:pass
     LIMIT 1";
 
-  //Prepara e executa o comando SQL
-    $result_user = $conn->prepare($query_user);
+    //Prepara e executa o comando SQL
+    $result_user = $conn->prepare($sql);
     $result_user->bindParam(':user', $data['user'], PDO::PARAM_STR);
+    $result_user->bindParam(':pass', $data['pass'], PDO::PARAM_STR);
     $result_user->execute();
-  
+
     //Verifica se existe uma linha no banco de dados e pega a linha
-    if (($result_user) AND ($result_user->rowCount() != 0)) {
+    if (($result_user) && ($result_user->rowCount() != 0)) {
       $row_user = $result_user->fetch(PDO::FETCH_ASSOC);
 
-      //Maneira correta de validar a segurança -> password_verify($data['password'], $row_user['admin_password'])
-      if ($data['password'] == $row_user['admin_password']) {
-        $_SESSION['id'] = $row_user['id']; 
+      //Faz a verificação de senha
+      if (password_verify($data['pass'], $row_user['admin_password'])) {
+        $_SESSION['id'] = $row_user['id'];
         $_SESSION['user'] = $row_user['admin_user'];
         header("Location: pagInicio.php");
       } else {
         message("Erro: Usuário ou senha inválidos!", 'danger');
-        echo "<a href='index.php' class='btn btn-primary'>Ok</a>";
       }
     }
   }
@@ -72,15 +72,17 @@ include_once 'conexao.php';
         <div>
           <form method="POST"> <!--Início do formulário de Login-->
             <div class="mb-4">
-              <input type="text" name="user" placeholder="Usuário" class="form-control"
-               value="<?php if(isset($data['user'])){ echo $data['user'];} ?>">
+              <input type="text" name="user" placeholder="Usuário" class="form-control" required value="<?php if (isset($data['user'])) {
+                                                                                                          echo $data['user'];
+                                                                                                        }g ?>">
             </div>
             <div class="mb-4">
-              <input type="password" name="password" placeholder="Senha" class="form-control"
-              value="<?php if(isset($data['password'])){ echo $data['password'];} ?>">
+              <input type="password" name="pass" placeholder="Senha" class="form-control" value="<?php if (isset($data['password'])) {
+                                                                                                        echo $data['password'];
+                                                                                                      } ?>">
             </div>
             <div class="text-center">
-              <input type="submit" class="btn btn-primary col-6" value="Entrar" name="sendLogin" style="border-radius: 20px;">
+              <input type="submit" class="btn btn-primary col-6" required value="Entrar" name="submit" style="border-radius: 20px;">
               <a href="cadastro.php" class="nav-link mt-3 text-light">
                 Cadastrar-se
               </a>

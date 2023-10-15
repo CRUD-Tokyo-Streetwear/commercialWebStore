@@ -1,9 +1,6 @@
-<?php 
-
-require_once 'sistema/usuario.php'; // importando a classe do outro arquivo
-
-$u = new Usuario; //instanciando classe 
-
+<?php
+session_start();
+include('conexao.php');
 ?>
 
 <html lang="pt-BR">
@@ -13,11 +10,12 @@ $u = new Usuario; //instanciando classe
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastrar Administrador</title>
   <link rel="icon" href="images\Charlie.png">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
 <body class="bg-black">
+
+
 
   <!--Imagem da Logo Principal-->
   <div class="d-flex justify-content-center mt-5">
@@ -26,16 +24,13 @@ $u = new Usuario; //instanciando classe
 
   <!--Formulário Cadastro de Admin-->
   <section>
-    <div class="container p-5 d-flex justify-content-center col-12 col-sm-7 col-md-3 m-auto text-light"
-      style="height:500px; border-radius:1rem; position:absolute; top: 50%; left: 50%; transform: translate(-50%, -44%); background-color: #0d0d0d;">
+    <div class="container p-5 d-flex justify-content-center col-12 col-sm-7 col-md-3 m-auto text-light" style="height:500px; border-radius:1rem; position:absolute; top: 50%; left: 50%; transform: translate(-50%, -44%); background-color: #0d0d0d;">
       <div class="row">
         <div class="d-flex justify-content-center">
-          <svg class="mx-auto my-3 bi bi-person-circle" xmlns="http://www.w3.org/2000/svg" width="50"
-            fill="currentColor" viewBox="0 0 16 16" style="cursor: pointer; position: absolute;
+          <svg class="mx-auto my-3 bi bi-person-circle" xmlns="http://www.w3.org/2000/svg" width="50" fill="currentColor" viewBox="0 0 16 16" style="cursor: pointer; position: absolute;
          top: -48px;">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-            <path fill-rule="evenodd"
-              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
           </svg>
         </div>
         <div>
@@ -46,7 +41,7 @@ $u = new Usuario; //instanciando classe
           <form method="POST">
             <div class="mb-4">
               <label class="form-label" for="name">Nome</label>
-              <input type="text" name="name" placeholder="Usuário" class="form-control" required>
+              <input type="text" name="user" placeholder="Usuário" class="form-control" required>
             </div>
             <div class="mb-4">
               <label class="form-label" for="email">Email</label>
@@ -54,7 +49,7 @@ $u = new Usuario; //instanciando classe
             </div>
             <div class="mb-4">
               <label class="form-label" for="passowrd">Senha</label>
-              <input type="password" name="password" placeholder="Senha" class="form-control" required>
+              <input type="password" name="pass" placeholder="Senha" class="form-control" required>
             </div>
             <div class="text-center">
               <button type="submit" name="submit" class="btn btn-primary col-6" style="border-radius: 20px;">
@@ -69,36 +64,36 @@ $u = new Usuario; //instanciando classe
         </div>
       </div>
     </div>
-  </section> 
+  </section>
 
-<?php 
+  <?php
+  if (isset($_POST['user']) && isset($_POST['email']) && isset($_POST['pass'])) {
 
-if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
-  if (!empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['password'])) { // Verifica se os campos estão preenchidos
+    $user = $_POST['user'];
+    $email = $_POST['email'];
+    $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 
-      $user = addslashes($_POST['name']);
-      $email = addslashes($_POST['email']);
-      $senha = addslashes($_POST['password']);
+    $sql = "INSERT INTO adm (admin_user, admin_email, admin_password) 
+    VALUES (:user, :email, :pass)";
 
-      $u->conectar('charlie', 'localhost', 'root', ''); // Conecta ao banco de dados para utilizar os métodos
+    // Prepara e executa o comando SQL
+    $result_user = $conn->prepare($sql);
+    $result_user->bindParam(':user', $user, PDO::PARAM_STR);
+    $result_user->bindParam(':email', $email, PDO::PARAM_STR);
+    $result_user->bindParam(':pass', $pass, PDO::PARAM_STR);
+    $result = $result_user->execute();
 
-      if ($u->cadastrar($user, $email, $senha)) { // Não houve erro e foi executado o método cadastrar
-          echo "CADASTRADO COM SUCESSO";
-      } else {
-          echo "USUÁRIO JÁ CADASTRADO"; // Usuário já está cadastrado
-      }
-  } else {
-      echo "PREENCHA TODOS OS CAMPOS";
-  }
+    if ($result) {
+        message("Administrador cadastrado com sucesso!", "success");
+    } else {
+        // Usa o PDO para obter informações de erro
+        message("Erro: " . $result_user->errorInfo()[2], "danger");
+    }
 }
-  
 
-?>
+  ?>
 
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 
 </html>
