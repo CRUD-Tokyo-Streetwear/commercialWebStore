@@ -9,8 +9,12 @@
   require_once('sistema/usuario.php');
   $u = new Usuario("charlie", "localhost", "root", "");
 
-?>
 
+
+
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -122,17 +126,21 @@
     <!--Tela central-->
     <div class="d-flex align-items-center col col-11 mt-4" style="height: 100%;">
       <div class="container col-2"></div> <!--Coluna que empurra o retângulo principal pro centro-->
-      <div class="container d-flex justify-content-center bg-black" style="height: 80%;">
-        <img src="images\logoCharlie.png" alt="Logo Charlie" style="width:400px; object-fit: contain;">
-      </div>
+     
+
+        <form enctype="multipart/form-data" method="POST">
+        <label for="">Imagem</label>
+        <input type="file" name="upload">
+        <input type="submit" name="submit">
+        </form>
+
+
+
     </div>
     <div></div>
 
     <!--Div de encerramento que orienta o Menu Lateral e a Tela de Ações-->
   </div>
-
-
-
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

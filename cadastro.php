@@ -5,7 +5,7 @@ unset($_SESSION['ADM_ID']);
 
 require_once 'sistema/usuario.php'; // importando a classe do outro arquivo
 
-$u = new Usuario; //instanciando classe 
+$u = new Usuario("charlie", "localhost", "root", ""); //instanciando classe 
 
 ?>
 
@@ -83,22 +83,26 @@ if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
       $email = addslashes($_POST['email']);
       $senha = addslashes($_POST['password']);
 
-      $u->conectar('charlie', 'localhost', 'root', ''); // Conecta ao banco de dados para utilizar os métodos
-
       if ($u->cadastrar($user, $email, $senha)) { // Não houve erro e foi executado o método cadastrar
-          echo "CADASTRADO COM SUCESSO";
+        echo '<div class="alert alert-primary" role="alert">
+        Cadastro realizado com sucesso
+        </div>';
       } else {
-          echo "USUÁRIO JÁ CADASTRADO"; // Usuário já está cadastrado
+        echo '<div class="alert alert-danger" role="alert">
+        Usuario já Cadastado, faça login
+        </div>';
       }
   } else {
-      echo "PREENCHA TODOS OS CAMPOS";
+    echo '<div class="alert alert-danger" role="alert">
+    Preencha todos os campos
+    </div>';
   }
 }
   
 
 ?>
 
-
+<script src="script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>

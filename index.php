@@ -5,7 +5,7 @@ unset($_SESSION['ADM_ID']);
 
 require_once 'sistema/usuario.php'; // importando a classe do outro arquivo
 
-$u = new Usuario; //instanciando classe 
+$u = new Usuario("charlie", "localhost", "root", ""); //instanciando classe 
 
 ?>
 
@@ -72,15 +72,17 @@ if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
       $email = addslashes($_POST['email']);
       $senha = addslashes($_POST['password']);
 
-      $u->conectar('charlie', 'localhost', 'root', ''); // Conecta ao banco de dados para utilizar os métodos
-
       if ($u->logar($email, $senha)) { // Não houve erro e foi executado o método logar
           header("location: pagInicio.php"); //direcionando para a area privada
       } else {
-          echo "EMAIL OU SENHA INVALIDOS"; // nao foi possivel logar 
+        echo '<div class="alert alert-danger" role="alert">
+        Email ou senha invalidos
+        </div>'; // nao foi possivel logar 
       }
   } else {
-      echo "PREENCHA TODOS OS CAMPOS";
+      echo '<div class="alert alert-danger" role="alert">
+      Preencha todos os campos!
+      </div>';
   }
 }
 
@@ -90,6 +92,8 @@ if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
