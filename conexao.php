@@ -6,7 +6,7 @@ $password = "";
 $dbname = "pi_webstore";
 
 //Conexão com o banco de dados
-$conn = new PDO("mysql:host=$server; dbname=$dbname; user=$user; password=$password");
+$connection = mysqli_connect($server, $user, $password, $dbname);
 
 //Função para mandar mensagem de sucesso ou erro
 function message($text, $type)

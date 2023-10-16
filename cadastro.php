@@ -1,6 +1,11 @@
-<?php
-session_start();
-include('conexao.php');
+<?php 
+session_start(); 
+unset($_SESSION['ADM_ID']);
+
+require_once 'sistema/usuario.php'; // importando a classe do outro arquivo
+
+$u = new Usuario; //instanciando classe 
+
 ?>
 
 <html lang="pt-BR">
@@ -67,29 +72,23 @@ include('conexao.php');
   </section>
 
   <?php
-  if (isset($_POST['user']) && isset($_POST['email']) && isset($_POST['pass'])) {
-
-    $user = $_POST['user'];
-    $email = $_POST['email'];
-    $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
-
-    $sql = "INSERT INTO adm (admin_user, admin_email, admin_password) 
-    VALUES (:user, :email, :pass)";
-
-    // Prepara e executa o comando SQL
-    $result_user = $conn->prepare($sql);
-    $result_user->bindParam(':user', $user, PDO::PARAM_STR);
-    $result_user->bindParam(':email', $email, PDO::PARAM_STR);
-    $result_user->bindParam(':pass', $pass, PDO::PARAM_STR);
-    $result = $result_user->execute();
-
-    if ($result) {
-        message("Administrador cadastrado com sucesso!", "success");
-    } else {
-        // Usa o PDO para obter informações de erro
-        message("Erro: " . $result_user->errorInfo()[2], "danger");
+  if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
+    if (!empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['password'])) { // Verifica se os campos estão preenchidos
+  
+        $user = addslashes($_POST['name']);
+        $email = addslashes($_POST['email']);
+        $senha = addslashes($_POST['password']);
+  
+        $u->conectar('charlie', 'localhost', 'root', ''); // Conecta ao banco de dados para utilizar os métodos
+  
+        if ($u->cadastrar($user, $email, $senha)) { // Não houve erro e foi executado o método cadastrar
+            echo "CADASTRADO COM SUCESSO";
+        } else {
+            echo "USUÁRIO JÁ CADASTRADO"; // Usuário já está cadastrado
+        }
     }
-}
+  }
+
 
   ?>
 

@@ -1,10 +1,16 @@
-<?php
-session_start();
-if((!isset($_SESSION['id'])) AND (!isset($_SESSION['user']))) {
-  header("Location: index.php");
-}
+<?php 
+  session_start();
+
+  if(!isset($_SESSION['ADM_ID'])){
+    header("location: index.php");
+    exit;
+  }
+
+  require_once('sistema/usuario.php');
+  $u = new Usuario;
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -38,10 +44,12 @@ if((!isset($_SESSION['id'])) AND (!isset($_SESSION['user']))) {
               <div class="dropdown">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                   <p class="m-0 pe-1">
-                    <?php 
-                    echo "$_SESSION[user]";
+                    <?php
+                    $u->conectar('charlie', 'localhost', 'root', '');
+                    $nome = $u->listarNomeAdmin();
+                    echo $nome;
                     ?>
-                  </p>
+                    </p>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                   <li><a class="dropdown-item" href="#">Editar foto</a></li>
@@ -49,7 +57,7 @@ if((!isset($_SESSION['id'])) AND (!isset($_SESSION['user']))) {
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="sair.php">Sair</a></li>
+                  <li><a class="dropdown-item" name="sair" href="sistema/sair.php">Sair</a></li>
                 </ul>
               </div>
             </div>
@@ -120,6 +128,7 @@ if((!isset($_SESSION['id'])) AND (!isset($_SESSION['user']))) {
         <img src="images\logoCharlie.png" alt="Logo Charlie" style="width:400px; object-fit: contain;">
       </div>
     </div>
+    <div></div>
 
     <!--Div de encerramento que orienta o Menu Lateral e a Tela de Ações-->
   </div>
