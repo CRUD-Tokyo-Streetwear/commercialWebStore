@@ -69,53 +69,40 @@ class Usuario{
         return false; // Retorna falso se a sessão não estiver ativa ou o usuário não existir
     }
 
-    public function atualizarImagem($imagem, $admId){
-        // Verifique se o usuário está logado
+    public function atualizarImagem($upload, $admId){
         if(isset($_SESSION['ADM_ID'])){
-            // Verifique se o ID do usuário da sessão corresponde ao ID do administrador que deseja atualizar a imagem
-            if($_SESSION['ADM_ID'] == $admId){
-                // Defina o diretório onde as imagens serão armazenadas
-                $diretorio = "../upload";
-    
-                // Gere um nome de arquivo único para a imagem (você pode personalizar isso de acordo com suas necessidades)
-                $nomeArquivo = uniqid() . "_" . $imagem['name'];
-    
-                // Mova o arquivo para o diretório de imagens
-                if(move_uploaded_file($imagem['tmp_name'], $diretorio . $nomeArquivo)){
+                      $pastaImagem = 'imagemAdm/';
+                      $nomeImagem = $upload['name'];
+                      $novoNomeImagem = uniqid();
+                      $extensaoImagem = strtolower(pathinfo($nomeImagem, PATHINFO_EXTENSION));
+                  
+                      if($extensaoImagem != "jpg" && $extensaoImagem != "jpeg" && $extensaoImagem != "png" && $extensaoImagem != "gif"){
+                        echo "tipo de arquivo inválido";
+                      }else{
+                    $imagemAdicionada = move_uploaded_file($upload["tmp_name"], $pastaImagem . $novoNomeImagem . "." . $extensaoImagem);
+                  
                     // Atualize o campo ADM_IMAGEM no banco de dados com o caminho do novo arquivo
+                    if($imagemAdicionada){
                     $sql = $this->pdo->prepare("UPDATE ADMINISTRADOR SET ADM_IMAGEM = :imagem WHERE ADM_ID = :id");
-                    $sql->bindValue(":imagem", $diretorio . $nomeArquivo);
+                    $sql->bindValue(":imagem", $pastaImagem . $novoNomeImagem);
                     $sql->bindValue(":id", $admId);
                     $sql->execute();
                     return true; // Imagem atualizada com sucesso
                 } else {
                     return false; // Falha ao mover o arquivo
+                        }
+                      }
+                }else{
+                    return false;
                 }
             }
-        }
-        return false; // Usuário não está logado ou não tem permissão para atualizar a imagem
-    }
+   
 
 
     public function mostrarImagemAdmin($admId){
-        if(isset($_SESSION['ADM_ID'])){
-            if($_SESSION['ADM_ID'] == $admId){
-                $sql = $this->pdo->prepare("SELECT ADM_IMAGEM FROM ADMINISTRADOR WHERE ADM_ID = :id");
-                $sql->bindValue(":id", $admId);
-                $sql->execute();
-                
-                if($sql->rowCount() > 0) {
-                    $resultado = $sql->fetch(PDO::FETCH_ASSOC);
-                    return $resultado['ADM_IMAGEM']; // Retorna o caminho da imagem do perfil do administrador
-                }
-            }
-        }
-        return false; // Usuário não está logado ou não tem permissão para visualizar a imagem
+            
+
     }
-
-
-
-
 
 
 }

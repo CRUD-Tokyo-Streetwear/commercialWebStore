@@ -76,13 +76,10 @@
             </a>
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
               <li class="nav-item">
-                <a href="#" class="d-flex align-items-center nav-link align-middle px-0 text-light">
+                <a href="pagInicio.php" class="d-flex align-items-center nav-link align-middle px-0 text-light">
                   <img src="images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
                 </a>
               </li>
-              <a href="#" data-bs-toggle="collapse" class="d-flex align-items-center nav-link px-0 align-middle text-light">
-                <img src="images\userIcon.png" alt="Icone de Perfil" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
-              </a>
               <li>
                 <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
                   <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
