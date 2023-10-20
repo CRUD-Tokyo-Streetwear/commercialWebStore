@@ -5,30 +5,6 @@
     header("location: index.php");
     exit;
   }
-
-  require_once('sistema/usuario.php');
-  $u = new Usuario("charlie", "localhost", "root", "");
-
-  //adicionar imagem de adm
-  if(isset($_POST['submit'] ) && (isset($_FILES['upload']))){
-    $upload = $_FILES['upload'];
-    $admId = $_SESSION['ADM_ID'];
-    
-    if($upload['error'] > 0){
-      die("falha ao enviar imagem");
-    }
-  
-    if($upload['size'] > 5242880){
-      die("Não foi possivel carregar a imagem pois o arquivo é muito grande!! MAX 5MB");
-    }else{
-      $u->atualizarImagem($upload, $admId);
-      echo "imagem adicionada";
-    }
-  }
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +21,29 @@
 </head>
 
 <body class="bg-light overflow-y-hidden">
+
+<?php 
+require_once('sistema/usuario.php');
+  $u = new Usuario("charlie", "localhost", "root", "");
+
+  //adicionar imagem de adm
+  if(isset($_POST['submit'] ) && (isset($_FILES['upload']))){
+    $upload = $_FILES['upload'];
+    $admId = $_SESSION['ADM_ID'];
+    
+    if($upload['error'] > 0){
+      echo "falha ao enviar imagem";
+    }
+  
+    if($upload['size'] > 5242880){
+      echo "Não foi possivel carregar a imagem pois o arquivo é muito grande!! MAX 5MB";
+    }else{
+      $u->atualizarImagem($upload, $admId);
+    }
+  }
+
+?>
+
 
   <!--Barra de navegação-->
   <nav class="navbar" style="background-color: black;">
@@ -137,15 +136,38 @@
 
     <!--Tela central-->
     <div class="d-flex align-items-center col col-11 mt-4" style="height: 100%;">
+
+
+    
       <div class="container col-2"></div> <!--Coluna que empurra o retângulo principal pro centro-->
      
+  <div class="containerForm">
 
+    <?php
+    $admId = $_SESSION["ADM_ID"];
+    $imagemDefault = "images/userIcon.png";
+    $imagem = $u->mostrarImagemAdmin($admId);
+
+    echo '<div class="imagemP">';
+    if ($imagem) {
+        echo '<img class="imgPerfil" src="' . $imagem . '" width="300px">';
+    } else {
+        echo '<img class="imgPerfil" src="' . $imagemDefault . '" width="300px">';
+    }
+    echo '</div>';
+    ?>
+
+    <div class="form-container">
         <form enctype="multipart/form-data" method="POST">
-        <label for="">Imagem</label>
-        <input type="file" name="upload">
-        <input type="submit" name="submit">
+            <label for="upload"></label>
+            <input type="file" name="upload" id="upload"></br></br>
+            <input type="submit" name="submit" value="Enviar">
         </form>
+    </div>
+</div>
+       
 
+        
 
 
     </div>
@@ -155,6 +177,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="script.js"></script>
 </body>
 
 </html>

@@ -84,7 +84,7 @@ class Usuario{
                     // Atualize o campo ADM_IMAGEM no banco de dados com o caminho do novo arquivo
                     if($imagemAdicionada){
                     $sql = $this->pdo->prepare("UPDATE ADMINISTRADOR SET ADM_IMAGEM = :imagem WHERE ADM_ID = :id");
-                    $sql->bindValue(":imagem", $pastaImagem . $novoNomeImagem);
+                    $sql->bindValue(":imagem", $pastaImagem . $novoNomeImagem .".". $extensaoImagem);
                     $sql->bindValue(":id", $admId);
                     $sql->execute();
                     return true; // Imagem atualizada com sucesso
@@ -100,11 +100,22 @@ class Usuario{
 
 
     public function mostrarImagemAdmin($admId){
-            
-
+        if(isset($_SESSION["ADM_ID"])){
+        $sql = $this->pdo->prepare("SELECT ADM_IMAGEM FROM ADMINISTRADOR WHERE ADM_ID = :id");
+        $sql->bindValue(":id", $admId);
+        $sql->execute();
+    
+        $res = $sql->fetch(PDO::FETCH_ASSOC);
+        if ($res) {
+            return $res['ADM_IMAGEM'];
+        } else {
+            return null; // Nenhuma imagem encontrada para o administrador
+        }
+      }else{
+        echo 'você não está logado';
+      }
     }
-
-
 }
 
 ?>
+
