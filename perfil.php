@@ -141,7 +141,6 @@ require_once('sistema/usuario.php');
     
       <div class="container col-2"></div> <!--Coluna que empurra o retângulo principal pro centro-->
      
-  <div class="containerForm">
 
     <?php
     $admId = $_SESSION["ADM_ID"];
@@ -164,7 +163,6 @@ require_once('sistema/usuario.php');
             <input type="submit" name="submit" value="Enviar">
         </form>
     </div>
-</div>
        
 
         
