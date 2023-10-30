@@ -1,8 +1,43 @@
 # commercialWebStore
-SISTEMA DE LOGIN 
-TELA DE CADASTRO ADM
-CRUD / TELA DE AD
 
+Tafinha:
 
+FRONT E BACK
 
-https://www.shui.com.br/
+-> LISTA DE PRODUTOS
+
+-> CADASTRO DE PRODUTOS
+
+------------------------------
+
+Ricardo:
+
+FRONT
+
+-> TELA DE PERFIL
+
+-> LOGIN ADMIN
+
+-> CADASTRO ADMIN
+
+-> PAG PRINCIPAL
+
+BACK
+
+-> LOGIN ADMIN
+
+------------------------------
+
+LUCAS:
+
+FRONT
+
+-> LISTA DE ADMINS
+
+-> CADASTAR ADMIN
+
+BACK
+
+-> LOGIN ADMIN
+
+-> CADASTRO ADMIN
