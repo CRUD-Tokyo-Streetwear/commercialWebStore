@@ -47,10 +47,12 @@ $u = new Usuario("charlie", "localhost", "root", ""); //instanciando classe
         <div>
           <form action="" method="POST">
             <div class="mb-4">
-              <input type="text" name="email" placeholder="Email" class="form-control">
-            </div>
+              <input type="text" name="email" placeholder="Email" class="form-control" value="<?php 
+            if(isset($_POST['email'])) {echo $_POST['email'];}?>">
+            </div> 
             <div class="mb-4">
-              <input type="password" name="password" placeholder="Senha" class="form-control">
+              <input type="password" name="password" placeholder="Senha" class="form-control" value="<?php 
+            if(isset($_POST['password'])) {echo $_POST['password'];}?>">
             </div>
             <div class="text-center">
               <button type="submit" name="submit" class="btn btn-primary col-6" style="border-radius: 20px;">Entrar</button>
