@@ -1,13 +1,13 @@
-<?php 
-  session_start();
+<?php
+session_start();
 
-  if(!isset($_SESSION['ADM_ID'])){
-    header("location: index.php");
-    exit;
-  }
+if (!isset($_SESSION['ADM_ID'])) {
+  header("location: index.php");
+  exit;
+}
 
-  require_once('sistema/usuario.php');
-  $u = new Usuario("charlie", "localhost", "root", "");
+require_once('sistema/usuario.php');
+$u = new Usuario("charlie", "localhost", "root", "");
 
 ?>
 
@@ -46,7 +46,7 @@
                     <?php
                     echo $u->mostrarNomeAdmin();
                     ?>
-                    </p>
+                  </p>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                   <li><a class="dropdown-item" href="perfil.php">Configuração</a></li>
@@ -65,67 +65,62 @@
   </nav>
 
   <!--Menu lateral-->
-  <div class="d-flex justify-content-between" style="height: calc(100vh - 93px);">
-    <div>
-      <div class="row flex-nowrap">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark" style="position: fixed; left:0;">
-          <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-            <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-              <span class="fs-5 d-none d-sm-inline">Menu</span>
-            </a>
-            <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
-              <li class="nav-item">
-                <a href="pagInicio.php" class="d-flex align-items-center nav-link align-middle px-0 text-light">
-                  <img src="images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
-                  <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
-                  <img src="images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Produtos</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
-                  <img src="images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
-                  <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
-                  <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
-                  <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
-                </a>
-              </li>
-            </ul>
-          </div>
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 min-vh-100 bg-dark">
+        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+          <span class="fs-5 pb-3 mb-md-0 d-none d-sm-inline">
+            Menu
+          </span>
+          <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
+            <li class="nav-item">
+              <a href="pagInicio.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
+              </a>
+            </li>
+            <li>
+              <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
+              </a>
+            </li>
+            <li>
+              <a href="administradores.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Produtos</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
-    </div>
 
-    <!--Tela central-->
-    <div class="d-flex align-items-center col col-11 mt-4" style="height: 100%;">
-      <div class="container col-2"></div> <!--Coluna que empurra o retângulo principal pro centro-->
-      <div class="container d-flex justify-content-center bg-black" style="height: 80%;">
-        <img src="images\logoCharlie.png" alt="Logo Charlie" style="width:400px; object-fit: contain;">
+      <!--Tela central-->
+      <div class="d-flex align-items-center col col-10 mb-5">
+        <div class="container d-flex justify-content-center bg-black" style="height: 65%;">
+          <img src="images\logoCharlie.png" alt="Logo Charlie" class="object-fit-contain mb-5 img-fluid" style="width:400px;">
+        </div>
       </div>
-    </div>
-    <div></div>
 
-    <!--Div de encerramento que orienta o Menu Lateral e a Tela de Ações-->
-  </div>
+    </div>
+  </div> <!--Fecha a div do menu lateral-->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

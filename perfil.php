@@ -100,6 +100,11 @@ require_once('sistema/usuario.php');
               </li>
               <li>
                 <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
+                  <img src="images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
+                </a>
+              </li>
+              <li>
+                <a href="administradores.php" class="d-flex align-items-center nav-link px-0 text-light">
                   <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
                 </a>
               </li>
@@ -124,9 +129,6 @@ require_once('sistema/usuario.php');
                 </a>
               </li>
               <li>
-                <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
-                  <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
-                </a>
               </li>
             </ul>
           </div>
