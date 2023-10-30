@@ -1,7 +1,7 @@
 # commercialWebStore
 SISTEMA DE LOGIN 
 TELA DE CADASTRO ADM
-CRUD / TELA DE ADM 
+CRUD / TELA DE AD
 
 
 
