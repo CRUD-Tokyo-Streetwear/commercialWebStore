@@ -84,28 +84,18 @@ $u = new Usuario("charlie", "localhost", "root", "");
               </a>
             </li>
             <li>
-              <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
+              <a href="listarAdmins.php" class="d-flex align-items-center nav-link px-0 text-light">
                 <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
               </a>
             </li>
             <li>
               <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Produtos</span>
+                <img src="images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
               </a>
             </li>
             <li>
-              <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
+              <a href="cadastroProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
                 <img src="images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
               </a>
             </li>
           </ul>

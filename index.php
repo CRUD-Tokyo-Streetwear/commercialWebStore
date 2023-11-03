@@ -7,6 +7,26 @@ require_once 'sistema/usuario.php'; // importando a classe do outro arquivo
 
 $u = new Usuario("charlie", "localhost", "root", ""); //instanciando classe 
 
+if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
+  if (!empty($_POST['email']) && !empty($_POST['password'])) { // Verifica se os campos estão preenchidos
+
+      $email = addslashes($_POST['email']);
+      $senha = addslashes($_POST['password']);
+
+      if ($u->logar($email, $senha)) { // Não houve erro e foi executado o método logar
+          header("location: pagInicio.php"); //direcionando para a area privada
+      } else {
+        echo '<div class="alert alert-danger" role="alert">
+        Email ou senha invalidos
+        </div>'; // nao foi possivel logar 
+      }
+  } else {
+      echo '<div class="alert alert-danger" role="alert">
+      Preencha todos os campos!
+      </div>';
+  }
+}
+
 ?>
 
 <!DOCTYPE html>                           <!--PÁGINA PRINCIPAL - TELA DE LOGIN-->
@@ -65,31 +85,6 @@ $u = new Usuario("charlie", "localhost", "root", ""); //instanciando classe
       </div>
     </div>
   </section>
-
-  <?php 
-
-if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
-  if (!empty($_POST['email']) && !empty($_POST['password'])) { // Verifica se os campos estão preenchidos
-
-      $email = addslashes($_POST['email']);
-      $senha = addslashes($_POST['password']);
-
-      if ($u->logar($email, $senha)) { // Não houve erro e foi executado o método logar
-          header("location: pagInicio.php"); //direcionando para a area privada
-      } else {
-        echo '<div class="alert alert-danger" role="alert">
-        Email ou senha invalidos
-        </div>'; // nao foi possivel logar 
-      }
-  } else {
-      echo '<div class="alert alert-danger" role="alert">
-      Preencha todos os campos!
-      </div>';
-  }
-}
-
-?>
-
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

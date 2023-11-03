@@ -116,9 +116,10 @@ $p = new Produto("charlie", "localhost", "root", "");
                     <div class="col col-xl-3 d-flex justify-content-around align-items-center">
                         <a href="cadastroProduto.php" class="nav-link text-light">
                             <div class="d-flex align-items-center fs-5 p-2" style="background-color: #88d02c;">
-                                Adicionar produto
+                                Adicionar Administrador
                             </div>
                         </a>
+
                         <div>
                             <img src="images\squaresWindowIcon.png" alt="Janela de quadrados para expandir os produtos" style="width:40px;">
                         </div>
@@ -127,38 +128,33 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                 <!--Tela central-->
                 <div class="col col-11 bg-light overflow-y-scroll" style="height: 63%;">
+
                     <table class="table table-hover text-center">
+
                         <thead class="align-middle">
                             <tr class="table-secondary">
                                 <th class="py-3" scope="col">ID</th>
                                 <th class="py-3" scope="col">Foto</th>
                                 <th class="py-3" scope="col">Nome</th>
-                                <th class="py-3" scope="col">Preço</th>
-                                <th class="py-3" scope="col">Desconto</th>
-                                <th class="py-3" scope="col">Categoria</th>
-                                <th class="py-3" scope="col">Estoque</th>
-                                <th class="py-3" scope="col">Descrição</th>
-                                <th class="py-3" scope="col">Status do Produto</th>
+                                <th class="py-3" scope="col">E-mail</th>
+                                <th class="py-3" scope="col">Status</th>
                                 <th class="py-3" scope="col">Editar/Excluir</th>
                             </tr>
                         </thead>
 
                         <tbody class="align-middle">
-                            <?php
-                            $result = $p->listarProdutos();
 
-                            while ($product_data = $result->fetch()) {
-                                $product_data['PRODUTO_ATIVO'] = $product_data['PRODUTO_ATIVO'] == 1 ? 'Ativo' : 'Inativo';
+                            <?php
+                            $result = $u->listarAdmins();
+
+                            while($admin_data = $result->fetch()){
+                                $admin_data['ADM_ATIVO'] = $admin_data['ADM_ATIVO'] == 1? 'Ativo' : 'Inativo';
                                 echo '<tr>';
-                                echo '<th scope="row">' . $product_data['PRODUTO_ID'] . "</th>";
-                                echo '<td><img src="imagemProduto\camisa.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>'; //Trocar para a variavel equivalente a imagem
-                                echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';
-                                echo '<td>' . $product_data['PRODUTO_PRECO'] . '</td>';
-                                echo '<td>' . $product_data['PRODUTO_DESCONTO'] . '</td>';
-                                echo '<td>Camiseta</td>'; // Trocar para a variavel equivalente a categoria do produto
-                                echo '<td>223</td>'; //Trocar para a variavel equivalente a estoque
-                                echo '<td>' . $product_data['PRODUTO_DESC'] . '</td>';
-                                echo '<td>' . $product_data['PRODUTO_ATIVO'] . '</td>';
+                                echo '<th scope="row">' . $admin_data['ADM_ID'] . "</th>";
+                                echo '<td><img src="imagemAdm\653ee4a4be43b.jpg" alt="Imagem do produto" class="rounded-1 object-fit-contain" style="width: 70px;"></td>'; //Trocar para a variavel equivalente a imagem
+                                echo '<td>' . $admin_data['ADM_NOME'] . '</td>';
+                                echo '<td>' . $admin_data['ADM_EMAIL'] . '</td>';
+                                echo '<td>' . $admin_data['ADM_ATIVO'] . '</td>';
                                 echo '<td>' .
                                     '<a class="text-decoration-none pe-2" href="#">' .
                                     '<img src="images\pencilIcon.png" alt="Icone de lápis para edição" style="width: 17px;">' .
@@ -167,13 +163,17 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     '<img src="images\trashCanIcon.png" alt="Icone de lixeira para exclusão" style="width: 17px;">' .
                                     '</a>' .
                                     '</td>';
-                                echo '</tr>';
+                                echo '</tr>';                    
                             }
-                            
+               
                             ?>
                         </tbody>
                     </table>
+
                 </div>
+
+
+
 
             </div>
         </div> <!--Fecha a div do menu lateral-->

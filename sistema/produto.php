@@ -13,7 +13,7 @@ class Produto{ //Cria o objeto produto
         }
     }
 
-    public function listar_produtos() {
+    public function listarProdutos() {
 
         $sql = $this->pdo->prepare("SELECT PRODUTO_ID, PRODUTO_NOME, PRODUTO_DESC, PRODUTO_PRECO, PRODUTO_DESCONTO, CATEGORIA_ID, PRODUTO_ATIVO 
         FROM PRODUTO");
@@ -32,5 +32,5 @@ class Produto{ //Cria o objeto produto
 
 
  }
-
+ 
 ?>

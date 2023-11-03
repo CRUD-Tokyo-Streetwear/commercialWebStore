@@ -115,6 +115,24 @@ class Usuario{
         echo 'você não está logado';
       }
     }
+
+    public function listarAdmins() {
+
+        $sql = $this->pdo->prepare("SELECT ADM_ID, ADM_IMAGEM, ADM_NOME, ADM_EMAIL, ADM_ATIVO 
+        FROM ADMINISTRADOR");
+        $sql->execute(); 
+        
+        if($sql->rowCount() > 0 ){ 
+
+            return $sql;  
+
+        }else{
+            echo"Nenhum Administrador encontrado";
+        }
+
+    }
+
+    
 }
 
 ?>
