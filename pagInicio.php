@@ -29,7 +29,7 @@ $u = new Usuario("charlie", "localhost", "root", "");
   <!--Barra de navegação-->
   <nav class="navbar" style="background-color: black;">
     <div class="container-fluid text-light">
-      <a class="navbar-brand ">
+      <a href="pagInicio.php" class="navbar-brand ">
         <img src="images\logoCharlie.png" alt="logo Charlie" class="p-2" width="180">
       </a>
       <div class="d-flex justify-content-end me-5">
@@ -84,12 +84,12 @@ $u = new Usuario("charlie", "localhost", "root", "");
               </a>
             </li>
             <li>
-              <a href="administradores.php" class="d-flex align-items-center nav-link px-0 text-light">
+              <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
                 <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
               </a>
             </li>
             <li>
-              <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
+              <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
                 <img src="images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Produtos</span>
               </a>
             </li>
@@ -113,8 +113,8 @@ $u = new Usuario("charlie", "localhost", "root", "");
       </div>
 
       <!--Tela central-->
-      <div class="d-flex align-items-center col col-10 mb-5">
-        <div class="container d-flex justify-content-center bg-black" style="height: 65%;">
+      <div class="d-flex align-items-center col col-10 mb-4">
+        <div class="container d-flex justify-content-center bg-black col col-10 mb-4" style="height: 72%;">
           <img src="images\logoCharlie.png" alt="Logo Charlie" class="object-fit-contain mb-5 img-fluid" style="width:400px;">
         </div>
       </div>

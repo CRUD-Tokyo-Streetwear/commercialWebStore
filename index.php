@@ -45,7 +45,7 @@ $u = new Usuario("charlie", "localhost", "root", ""); //instanciando classe
         </div>
           <p class="text-light text-center fs-5">Logar no sistema</p>
         <div>
-          <form action="" method="POST">
+          <form method="POST">
             <div class="mb-4">
               <input type="text" name="email" placeholder="Email" class="form-control" value="<?php 
             if(isset($_POST['email'])) {echo $_POST['email'];}?>">
