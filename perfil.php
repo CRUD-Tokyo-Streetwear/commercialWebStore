@@ -39,6 +39,8 @@ require_once('sistema/usuario.php');
       echo "Não foi possivel carregar a imagem pois o arquivo é muito grande!! MAX 5MB";
     }else{
       $u->atualizarImagem($upload, $admId);
+      echo '<script>setTimeout(function(){ window.location.href = "perfil.php"; }, 0010);</script>';
+      
     }
   }
 
@@ -49,21 +51,34 @@ require_once('sistema/usuario.php');
   <nav class="navbar" style="background-color: black;">
     <div class="container-fluid text-light">
       <a class="navbar-brand ">
-        <img src="images\logoCharlie.png" alt="logo Charlie" class="p-2" width="180">
+        <img src="images/logoCharlieBranco.svg" alt="logo Charlie" class="p-2" width="180">
       </a>
+
       <div class="d-flex justify-content-end me-5">
-        <div class="d-flex">
-          <svg xmlns="http://www.w3.org/2000/svg" class="" fill="white" viewBox="0 0 16 16" style="cursor: pointer;" width="50">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-          </svg>
+        <div class="d-flex">  
+        <?php
+            $admId = $_SESSION["ADM_ID"];
+            $imagem = $u->mostrarImagemAdmin($admId);
+            $imagemPadrao = 'images/userIcon.png';
+            
+            if($imagem){
+              echo '<img class="imgPerfil rounded-circle object-fit-cover " src="' . $imagem . '" width="60px" height="60px" >';
+            }else{
+              echo '<svg xmlns="http://www.w3.org/2000/svg" class="" fill="white" viewBox="0 0 16 16" style="cursor: pointer;" width="50">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            </svg>';
+            }
+        ?>
+
+
           <div class="ms-3 d-flex flex-column justify-content-center align-items-center">
             <div class="d-flex flex-row align-items-center">
               <div class="dropdown">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                   <p class="m-0 pe-1">
                     <?php
-                    echo $u->mostrarNomeAdmin();
+                    echo $u->mostrarDadosAdmin()['ADM_NOME'];
                     ?>
                     </p>
                 </a>
@@ -135,42 +150,100 @@ require_once('sistema/usuario.php');
     </div>
 
     <!--Tela central-->
-    <div class="d-flex align-items-center col col-11 mt-4" style="height: 100%;">
-
-
-    
+    <div class=" d-flex align-items-center col col-11 mt-4" style="height: 100%;">
       <div class="container col-2"></div> <!--Coluna que empurra o retângulo principal pro centro-->
-     
+      <div class="container d-flex flex-column align-items-center justify-content-center border rounded-4 mb-5" style="height: 80%;">
 
-    <?php
+      <?php
     $admId = $_SESSION["ADM_ID"];
     $imagemDefault = "images/userIcon.png";
     $imagem = $u->mostrarImagemAdmin($admId);
 
     echo '<div class="imagemP">';
     if ($imagem) {
-        echo '<img class="imgPerfil" src="' . $imagem . '" width="300px">';
+        echo '<img class="imgPerfil rounded-circle object-fit-cover  " src="' . $imagem . '" width="250px" height="250px">';
     } else {
-        echo '<img class="imgPerfil" src="' . $imagemDefault . '" width="300px">';
+      echo '<div class="alert alert-danger" role="alert">
+      Nenhuma imagem encontrada para o administrador
+      </div>';
     }
-    echo '</div>';
+    echo '</div><br>';
+
+
     ?>
 
-    <div class="form-container">
-        <form enctype="multipart/form-data" method="POST">
-            <label for="upload"></label>
-            <input type="file" name="upload" id="upload"></br></br>
-            <input type="submit" name="submit" value="Enviar">
+
+     <!-- formulario de imagem -->
+    <div class="row mb-3">
+        <form action="perfil.php" enctype="multipart/form-data" method="POST">  
+        <input type="file" class="form-control" name="upload" id="inputGroupFile04" >
+        <input class="btn btn-dark" type="submit" name="submit" value="Salvar" style="width: 380px;">
         </form>
     </div>
-       
 
-        
+    
+
+    <!-- formulario dados perfil -->
 
 
+
+    <form action="" method="POST" >
+
+    <div class="row mb-3">
+    <label for="inputPassword3" class="col-sm-2 col-form-label">Nome</label>
+    <div class="col-sm-10">
+    <input required type="text" name="nome" class="form-control" id="inputEmail3" style="width: 500px;" 
+    value="<?php echo $u->mostrarDadosAdmin()['ADM_NOME']?> ">
+    </div>
+  </div>
+
+    <div class="row mb-3">
+    <label for="inputPassword3" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+    <input required type="email" name="email" class="form-control" id="inputEmail3" style="width: 500px;"
+    value="<?php echo $u->mostrarDadosAdmin()['ADM_EMAIL']?>">
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input required type="password" name="senha" class="form-control" id="inputPassword3" style="width: 500px;">
+    </div>
+  </div>
+
+      <input type="submit" name="enviarDados" class="btn btn-dark" style="width: 100px;">
+
+    </form>
+
+      </div>
     </div>
     <div></div>
 
+
+    <?php
+    
+    if(isset($_POST['enviarDados'])){
+
+      $admId = $_SESSION['ADM_ID'];
+      $novoNome = $_POST['nome'];
+      $novoEmail = $_POST['email'];
+      $novaSenha = $_POST['senha'];
+
+      if($u->atualizarDadosAdmin($admId, $novoNome, $novoEmail, $novaSenha)){
+      echo '<script>setTimeout(function(){ window.location.href = "perfil.php"; }, 0010);</script>';
+    } else {
+        echo '<div class="alert alert-danger" role="alert">
+        Não foi possível atualizar pois este email já está em uso
+        </div>';
+    }
+
+  }
+?>
+
+
+   
+       
     <!--Div de encerramento que orienta o Menu Lateral e a Tela de Ações-->
   </div>
 

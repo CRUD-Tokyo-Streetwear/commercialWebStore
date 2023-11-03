@@ -9,6 +9,7 @@
   require_once('sistema/usuario.php');
   $u = new Usuario("charlie", "localhost", "root", "");
 
+
 ?>
 
 
@@ -45,7 +46,7 @@
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                   <p class="m-0 pe-1">
                     <?php
-                    echo $u->mostrarNomeAdmin();
+                    echo $u->mostrarDadosAdmin()['ADM_NOME'];
                     ?>
                     </p>
                 </a>
@@ -128,7 +129,10 @@
     <!--Div de encerramento que orienta o Menu Lateral e a Tela de Ações-->
   </div>
 
+<?php
 
+
+?>
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
