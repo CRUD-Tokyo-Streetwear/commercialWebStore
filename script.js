@@ -7,11 +7,4 @@ function exibirCaixaDeDialogo() {
     }, 2000); 
 }
 
-exibirCaixaDeDialogo()
-
-
-
-
-
-
-
+exibirCaixaDeDialogo();

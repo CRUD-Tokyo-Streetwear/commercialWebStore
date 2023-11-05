@@ -35,17 +35,27 @@ $p = new Produto("charlie", "localhost", "root", "");
             </a>
             <div class="d-flex justify-content-end me-5">
                 <div class="d-flex">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="" fill="white" viewBox="0 0 16 16" style="cursor: pointer;" width="50">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                    </svg>
+                    <?php
+                    $admId = $_SESSION["ADM_ID"];
+                    $imagem = $u->mostrarImagemAdmin($admId);
+                    $imagemPadrao = 'images/userIcon.png';
+
+                    if ($imagem) {
+                        echo '<img class="imgPerfil rounded-circle object-fit-cover " src="' . $imagem . '" width="60px" height="60px" >';
+                    } else {
+                        echo '<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 16 16" style="cursor: pointer;" width="50">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            </svg>';
+                    }
+                    ?>
                     <div class="ms-3 d-flex flex-column justify-content-center align-items-center">
                         <div class="d-flex flex-row align-items-center">
                             <div class="dropdown">
                                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     <p class="m-0 pe-1">
                                         <?php
-                                        echo $u->mostrarNomeAdmin();
+                                        echo $u->mostrarDadosAdmin()['ADM_NOME'];
                                         ?>
                                     </p>
                                 </a>
@@ -147,31 +157,56 @@ $p = new Produto("charlie", "localhost", "root", "");
                             <?php
                             $result = $u->listarAdmins();
 
-                            while($admin_data = $result->fetch()){
-                                $admin_data['ADM_ATIVO'] = $admin_data['ADM_ATIVO'] == 1? 'Ativo' : 'Inativo';
+                            while ($admin_data = $result->fetch()) {
+                                $admin_data['ADM_ATIVO'] = $admin_data['ADM_ATIVO'] == 1 ? 'Ativo' : 'Inativo';
                                 echo '<tr>';
                                 echo '<th scope="row">' . $admin_data['ADM_ID'] . "</th>";
-                                echo '<td><img src="imagemAdm\653ee4a4be43b.jpg" alt="Imagem do produto" class="rounded-1 object-fit-contain" style="width: 70px;"></td>'; //Trocar para a variavel equivalente a imagem
+
+                                if ($admin_data['ADM_IMAGEM']) {
+                                    echo '<td><img src="' . $admin_data['ADM_IMAGEM'] . '" alt="Imagem do Administrador" class="rounded-1 object-fit-contain" style="width: 60px; height:60px;"></td>';
+                                } else {
+                                    echo '<td><svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 16 16" style="width: 40px;">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+              </svg></td>';
+                                }
                                 echo '<td>' . $admin_data['ADM_NOME'] . '</td>';
                                 echo '<td>' . $admin_data['ADM_EMAIL'] . '</td>';
                                 echo '<td>' . $admin_data['ADM_ATIVO'] . '</td>';
                                 echo '<td>' .
-                                    '<a class="text-decoration-none pe-2" href="#">' .
-                                    '<img src="images\pencilIcon.png" alt="Icone de lápis para edição" style="width: 17px;">' .
-                                    '</a>' .
-                                    '<a class="text-decoration-none ps-2" href="#">' .
-                                    '<img src="images\trashCanIcon.png" alt="Icone de lixeira para exclusão" style="width: 17px;">' .
-                                    '</a>' .
+                                    '<img src="images\pencilIcon.png" alt="Icone de lápis para edição" class="me-2" style="width: 17px;">' .
+                                    '<button type="button" class="border border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#exclusao_admin">' .
+                                    '<img src="images\trashCanIcon.png" alt="Icone de lixeira para exclusão" class="ms-2" style="width: 17px;">' .
+                                    '</button>' .
                                     '</td>';
-                                echo '</tr>';                    
+                                echo '</tr>';
                             }
-               
+
                             ?>
                         </tbody>
                     </table>
-
                 </div>
 
+                <!-- Modal -->
+                <div class="modal fade" id="exclusao_admin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Deseja realmente exluir este usuário?</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <?php
+                                echo "Usuário tal";
+                                ?>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                                <button type="submit" class="btn btn-primary">Excluir</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
 

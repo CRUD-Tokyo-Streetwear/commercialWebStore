@@ -53,21 +53,22 @@ class Usuario{
     }
 
 
-    public function mostrarNomeAdmin(){
-
+    public function mostrarDadosAdmin(){
         if(isset($_SESSION['ADM_ID'])){ // Verifique se a sessão está ativa
             $sessao = $_SESSION['ADM_ID'];
-            $sql = $this->pdo->prepare("SELECT ADM_NOME FROM ADMINISTRADOR WHERE ADM_ID = :id");
+            $sql = $this->pdo->prepare("SELECT ADM_NOME, ADM_EMAIL FROM ADMINISTRADOR WHERE ADM_ID = :id");
             $sql->bindValue(":id", $sessao);
             $sql->execute();
-            
+    
             if($sql->rowCount() > 0) { // Verifique se o usuário existe no banco
                 $resultado = $sql->fetch(PDO::FETCH_ASSOC);
-                return $resultado['ADM_NOME']; // Retorna o nome do usuário
+                return $resultado; // Retorna um array associativo com todos os dados do usuário
             }
         }
         return false; // Retorna falso se a sessão não estiver ativa ou o usuário não existir
     }
+
+    
 
     public function atualizarImagem($upload, $admId){
         if(isset($_SESSION['ADM_ID'])){
@@ -97,7 +98,6 @@ class Usuario{
                 }
             }
    
-
 
     public function mostrarImagemAdmin($admId){
         if(isset($_SESSION["ADM_ID"])){
@@ -133,6 +133,33 @@ class Usuario{
     }
 
     
+    public function atualizarDadosAdmin($admId, $novoNome, $novoEmail, $novaSenha){
+        if(isset($_SESSION["ADM_ID"])){
+            // Verificar se o novo email já está em uso
+            $sqlCheckEmail = $this->pdo->prepare("SELECT ADM_ID FROM ADMINISTRADOR WHERE ADM_EMAIL = :novoEmail AND ADM_ID != :id");
+            $sqlCheckEmail->bindValue(":novoEmail", $novoEmail);
+            $sqlCheckEmail->bindValue(":id", $admId);
+            $sqlCheckEmail->execute();
+            
+            if($sqlCheckEmail->rowCount() > 0) {
+                // O novo email já está em uso, exibir um erro
+                return false;
+            } else {
+                // Atualizar os dados do usuário
+                $sql = $this->pdo->prepare("UPDATE ADMINISTRADOR SET ADM_NOME = :novoNome, ADM_EMAIL = :novoEmail, ADM_SENHA = :novaSenha WHERE ADM_ID = :id");
+                $sql->bindValue(":novoNome", $novoNome);
+                $sql->bindValue(":novoEmail", $novoEmail);
+                $sql->bindValue(":novaSenha", md5($novaSenha));
+                $sql->bindValue(":id", $admId);
+                $sql->execute();
+    
+                return true; // Dados atualizados com sucesso
+            }
+        } else {
+            return false; // Usuário não está logado
+        }
+    }
+
 }
 
 ?>
