@@ -31,7 +31,7 @@ $u = new Usuario("charlie", "localhost", "root", "");
   <nav class="navbar" style="background-color: black;">
     <div class="container-fluid text-light">
       <a href="pagInicio.php" class="navbar-brand ">
-        <img src="images\logoCharlie.png" alt="logo Charlie" class="p-2" width="180">
+        <img src="images\logoCharlieBranco.svg" alt="logo Charlie" class="p-2" width="180">
       </a>
       <div class="d-flex justify-content-end me-5">
         <div class="d-flex">
@@ -116,7 +116,7 @@ $u = new Usuario("charlie", "localhost", "root", "");
       <!--Tela central-->
       <div class="d-flex align-items-center col col-10 mb-4">
         <div class="container d-flex justify-content-center bg-black col col-10 mb-4" style="height: 72%;">
-          <img src="images\logoCharlie.png" alt="Logo Charlie" class="object-fit-contain mb-5 img-fluid" style="width:400px;">
+          <img src="images\logoCharlieBranco.svg" alt="Logo Charlie" class="object-fit-contain mb-5 img-fluid" style="width:400px;">
         </div>
       </div>
 

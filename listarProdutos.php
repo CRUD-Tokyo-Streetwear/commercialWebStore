@@ -31,7 +31,7 @@ $p = new Produto("charlie", "localhost", "root", "");
     <nav class="navbar" style="background-color: black;">
         <div class="container-fluid text-light">
             <a href="pagInicio.php" class="navbar-brand ">
-                <img src="images\logoCharlie.png" alt="logo Charlie" class="p-2" width="180">
+                <img src="images\logoCharlieBranco.svg" alt="logo Charlie" class="p-2" width="180">
             </a>
             <div class="d-flex justify-content-end me-5">
                 <div class="d-flex">
