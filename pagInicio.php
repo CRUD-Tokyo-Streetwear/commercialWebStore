@@ -94,7 +94,7 @@ $u = new Usuario("charlie", "localhost", "root", "");
               </a>
             </li>
             <li>
-              <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
+              <a href="cadastroProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
                 <img src="images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
               </a>
             </li>
