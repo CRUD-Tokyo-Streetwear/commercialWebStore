@@ -175,9 +175,9 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 echo '<td>' . $admin_data['ADM_ATIVO'] . '</td>';
                                 echo '<td>' .
                                     '<img src="images\pencilIcon.png" alt="Icone de lápis para edição" class="me-2" style="width: 17px;">' .
-                                    '<button type="button" class="border border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#exclusao_admin">' .
+                                    '<a href="listarAdmins.php?id='. $admin_data["ADM_ID"].'">' .
                                     '<img src="images\trashCanIcon.png" alt="Icone de lixeira para exclusão" class="ms-2" style="width: 17px;">' .
-                                    '</button>' .
+                                    '</a>' .
                                     '</td>';
                                 echo '</tr>';
                             }
@@ -186,29 +186,6 @@ $p = new Produto("charlie", "localhost", "root", "");
                         </tbody>
                     </table>
                 </div>
-
-                <!-- Modal -->
-                <div class="modal fade" id="exclusao_admin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Deseja realmente exluir este usuário?</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <?php
-                                echo "Usuário tal";
-                                ?>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-                                <button type="submit" class="btn btn-primary">Excluir</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
 
             </div>
         </div> <!--Fecha a div do menu lateral-->

@@ -97,7 +97,7 @@ class Usuario{
                     return false;
                 }
             }
-   
+
 
     public function mostrarImagemAdmin($admId){
         if(isset($_SESSION["ADM_ID"])){
@@ -159,6 +159,27 @@ class Usuario{
             return false; // Usuário não está logado
         }
     }
+
+    /*public function deletarAdmin() {
+
+        if(!empty($_POST[''])) {
+
+        }
+        
+        $sql = $this->pdo->prepare("DELETE ADM_ID, ADM_IMAGEM, ADM_NOME, ADM_EMAIL, ADM_ATIVO 
+        FROM ADMINISTRADOR
+        WHERE ADM_ID = $admin_data['ADM_ID']");
+        $sql->execute(); 
+        
+        if($sql->rowCount() > 0 ){ 
+
+            return $sql;  
+
+        }else{
+            echo"Erro ao deletar administrador!";
+        }
+
+    }*/
 
 }
 
