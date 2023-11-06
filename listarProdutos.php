@@ -136,7 +136,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                 </div>
 
                 <!--Tela central-->
-                <div class="col col-11 bg-light overflow-y-scroll" style="height: 63%;">
+                <div class="col col-11 bg-light overflow-y-scroll" style="max-height: 60vh;">
                     <table class="table table-hover text-center">
                         <thead class="align-middle">
                             <tr class="table-secondary">
