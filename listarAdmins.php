@@ -174,14 +174,18 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 echo '<td>' . $admin_data['ADM_EMAIL'] . '</td>';
                                 echo '<td>' . $admin_data['ADM_ATIVO'] . '</td>';
                                 echo '<td>' .
-                                    '<img src="images\pencilIcon.png" alt="Icone de lápis para edição" class="me-2" style="width: 17px;">' .
-                                    '<a href="listarAdmins.php?id='. $admin_data["ADM_ID"].'">' .
-                                    '<img src="images\trashCanIcon.png" alt="Icone de lixeira para exclusão" class="ms-2" style="width: 17px;">' .
+                                    '<a class="me-2" href="listarAdmins.php?id='. '">' .
+                                    '<img src="images\pencilIcon.png" alt="Icone de lápis para edição"style="width: 17px;">' .
+                                    '</a>' .
+                                    '<a class="ms-2" href="listarAdmins.php?id=' . $admin_data["ADM_ID"] . '">' .
+                                    '<img src="images\trashCanIcon.png" alt="Icone de lixeira para exclusão" style="width: 17px;">' .
                                     '</a>' .
                                     '</td>';
                                 echo '</tr>';
                             }
 
+                            $u->deletarAdmin();
+                            
                             ?>
                         </tbody>
                     </table>
