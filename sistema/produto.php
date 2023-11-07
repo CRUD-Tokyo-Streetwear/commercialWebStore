@@ -59,6 +59,18 @@ class Produto
             return $sql;
         } else {
             echo "Nenhuma categoria encontrada!";
+
         }
     }
 }
+/*
+public function cadastrarCategorias()
+
+    $sql = $this->pdo->prepare("INSERT INTO ")
+    VALUS ();
+    $SQL->execute();
+    return true;
+    }
+*/
+
+   // Inserindo imagens no banco.
