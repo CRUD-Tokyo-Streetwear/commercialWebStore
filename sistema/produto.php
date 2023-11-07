@@ -1,6 +1,6 @@
 <?php
 
-class Produto
+class Produto 
 { //Cria o objeto produto
 
     private $pdo; //variavel declarada do lado de fora pois sera utilizada em varios metodos
@@ -27,6 +27,20 @@ class Produto
             return $sql;
         } else {
             echo "Nenhum produto encontrado!";
+        }
+    }
+
+
+    public function deletarProduto()
+    {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+
+            if (!empty($id)) {
+                $sql = $this->pdo->prepare("DELETE FROM PRODUTO
+            WHERE PRODUTO_ID = $id");
+                $sql->execute();
+            }
         }
     }
 

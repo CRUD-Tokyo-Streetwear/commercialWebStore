@@ -9,7 +9,7 @@ if (!isset($_SESSION['ADM_ID'])) {
 require_once('sistema/usuario.php');
 require_once('sistema/produto.php');
 $u = new Usuario("charlie", "localhost", "root", "");
-$p = new Produto("charlie", "localhost", "root", "");
+$p = new Produto("charlie", "localhost", "root", ""); 
 ?>
 
 <!DOCTYPE html>
@@ -173,11 +173,15 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     '<a class="text-decoration-none pe-2" href="#">' .
                                     '<img src="images\pencilIcon.png" alt="Icone de lápis para edição" style="width: 17px;">' .
                                     '</a>' .
-                                    '<a class="text-decoration-none ps-2" href="#">' .
+                                    '<a class="ms-2" href="listarProdutos.php?id=' . $product_data["PRODUTO_ID"] . '">' .
                                     '<img src="images\trashCanIcon.png" alt="Icone de lixeira para exclusão" style="width: 17px;">' .
                                     '</a>' .
                                     '</td>';
                                 echo '</tr>';
+                            }
+
+                            if ($p->deletarProduto()) {
+                                header("location: listarProdutos.php");  //Não está atualizando a pág
                             }
 
                             ?>

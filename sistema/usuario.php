@@ -123,7 +123,7 @@ class Usuario
         }
     }
 
-    public function listarAdmins()
+    public function listarAdmins() //Exibe a lista de admins cadastrados
     {
 
         $sql = $this->pdo->prepare("SELECT ADM_ID, ADM_IMAGEM, ADM_NOME, ADM_EMAIL, ADM_ATIVO 
@@ -167,7 +167,7 @@ class Usuario
         }
     }
 
-    public function deletarAdmin()
+    public function deletarAdmin() //Apaga o administrador do banco
     {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
@@ -176,8 +176,6 @@ class Usuario
                 $sql = $this->pdo->prepare("DELETE FROM ADMINISTRADOR
             WHERE ADM_ID = $id");
                 $sql->execute();
-
-                //header("location: listarAdmins.php"); Mudar de volta para a página para atualiza-lá
             }
         }
     }

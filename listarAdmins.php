@@ -120,7 +120,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                 <div class="col col-11 mt-5 mb-5 d-flex justify-content-between">
                     <form class="d-flex justify-content-between col col-md-4 py-2 px-3" style="background-color: #f0f0f0;">
                         <input class="form-control border border-0 fs-5" type="search" placeholder="Pesquisar" aria-label="Search" style="background-color: #f0f0f0;">
-                        <button class="btn" type="submit"><img src="images\loupeIcon.png" alt="Icone de lupa da barra de pesquisa" style="width:32px;"></button>
+                        <button class="btn"><img src="images\loupeIcon.png" alt="Icone de lupa da barra de pesquisa" style="width:32px;"></button>
                     </form>
 
                     <div class="col col-xl-3 d-flex justify-content-around align-items-center">
@@ -174,7 +174,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 echo '<td>' . $admin_data['ADM_EMAIL'] . '</td>';
                                 echo '<td>' . $admin_data['ADM_ATIVO'] . '</td>';
                                 echo '<td>' .
-                                    '<a class="me-2" href="listarAdmins.php?id='. '">' .
+                                    '<a class="me-2" href="listarAdmins.php?id=' . '">' .
                                     '<img src="images\pencilIcon.png" alt="Icone de lápis para edição"style="width: 17px;">' .
                                     '</a>' .
                                     '<a class="ms-2" href="listarAdmins.php?id=' . $admin_data["ADM_ID"] . '">' .
@@ -184,8 +184,10 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 echo '</tr>';
                             }
 
-                            $u->deletarAdmin();
-                            
+                            if ($u->deletarAdmin()) {
+                                header("location: listarAdmins.php");  //Não está atualizando a pág
+                            }
+
                             ?>
                         </tbody>
                     </table>
@@ -194,6 +196,7 @@ $p = new Produto("charlie", "localhost", "root", "");
             </div>
         </div> <!--Fecha a div do menu lateral-->
 
+        <script src="script.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 
