@@ -63,13 +63,14 @@ class Produto
         }
     }
 }
-
 /*
-public function cadastrarCategorias($categoriaNome, $categoriaDesc, $categoriaAtivo){
+public function cadastrarCategorias()
 
-    $sql = $this->pdo->prepare("INSERT INTO CATEGORIA (CATEGORIA_NOME, CATEGORIA_DEC, CATEGORIA_ATIVO)")
-    VALUES ('$categoriaNome', '$categoriaDesc', '$categoriaAtivo');
+    $sql = $this->pdo->prepare("INSERT INTO ")
+    VALUS ();
     $SQL->execute();
     return true;
     }
 */
+
+   // Inserindo imagens no banco.

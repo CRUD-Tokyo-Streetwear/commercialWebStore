@@ -113,101 +113,88 @@ $p = new Produto("charlie", "localhost", "root", "");
                 </div>
             </div>
 
-            <!--Tela central-->
-            <div class="container fluid col col-11 mt-4" style="height: 63%; max-width:60vw;">
-                <div class="container d-flex flex-column align-items-start justify-content-center border rounded- mt-4" style="background-color: #f0f0f0; height: 60%;">
-                    <!--Cadastro Produto-->
-                    <div class="d-flex justify-content-between mt-3 mb-3">
-                        <form class="row g-5">
-                            <div class="col-md-4">
-                                <label for="nome" class="form-label">Nome</label>
-                                <input type="text" class="form-control col" name="nome">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="preco" class="form-label">Preço</label>
-                                <input type="text" class="form-control" id="preco" name="preco" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="precoDesconto" class="form-label">Desconto</label>
-                                <input type="text" class="form-control" id="precoDesconto" name="preco_desconto">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="imagemUrl" class="form-label">Imagem URL</label>
-                                <input type="text" class="form-control" id="imagemUrl" name="imagem_url">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="inputCategoria" class="form-label">Categoria</label>
-                                <select class="form-select" aria-label="Default select example">
+            <!--Orienta na vertical a tela central, barra de pesquisa, add produto-->
+            <div class="col flex-wrap d-flex justify-content-start align-items-center flex-column" style="background-color: #d9d9d9;">
 
-                                    <option selected>Selecione</option>
+                <!--Barra de pesquisa, add produto e exibir em icone grande produtos-->
+                <div class="col col-11 mt-5 mb-5 d-flex justify-content-between">
+                    <form class="d-flex justify-content-between col col-md-4 py-2 px-3" style="background-color: #f0f0f0;">
+                        <input class="form-control border border-0 fs-5" type="search" placeholder="Pesquisar" aria-label="Search" style="background-color: #f0f0f0;">
+                        <button class="btn" type="submit"><img src="images\loupeIcon.png" alt="Icone de lupa da barra de pesquisa" style="width:32px;"></button>
+                    </form>
 
-                                    <?php
-                                    $result = $p->listarCategorias();
-                                    while ($categoria_data = $result->fetch()) {
-                                        echo '<option> ' . $categoria_data['CATEGORIA_NOME'] . '</option>';
-                                    }
-                                    ?>
+                    <div class="col col-xl-3 d-flex justify-content-around align-items-center">
+                        <a href="cadastroProduto.php" class="nav-link text-light">
+                            <div class="d-flex align-items-center fs-5 p-2" style="background-color: #88d02c;">
+                                Adicionar Administrador
+                            </div>
+                        </a>
 
-                                </select>
-                            </div>
+                        <div>
+                            <img src="images\squaresWindowIcon.png" alt="Janela de quadrados para expandir os produtos" style="width:40px;">
+                        </div>
+                    </div>
+                </div>
 
-                            <div class="col-md-4">
-                                <label for="inputCity" class="form-label">City</label>
-                                <input type="text" class="form-control" id="inputCity">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="descricao" class="form-label col-4">Descrição</label>
-                                <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
-                            </div>
-                            <div class="d-flex mt-5 mb-3 col-12">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" value="0" id="produtoAtivo" name="produto_ativo" checked>
-                                    <label class="form-check-label ms-2" for="produtoAtivo">Produto Ativo</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-dark" name="botao">Cadastrar</button>
-                            </div>
+                <!--Tela central-->
+                <div class="col col-11 bg-light overflow-y-scroll" style="height: 63%;">
+
+                    <table class="table table-hover text-center">
+
+                        <thead class="align-middle">
+                            <tr class="table-secondary">
+                                <th class="py-3" scope="col">ID</th>
+                                <th class="py-3" scope="col">Foto</th>
+                                <th class="py-3" scope="col">Nome</th>
+                                <th class="py-3" scope="col">E-mail</th>
+                                <th class="py-3" scope="col">Status</th>
+                                <th class="py-3" scope="col">Editar/Excluir</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="align-middle">
+
                             <?php
+                            $result = $u->listarAdmins();
 
+                            while ($admin_data = $result->fetch()) {
+                                $admin_data['ADM_ATIVO'] = $admin_data['ADM_ATIVO'] == 1 ? 'Ativo' : 'Inativo';
+                                echo '<tr>';
+                                echo '<th scope="row">' . $admin_data['ADM_ID'] . "</th>";
 
-                            if (isset($_POST['botao'])) {
-
-                                $nome = $_POST['nome'];
-                                $preco = floatval($_POST['preco']);
-                                $precoDesconto = floatval($_POST['preco_desconto']);
-                                $descricao = $_POST['descricao'];
-                                $produtoAtivo = $_POST['produto_ativo'];
-                                $urlImagem = $_POST['imagem_url'];
-
-                                if ($p->cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $produtoAtivo)) {
-                                    echo "Produto cadastrado com sucesso!";
+                                if ($admin_data['ADM_IMAGEM']) {
+                                    echo '<td><img src="' . $admin_data['ADM_IMAGEM'] . '" alt="Imagem do Administrador" class="rounded-1 object-fit-contain" style="width: 60px; height:60px;"></td>';
                                 } else {
-                                    echo "Produto já cadastrado!";
+                                    echo '<td><svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 16 16" style="width: 40px;">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+              </svg></td>';
                                 }
+                                echo '<td>' . $admin_data['ADM_NOME'] . '</td>';
+                                echo '<td>' . $admin_data['ADM_EMAIL'] . '</td>';
+                                echo '<td>' . $admin_data['ADM_ATIVO'] . '</td>';
+                                echo '<td>' .
+                                    '<a class="me-2" href="listarAdmins.php?id='. '">' .
+                                    '<img src="images\pencilIcon.png" alt="Icone de lápis para edição"style="width: 17px;">' .
+                                    '</a>' .
+                                    '<a class="ms-2" href="listarAdmins.php?id=' . $admin_data["ADM_ID"] . '">' .
+                                    '<img src="images\trashCanIcon.png" alt="Icone de lixeira para exclusão" style="width: 17px;">' .
+                                    '</a>' .
+                                    '</td>';
+                                echo '</tr>';
                             }
 
-                            //cadastro categoria
+                            $u->deletarAdmin();
+                            
                             ?>
-
-                        </form>
-                    </div>
-
-
-
-
+                        </tbody>
+                    </table>
                 </div>
 
             </div>
         </div> <!--Fecha a div do menu lateral-->
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-</body>
-
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 
 </html>

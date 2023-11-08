@@ -9,6 +9,7 @@ if (!isset($_SESSION['ADM_ID'])) {
 require_once('sistema/usuario.php');
 $u = new Usuario("charlie", "localhost", "root", "");
 
+
 ?>
 
 <!DOCTYPE html>
@@ -29,22 +30,32 @@ $u = new Usuario("charlie", "localhost", "root", "");
   <!--Barra de navegação-->
   <nav class="navbar" style="background-color: black;">
     <div class="container-fluid text-light">
-      <a class="navbar-brand ">
-        <img src="images\logoCharlie.png" alt="logo Charlie" class="p-2" width="180">
+      <a href="pagInicio.php" class="navbar-brand ">
+        <img src="images\logoCharlieBranco.svg" alt="logo Charlie" class="p-2" width="180">
       </a>
       <div class="d-flex justify-content-end me-5">
         <div class="d-flex">
-          <svg xmlns="http://www.w3.org/2000/svg" class="" fill="white" viewBox="0 0 16 16" style="cursor: pointer;" width="50">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-          </svg>
+        <?php
+            $admId = $_SESSION["ADM_ID"];
+            $imagem = $u->mostrarImagemAdmin($admId);
+            $imagemPadrao = 'images/userIcon.png';
+            
+            if($imagem){
+              echo '<img class="imgPerfil rounded-circle object-fit-cover " src="' . $imagem . '" width="60px" height="60px" >';
+            }else{
+              echo '<svg xmlns="http://www.w3.org/2000/svg" class="" fill="white" viewBox="0 0 16 16" style="cursor: pointer;" width="50">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            </svg>';
+            }
+        ?>
           <div class="ms-3 d-flex flex-column justify-content-center align-items-center">
             <div class="d-flex flex-row align-items-center">
               <div class="dropdown">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                   <p class="m-0 pe-1">
                     <?php
-                    echo $u->mostrarNomeAdmin();
+                    echo $u->mostrarDadosAdmin()['ADM_NOME'];
                     ?>
                   </p>
                 </a>
@@ -84,13 +95,13 @@ $u = new Usuario("charlie", "localhost", "root", "");
               </a>
             </li>
             <li>
-              <a href="administradores.php" class="d-flex align-items-center nav-link px-0 text-light">
+              <a href="listarAdmins.php" class="d-flex align-items-center nav-link px-0 text-light">
                 <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
               </a>
             </li>
             <li>
-              <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Produtos</span>
+              <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
               </a>
             </li>
             <li>
@@ -98,24 +109,14 @@ $u = new Usuario("charlie", "localhost", "root", "");
                 <img src="images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
               </a>
             </li>
-            <li>
-              <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
-              </a>
-            </li>
           </ul>
         </div>
       </div>
 
       <!--Tela central-->
-      <div class="d-flex align-items-center col col-10 mb-5">
-        <div class="container d-flex justify-content-center bg-black" style="height: 65%;">
-          <img src="images\logoCharlie.png" alt="Logo Charlie" class="object-fit-contain mb-5 img-fluid" style="width:400px;">
+      <div class="d-flex align-items-center col col-10 mb-4">
+        <div class="container d-flex justify-content-center bg-black col col-10 mb-4" style="height: 72%;">
+          <img src="images\logoCharlieBranco.svg" alt="Logo Charlie" class="object-fit-contain mb-5 img-fluid" style="width:400px;">
         </div>
       </div>
 

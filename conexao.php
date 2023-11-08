@@ -1,3 +1,12 @@
+<?php 
+  session_start();
+
+  if(!isset($_SESSION['ADM_ID'])){
+    header("location: index.php");
+    exit;
+  }
+?>
+
 <?php
 //Definição de variáveis para conectar com o banco
 $server = "localhost";
