@@ -1,6 +1,6 @@
 <?php
 
-class Produto 
+class Produto
 { //Cria o objeto produto
 
     private $pdo; //variavel declarada do lado de fora pois sera utilizada em varios metodos
@@ -18,8 +18,10 @@ class Produto
     public function listarProdutos()
     {
 
-        $sql = $this->pdo->prepare("SELECT PRODUTO_ID, PRODUTO_NOME, PRODUTO_DESC, PRODUTO_PRECO, PRODUTO_DESCONTO, CATEGORIA_ID, PRODUTO_ATIVO 
-        FROM PRODUTO");
+        $sql = $this->pdo->prepare("SELECT PRODUTO_ID, PRODUTO_NOME, PRODUTO_DESC, PRODUTO_PRECO, PRODUTO_DESCONTO, CATEGORIA_NOME, PRODUTO_ATIVO  
+        FROM PRODUTO P INNER JOIN CATEGORIA C
+        ON P.CATEGORIA_ID = C.CATEGORIA_ID
+        ORDER BY PRODUTO_ID ASC");
         $sql->execute();
 
         if ($sql->rowCount() > 0) {
@@ -44,25 +46,35 @@ class Produto
         }
     }
 
-    //------------------------------------------------------------------------------------------------------------------------------
+    public function cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo)
+    {
 
-
-
-
-
-
-
-    public function cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $produtoAtivo) { 
-
-        $sql = $this->pdo->prepare("INSERT INTO PRODUTO (PRODUTO_NOME, PRODUTO_DESC, PRODUTO_PRECO, PRODUTO_DESCONTO, PRODUTO_ATIVO)
-        VALUES ('$nome', '$descricao', '$preco', '$precoDesconto', '$produtoAtivo')");
+        $sql = $this->pdo->prepare("INSERT INTO PRODUTO (PRODUTO_NOME, PRODUTO_DESC, PRODUTO_PRECO, PRODUTO_DESCONTO, CATEGORIA_ID, PRODUTO_ATIVO)
+        VALUES ('$nome', '$descricao', '$preco', '$precoDesconto', '$categoria', '$produtoAtivo')");
         $sql->execute();
         return true;
     }
 
+    public function pegaIdCategoria() // Pega o ID da tabela categoria para inserir na tabela produto
+    {
+        if(isset($_POST['categoria'])) {
+            $categoria = $_POST['categoria'];
+        }
 
+        $sql = $this->pdo->prepare("SELECT CATEGORIA_ID 
+        FROM CATEGORIA
+        WHERE CATEGORIA_NOME = '$categoria'");
+        $sql->execute();
 
-    public function listarCategorias()
+        if ($sql->rowCount() > 0) {
+            $result = $sql->fetch();
+            return $result['CATEGORIA_ID'];
+        } else {
+            echo "Nenhuma categoria encontrada!";
+        }
+    }
+
+    public function listarCategorias() //Lista as categorias dos produtos
     {
 
         $sql = $this->pdo->prepare("SELECT CATEGORIA_NOME 
@@ -73,7 +85,6 @@ class Produto
             return $sql;
         } else {
             echo "Nenhuma categoria encontrada!";
-
         }
     }
 }

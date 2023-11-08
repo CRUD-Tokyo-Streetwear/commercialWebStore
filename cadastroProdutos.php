@@ -25,7 +25,7 @@ $p = new Produto("charlie", "localhost", "root", "");
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="bg-light overflow-y-hidden">
+<body class="bg-light">
 
     <!--Barra de navegação-->
     <nav class="navbar" style="background-color: black;">
@@ -132,9 +132,9 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 <input type="text" class="form-control" id="precoDesconto" name="preco_desconto">
                             </div>
                             <div class="d-flex mb-5">
-                                <select class="form-select" aria-label="Default select example">
+                                <select name="categoria" class="form-select" aria-label="Default select example">
 
-                                    <option selected>Categoria</option>
+                                    <option>Categoria</option>
 
                                     <?php
                                     $result = $p->listarCategorias();
@@ -162,29 +162,23 @@ $p = new Produto("charlie", "localhost", "root", "");
                             <button type="submit" class="btn btn-dark" name="botao">Cadastrar</button>
 
                             <?php
-
-
                             if (isset($_POST['botao'])) {
-
                                 $nome = $_POST['nome'];
                                 $preco = floatval($_POST['preco']);
                                 $precoDesconto = floatval($_POST['preco_desconto']);
                                 $descricao = $_POST['descricao'];
+                                $categoria = $p->pegaIdCategoria();
                                 $produtoAtivo = $_POST['produto_ativo'];
                                 $urlImagem = $_POST['imagem_url'];
 
-                                if ($p->cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $produtoAtivo)) {
+                                if ($p->cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo)) {
                                     echo "Produto cadastrado com sucesso!";
                                 } else {
                                     echo "Produto já cadastrado!";
                                 }
                             }
-
-                            //cadastro categoria
-
-
-
                             ?>
+                            
                         </form>
                     </div>
                 </div>
