@@ -124,7 +124,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                     </form>
 
                     <div class="col col-xl-3 d-flex justify-content-around align-items-center">
-                        <a href="cadastroProduto.php" class="nav-link text-light">
+                        <a href="cadastroProdutos.php" class="nav-link text-light">
                             <div class="d-flex align-items-center fs-5 p-2" style="background-color: #88d02c;">
                                 Adicionar produto
                             </div>
