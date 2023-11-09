@@ -25,8 +25,7 @@ $p = new Produto("charlie", "localhost", "root", "");
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="bg-light overflow-y-hidden">
-
+<body class="bg-light ">
     <!--Barra de navegação-->
     <nav class="navbar" style="background-color: black;">
         <div class="container-fluid text-light">
@@ -116,98 +115,80 @@ $p = new Produto("charlie", "localhost", "root", "");
             <!--Tela central-->
             <div class="container fluid col col-11 mt-4" style="height: 63%; max-width:60vw;">
                 <div class="container d-flex flex-column align-items-start justify-content-center border rounded- mt-4" style="background-color: #f0f0f0; height: 60%;">
-                    <!--Cadastro Produto-->
-                    <div class="d-flex justify-content-between mt-3 mb-3">
-                        <form class="row g-5">
-                            <div class="col-md-4">
-                                <label for="nome" class="form-label">Nome</label>
-                                <input type="text" class="form-control col" name="nome">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="preco" class="form-label">Preço</label>
-                                <input type="text" class="form-control" id="preco" name="preco" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="precoDesconto" class="form-label">Desconto</label>
-                                <input type="text" class="form-control" id="precoDesconto" name="preco_desconto">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="imagemUrl" class="form-label">Imagem URL</label>
+
+                <!--Cadastro Produto-->
+                <div class="d-flex justify-content-between ms-5 mt-5">
+                    <form id="produtoForm" method="POST">
+                        <div class="d-flex mb-5">
+                            <label for="nome" class="form-label col-4  fs-5">Nome</label>
+                            <input type="text" class="form-control" name="nome">
+                        </div>
+                        <div class="d-flex mb-5">
+                            <label for="preco" class="form-label col-4  fs-5">Preço</label>
+                            <input type="text" class="form-control" id="preco" name="preco" required>
+                        </div>
+                        <div class="d-flex mb-5">
+                            <label for="precoDesconto" class="form-label col-4 fs-5">Desconto</label>
+                            <input type="text" class="form-control" id="precoDesconto" name="preco_desconto">
+                        </div>
+                        <div class="d-flex mb-5">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Categoria</option>
+                                <?php
+                                $result = $p->listarCategorias();
+                                while ($categoria_data = $result->fetch()) {
+                                    echo '<option> ' . $categoria_data['CATEGORIA_NOME'] . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="mb-5">
+                            <label for="imagemUrl" class="form-label">Imagem URL</label>
+                            <div class="input-group">
                                 <input type="text" class="form-control" id="imagemUrl" name="imagem_url">
                             </div>
-                            <div class="col-md-4">
-                                <label for="inputCategoria" class="form-label">Categoria</label>
-                                <select class="form-select" aria-label="Default select example">
+                        </div>
+                        <div class="d-flex mb-5">
+                            <label for="descricao" class="form-label me-3 fs-5">Descrição</label>
+                            <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
+                        </div>
+                        <div class="d-flex mb-5 form-check">
+                            <input type="checkbox" class="form-check-input" value="0" id="produtoAtivo" name="produto_ativo" checked>
+                            <label class="form-check-label ms-2" for="produtoAtivo">Produto Ativo</label>
+                        </div>
+                        <button type="submit" class="btn btn-dark mb-4" name="botao">Cadastrar</button>
 
-                                    <option selected>Selecione</option>
-
-                                    <?php
-                                    $result = $p->listarCategorias();
-                                    while ($categoria_data = $result->fetch()) {
-                                        echo '<option> ' . $categoria_data['CATEGORIA_NOME'] . '</option>';
-                                    }
-                                    ?>
-
-                                </select>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label for="inputCity" class="form-label">City</label>
-                                <input type="text" class="form-control" id="inputCity">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="descricao" class="form-label col-4">Descrição</label>
-                                <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
-                            </div>
-                            <div class="d-flex mt-5 mb-3 col-12">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" value="0" id="produtoAtivo" name="produto_ativo" checked>
-                                    <label class="form-check-label ms-2" for="produtoAtivo">Produto Ativo</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-dark" name="botao">Cadastrar</button>
-                            </div>
-                            <?php
+                        
+                        <?php
 
 
-                            if (isset($_POST['botao'])) {
+                        if (isset($_POST['botao'])) {
 
-                                $nome = $_POST['nome'];
-                                $preco = floatval($_POST['preco']);
-                                $precoDesconto = floatval($_POST['preco_desconto']);
-                                $descricao = $_POST['descricao'];
-                                $produtoAtivo = $_POST['produto_ativo'];
-                                $urlImagem = $_POST['imagem_url'];
+                            $nome = $_POST['nome'];
+                            $preco = floatval($_POST['preco']);
+                            $precoDesconto = floatval($_POST['preco_desconto']);
+                            $descricao = $_POST['descricao'];
+                            $produtoAtivo = (int) $_POST['produto_ativo'];
+                            $urlImagem = $_POST['imagem_url'];
 
-                                if ($p->cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $produtoAtivo)) {
-                                    echo "Produto cadastrado com sucesso!";
-                                } else {
-                                    echo "Produto já cadastrado!";
-                                }
+                            $resultado = $p->cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $produtoAtivo);
+
+                            if ($resultado) {
+                                echo "Produto cadastrado com sucesso!";
+                            } else {
+                                echo "Produto já cadastrado!";
                             }
+                        }
 
-                            //cadastro categoria
-                            ?>
-
-                        </form>
-                    </div>
-
-
-
-
+                        ?>
+                    </form>
                 </div>
-
             </div>
+
+
         </div> <!--Fecha a div do menu lateral-->
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-</body>
-
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 
 </html>
