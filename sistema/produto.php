@@ -2,7 +2,7 @@
 
 class Produto
 { //Cria o objeto produto
-
+ 
     private $pdo; //variavel declarada do lado de fora pois sera utilizada em varios metodos
 
     public function __construct($nome, $host, $usuario, $senha)
@@ -46,13 +46,20 @@ class Produto
         }
     }
 
-    public function cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo)
+    public function cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo) //FAZER UM IF PARA VERIFICAR SE UM SELECT RETORNA ALGUMA LINHA DO BANCO PARA NÃO CADASTRAR O MESMO PRODUTO
     {
         $sql = $this->pdo->prepare("INSERT INTO PRODUTO (PRODUTO_NOME, PRODUTO_DESC, PRODUTO_PRECO, PRODUTO_DESCONTO, CATEGORIA_ID, PRODUTO_ATIVO)
         VALUES ('$nome', '$descricao', '$preco', '$precoDesconto', '$categoria', '$produtoAtivo')");
         $sql->execute();
         return true;
     }
+
+    /*public function pegaIdProduto($nome, $descricao){  //Pega o ID do produto de acordo com o nome e descrição dele
+        $sql = $this->pdo->prepare("SELECT PRODUTO_ID
+        FROM PRODUTO
+        WHERE PRODUTO_NOME = $nome AND PRODUTO_DESC = $descricao");
+        $sql->execute();
+    }*/
 
     public function pegaIdCategoria() // Pega o ID da tabela categoria para inserir na tabela produto
     {
@@ -75,7 +82,6 @@ class Produto
 
     public function listarCategorias() //Lista as categorias dos produtos
     {
-
         $sql = $this->pdo->prepare("SELECT CATEGORIA_NOME 
         FROM CATEGORIA");
         $sql->execute();

@@ -158,10 +158,12 @@ $p = new Produto("charlie", "localhost", "root", "");
                             $result = $p->listarProdutos();
 
                             while ($product_data = $result->fetch()) {
-                                $product_data['PRODUTO_ATIVO'] = $product_data['PRODUTO_ATIVO'] == 1 ? 'Ativo' : 'Inativo';
+
+                                $product_data['PRODUTO_ATIVO'] = $product_data['PRODUTO_ATIVO'] == 1 ? 'Ativo' : 'Inativo'; //Trocar os valores 0 e 1 para Ativo ou Não
+
                                 echo '<tr>';
                                 echo '<th scope="row">' . $product_data['PRODUTO_ID'] . "</th>";
-                                echo '<td><img src="" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>'; 
+                                echo '<td><img src="../images\camisa.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>'; 
                                 echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';
                                 echo '<td>' . $product_data['PRODUTO_PRECO'] . '</td>';
                                 echo '<td>' . $product_data['PRODUTO_DESCONTO'] . '</td>';
@@ -173,7 +175,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     '<a class="text-decoration-none pe-2" href="#">' .
                                     '<img src="../images\pencilIcon.png" alt="Icone de lápis para edição" style="width: 17px;">' .
                                     '</a>' .
-                                    '<a class="ms-2" href="listarProdutos.php?id=' . $product_data["PRODUTO_ID"] . '">' .
+                                    '<a class="ms-2" href="#">' .
                                     '<img src="../images\trashCanIcon.png" alt="Icone de lixeira para exclusão" style="width: 17px;">' .
                                     '</a>' .
                                     '</td>';

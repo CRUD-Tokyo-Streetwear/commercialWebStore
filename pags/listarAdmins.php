@@ -155,7 +155,9 @@ $p = new Produto("charlie", "localhost", "root", "");
                             $result = $u->listarAdmins();
 
                             while ($admin_data = $result->fetch()) {
-                                $admin_data['ADM_ATIVO'] = $admin_data['ADM_ATIVO'] == 1 ? 'Ativo' : 'Inativo';
+
+                                $admin_data['ADM_ATIVO'] = $admin_data['ADM_ATIVO'] == 1 ? 'Ativo' : 'Inativo'; //Trocar os valores 0 e 1 para Ativo ou Não
+
                                 echo '<tr>';
                                 echo '<th scope="row">' . $admin_data['ADM_ID'] . "</th>";
 
@@ -191,7 +193,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo '</td>';
                                     echo '</tr>';
 
-                            };
+                            }
                             ?>
 
                             <?php
