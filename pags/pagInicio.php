@@ -6,7 +6,7 @@ if (!isset($_SESSION['ADM_ID'])) {
   exit;
 }
 
-require_once('sistema/usuario.php');
+require_once('../sistema/usuario.php');
 $u = new Usuario("charlie", "localhost", "root", "");
 
 
@@ -31,7 +31,7 @@ $u = new Usuario("charlie", "localhost", "root", "");
   <nav class="navbar" style="background-color: black;">
     <div class="container-fluid text-light">
       <a href="pagInicio.php" class="navbar-brand ">
-        <img src="images\logoCharlieBranco.svg" alt="logo Charlie" class="p-2" width="180">
+        <img src="../images\logoCharlieBranco.svg" alt="logo Charlie" class="p-2" width="180">
       </a>
       <div class="d-flex justify-content-end me-5">
         <div class="d-flex">
@@ -64,7 +64,7 @@ $u = new Usuario("charlie", "localhost", "root", "");
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" name="sair" href="sistema/sair.php">Sair</a></li>
+                  <li><a class="dropdown-item" name="sair" href="../sistema/sair.php">Sair</a></li>
                 </ul>
               </div>
             </div>
@@ -86,27 +86,27 @@ $u = new Usuario("charlie", "localhost", "root", "");
           <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
             <li class="nav-item">
               <a href="pagInicio.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
+                <img src="../images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
               </a>
             </li>
             <li>
               <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
+                <img src="../images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
               </a>
             </li>
             <li>
               <a href="listarAdmins.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
+                <img src="../images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
               </a>
             </li>
             <li>
               <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
+                <img src="../images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
               </a>
             </li>
             <li>
               <a href="cadastroProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
+                <img src="../images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
               </a>
             </li>
           </ul>
@@ -116,7 +116,7 @@ $u = new Usuario("charlie", "localhost", "root", "");
       <!--Tela central-->
       <div class="d-flex align-items-center col col-10 mb-4">
         <div class="container d-flex justify-content-center bg-black col col-10 mb-4" style="height: 72%;">
-          <img src="images\logoCharlieBranco.svg" alt="Logo Charlie" class="object-fit-contain mb-5 img-fluid" style="width:400px;">
+          <img src="../images\logoCharlieBranco.svg" alt="Logo Charlie" class="object-fit-contain mb-5 img-fluid" style="width:400px;">
         </div>
       </div>
 

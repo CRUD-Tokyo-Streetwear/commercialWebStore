@@ -23,7 +23,7 @@
 <body class="bg-light overflow-y-hidden">
 
 <?php 
-require_once('sistema/usuario.php');
+require_once('../sistema/usuario.php');
   $u = new Usuario("charlie", "localhost", "root", "");
 
   //adicionar imagem de adm
@@ -53,7 +53,7 @@ require_once('sistema/usuario.php');
   <nav class="navbar" style="background-color: black;">
     <div class="container-fluid text-light">
       <a href="pagInicio.php" class="navbar-brand ">
-        <img src="images\logoCharlieBranco.svg" alt="logo Charlie" class="p-2" width="180">
+        <img src="../images\logoCharlieBranco.svg" alt="logo Charlie" class="p-2" width="180">
       </a>
 
       <div class="d-flex justify-content-end me-5">
@@ -87,7 +87,7 @@ require_once('sistema/usuario.php');
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" name="sair" href="sistema/sair.php">Sair</a></li>
+                  <li><a class="dropdown-item" name="sair" href="../sistema/sair.php">Sair</a></li>
                 </ul>
               </div>
             </div>
@@ -104,33 +104,31 @@ require_once('sistema/usuario.php');
       <div class="row flex-nowrap">
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark" style="position: fixed; left:0;">
           <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-            <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
               <span class="fs-5 d-none d-sm-inline">Menu</span>
-            </a>
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
               <li class="nav-item">
                 <a href="pagInicio.php" class="d-flex align-items-center nav-link align-middle px-0 text-light">
-                  <img src="images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
+                  <img src="../images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
                 </a>
               </li>
               <li>
                 <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
-                  <img src="images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
+                  <img src="../images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
                 </a>
               </li>
               <li>
                 <a href="listarAdmins.php" class="d-flex align-items-center nav-link px-0 text-light">
-                  <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
+                  <img src="../images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
                 </a>
               </li>
               <li>
                 <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                  <img src="images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
+                  <img src="../images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
                 </a>
               </li>
               <li>
                 <a href="cadastroProduto.php" class="d-flex align-items-center nav-link px-0 text-light">
-                  <img src="images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
+                  <img src="../images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
                 </a>
               </li>
 

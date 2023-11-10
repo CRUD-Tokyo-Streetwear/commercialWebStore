@@ -3,7 +3,7 @@
 session_start(); 
 unset($_SESSION['ADM_ID']);
 
-require_once 'sistema/usuario.php'; // importando a classe do outro arquivo
+require_once '../sistema/usuario.php'; // importando a classe do outro arquivo
 
 $u = new Usuario("charlie", "localhost", "root", ""); //instanciando classe 
 
@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
 
   <!--Imagem da Logo Principal-->
   <div class="d-flex justify-content-center mt-5">
-    <img src="images\logoCharlieBranco.svg" class="img-fluid object-fit-cover" alt="logo Charlie" width="210px">
+    <img src="../images/logoCharlieBranco.svg" class="img-fluid object-fit-cover" alt="logo Charlie" width="210px">
   </div>
 
   <!--Formulário Cadastro de Admin-->

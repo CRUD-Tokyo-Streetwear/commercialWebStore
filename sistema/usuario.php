@@ -78,7 +78,7 @@ class Usuario
     public function atualizarImagem($upload, $admId)
     {
         if (isset($_SESSION['ADM_ID'])) {
-            $pastaImagem = 'imagemAdm/';
+            $pastaImagem = '../imagemAdm/';
             $nomeImagem = $upload['name'];
             $novoNomeImagem = uniqid();
             $extensaoImagem = strtolower(pathinfo($nomeImagem, PATHINFO_EXTENSION));

@@ -18,10 +18,10 @@ class Produto
     public function listarProdutos()
     {
 
-        $sql = $this->pdo->prepare("SELECT PRODUTO_ID, PRODUTO_NOME, PRODUTO_DESC, PRODUTO_PRECO, PRODUTO_DESCONTO, CATEGORIA_NOME, PRODUTO_ATIVO  
+        $sql = $this->pdo->prepare("SELECT P.PRODUTO_ID, P.PRODUTO_NOME, P.PRODUTO_DESC, P.PRODUTO_PRECO, P.PRODUTO_DESCONTO, C.CATEGORIA_NOME, P.PRODUTO_ATIVO  
         FROM PRODUTO P INNER JOIN CATEGORIA C
         ON P.CATEGORIA_ID = C.CATEGORIA_ID
-        ORDER BY PRODUTO_ID ASC");
+        ORDER BY P.PRODUTO_ID ASC");
         $sql->execute();
 
         if ($sql->rowCount() > 0) {
