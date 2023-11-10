@@ -163,8 +163,8 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 echo '<th scope="row">' . $product_data['PRODUTO_ID'] . "</th>";
                                 echo '<td><img src="imagemProduto\camisa.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>'; 
                                 echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';
-                                echo '<td>'. 'R$ ' . $product_data['PRODUTO_PRECO'] . '</td>';
-                                echo '<td>'. $product_data['PRODUTO_DESCONTO'] . '%'.'</td>';
+                                echo '<td>' . $product_data['PRODUTO_PRECO'] . '</td>';
+                                echo '<td>' . $product_data['PRODUTO_DESCONTO'] . '</td>';
                                 echo '<td>Camiseta</td>'; // Trocar para a variavel equivalente a categoria do produto
                                 echo '<td>223</td>'; //Trocar para a variavel equivalente a estoque
                                 echo '<td>' . $product_data['PRODUTO_DESC'] . '</td>';
