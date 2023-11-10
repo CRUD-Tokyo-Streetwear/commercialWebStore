@@ -6,8 +6,8 @@ if (!isset($_SESSION['ADM_ID'])) {
     exit;
 }
 
-require_once('sistema/usuario.php');
-require_once('sistema/produto.php');
+require_once('../sistema/usuario.php');
+require_once('../sistema/produto.php');
 $u = new Usuario("charlie", "localhost", "root", "");
 $p = new Produto("charlie", "localhost", "root", "");
 ?>
@@ -31,7 +31,7 @@ $p = new Produto("charlie", "localhost", "root", "");
     <nav class="navbar" style="background-color: black;">
         <div class="container-fluid text-light">
             <a href="pagInicio.php" class="navbar-brand ">
-                <img src="images\logoCharlieBranco.svg" alt="logo Charlie" class="p-2" width="180">
+                <img src="../images\logoCharlieBranco.svg" alt="logo Charlie" class="p-2" width="180">
             </a>
             <div class="d-flex justify-content-end me-5">
                 <div class="d-flex">
@@ -64,7 +64,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" name="sair" href="sistema/sair.php">Sair</a></li>
+                                    <li><a class="dropdown-item" name="sair" href="../sistema/sair.php">Sair</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -86,27 +86,27 @@ $p = new Produto("charlie", "localhost", "root", "");
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
                         <li class="nav-item">
                             <a href="pagInicio.php" class="d-flex align-items-center nav-link px-0 text-light">
-                                <img src="images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
+                                <img src="../images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
                             </a>
                         </li>
                         <li>
                             <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
-                                <img src="images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
+                                <img src="../images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
                             </a>
                         </li>
                         <li>
                             <a href="listarAdmins.php" class="d-flex align-items-center nav-link px-0 text-light">
-                                <img src="images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
+                                <img src="../images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
                             </a>
                         </li>
                         <li>
                             <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                                <img src="images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
+                                <img src="../images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
                             </a>
                         </li>
                         <li>
                             <a href="cadastroProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                                <img src="images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
+                                <img src="../images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
                             </a>
                         </li>
                     </ul>
@@ -120,18 +120,15 @@ $p = new Produto("charlie", "localhost", "root", "");
                 <div class="col col-11 mt-5 mb-5 d-flex justify-content-between">
                     <form class="d-flex justify-content-between col col-md-4 py-2 px-3" style="background-color: #f0f0f0;">
                         <input class="form-control border border-0 fs-5" type="search" placeholder="Pesquisar" aria-label="Search" style="background-color: #f0f0f0;">
-                        <button class="btn" type="submit"><img src="images\loupeIcon.png" alt="Icone de lupa da barra de pesquisa" style="width:32px;"></button>
+                        <button class="btn"><img src="../images\loupeIcon.png" alt="Icone de lupa da barra de pesquisa" style="width:32px;"></button>
                     </form>
 
                     <div class="col col-xl-3 d-flex justify-content-around align-items-center">
-                        <a href="cadastroProduto.php" class="nav-link text-light">
-                            <div class="d-flex align-items-center fs-5 p-2" style="background-color: #88d02c;">
+                            <div class="d-flex align-items-center fs-5 p-2" style="background-color: #88d02c; font-weight: 600; white-space: nowrap;">
                                 Adicionar Administrador
                             </div>
-                        </a>
-
                         <div>
-                            <img src="images\squaresWindowIcon.png" alt="Janela de quadrados para expandir os produtos" style="width:40px;">
+                            <img src="../images\addIcon.png" alt="Janela de quadrados para expandir os produtos" style="width:40px;">
                         </div>
                     </div>
                 </div>
@@ -179,7 +176,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo '<input type="hidden" name="edit" value="' . $admin_data["ADM_ID"] . '">';
 
                                     echo '<button type="button" name="atualizar_admin" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  data-id="<?php echo $admin_data["ADM_ID"]; style="border: none; outline: none; background: transparent;"  >
-                                    <img src="images/pencilIcon.png" style= "width:22px;" >
+                                    <img src="../images\pencilIcon.png" style= "width:22px;" >
                                     </button>';
                                     echo '</form>';
                                     echo '<br>';
@@ -188,7 +185,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo '<form action="" method="POST">';
                                     echo '<input type="hidden" name="delete" value="' . $admin_data["ADM_ID"] . '">';
                                     echo '<button type="submit" name="excluir_admin" style="border: none; outline: none; background: transparent;"  >
-                                    <img src="images/trashCanIcon.png" style= "width:22px;" > </button>';
+                                    <img src="../images\trashCanIcon.png" style= "width:22px;" > </button>';
                                     echo '</form>';
                                     
                                     echo '</div>';
@@ -233,6 +230,11 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     </div>
                                 </div>
                             </div>
+
+
+                            
+
+
                         
                             <?php   
                             //deletar usuario                         
@@ -256,6 +258,7 @@ $p = new Produto("charlie", "localhost", "root", "");
             </div>
         </div> <!--Fecha a div do menu lateral-->
 
+        <script src="script.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <script src="script.js"></script>
 </body>

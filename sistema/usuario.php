@@ -79,7 +79,7 @@ class Usuario
     public function atualizarImagem($upload, $admId)
     {
         if (isset($_SESSION['ADM_ID'])) {
-            $pastaImagem = 'imagemAdm/';
+            $pastaImagem = '../imagemAdm/';
             $nomeImagem = $upload['name'];
             $novoNomeImagem = uniqid();
             $extensaoImagem = strtolower(pathinfo($nomeImagem, PATHINFO_EXTENSION));
@@ -124,7 +124,7 @@ class Usuario
         }
     }
 
-    public function listarAdmins()
+    public function listarAdmins() //Exibe a lista de admins cadastrados
     {
 
         $sql = $this->pdo->prepare("SELECT ADM_ID, ADM_IMAGEM, ADM_NOME, ADM_EMAIL, ADM_ATIVO 

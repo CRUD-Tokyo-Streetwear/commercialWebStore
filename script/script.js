@@ -2,9 +2,9 @@
 function exibirCaixaDeDialogo() {
     let caixaDialogo = document.querySelector('.alert');
 
-    setTimeout(function() {
+    setTimeout(function () {
         caixaDialogo.style.display = 'none';
-    }, 2000); 
+    }, 2000);
 }
 
 exibirCaixaDeDialogo();
