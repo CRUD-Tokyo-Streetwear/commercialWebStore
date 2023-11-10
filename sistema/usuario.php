@@ -31,6 +31,7 @@ class Usuario
             $sql->bindValue(":e", $email);
             $sql->bindValue(":s", md5($senha));
             $sql->execute();
+            header("location: index.php");
             return true; // usuario nao existia e foi cadastrado
         }
     }
@@ -167,18 +168,28 @@ class Usuario
         }
     }
 
-    public function deletarAdmin()
+    public function excluirAdmin($admId)
     {
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
+        if (isset($_SESSION["ADM_ID"])) {
 
-            if (!empty($id)) {
-                $sql = $this->pdo->prepare("DELETE FROM ADMINISTRADOR
-            WHERE ADM_ID = $id");
-                $sql->execute();
-
-                //header("location: listarAdmins.php"); Mudar de volta para a página para atualiza-lá
+            $sql = $this->pdo->prepare("DELETE FROM ADMINISTRADOR WHERE ADM_ID = :id");
+            $sql->bindValue(":id", $admId);
+            $sql->execute();
+    
+            if ($sql->rowCount() > 0) {
+                if ($_SESSION["ADM_ID"] == $admId) {
+                    session_destroy();
+                    echo '<script>setTimeout(function(){ window.location.href = "listarAdmins.php"; }, 0010);</script>';
+                    exit;
+                }
+                return true;
+            } else {
+                return false;
             }
+        } else {
+            return false; 
         }
     }
+
+
 }
