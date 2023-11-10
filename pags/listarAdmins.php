@@ -165,27 +165,51 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo '<td><svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 16 16" style="width: 40px;">
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-              </svg></td>';
+                </svg></td>';
                                 }
                                 echo '<td>' . $admin_data['ADM_NOME'] . '</td>';
                                 echo '<td>' . $admin_data['ADM_EMAIL'] . '</td>';
                                 echo '<td>' . $admin_data['ADM_ATIVO'] . '</td>';
-                                echo '<td>' .
-                                    '<a class="me-2" href="listarAdmins.php?id=' . '">' .
-                                    '<img src="../images\pencilIcon.png" alt="Icone de lápis para edição"style="width: 17px;">' .
-                                    '</a>' .
-                                    '<a class="ms-2" href="listarAdmins.php?id=' . $admin_data["ADM_ID"] . '">' .
-                                    '<img src="../images\trashCanIcon.png" alt="Icone de lixeira para exclusão" style="width: 17px;">' .
-                                    '</a>' .
-                                    '</td>';
-                                echo '</tr>';
-                            }
+                                echo '<td>' ;
 
-                            if ($u->deletarAdmin()) {
-                                header("location: listarAdmins.php");  //Não está atualizando a pág
-                            }
+                                echo '<div class= "d-flex justify-content-center" >';
+                                    echo '<form action="" method="POST">';
+                                    echo '<input type="hidden" name="edit" value="' . $admin_data["ADM_ID"] . '">';
+                                    echo '<button type="submit" class="me-2" name="atualizar_admin" style="border: none; outline: none; background: transparent;"  >
+                                    <img src="../images/pencilIcon.png" style= "width:18px;" > </button>';
+                                    echo '</form>';
+                                    echo '<br>';
 
+
+                                    echo '<form action="" method="POST">';
+                                    echo '<input type="hidden" name="delete" value="' . $admin_data["ADM_ID"] . '">';
+                                    echo '<button type="submit" class="ms-2" name="excluir_admin" style="border: none; outline: none; background: transparent;"  >
+                                    <img src="../images/trashCanIcon.png" style= "width:18px;" > </button>';
+                                    echo '</form>';
+                                    
+                                    echo '</div>';
+                                    echo '</td>';
+                                    echo '</tr>';
+
+                            };
                             ?>
+
+                            <?php
+                            
+                            if (isset($_POST['delete'])) {
+
+                                $admId = $_POST['delete'];
+
+                                if ($u->excluirAdmin($admId)) {
+                                    echo '<script>setTimeout(function(){ window.location.href = "listarAdmins.php"; }, 0010);</script>';
+                                    exit;
+                                } else {
+                                    echo 'Não foi possível excluir o administrador.';
+                                }
+                            } 
+                            
+                            ?>
+                            
                         </tbody>
                     </table>
                 </div>

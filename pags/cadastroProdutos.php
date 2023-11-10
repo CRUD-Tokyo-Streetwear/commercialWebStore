@@ -156,7 +156,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
                             </div>
                             <div class="d-flex mb-5 form-check">
-                                <input type="checkbox" class="form-check-input" value="0" id="produtoAtivo" name="produto_ativo" checked>
+                                <input type="checkbox" class="form-check-input" id="produtoAtivo" name="produto_ativo">
                                 <label class="form-check-label ms-2" for="produtoAtivo">Produto Ativo</label>
                             </div>
                             <button type="submit" class="btn btn-dark" name="botao">Cadastrar</button>
@@ -178,7 +178,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 }
                             }
                             ?>
-                            
+
                         </form>
                     </div>
                 </div>

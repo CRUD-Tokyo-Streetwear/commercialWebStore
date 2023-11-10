@@ -8,14 +8,14 @@ class Produto
     public function __construct($nome, $host, $usuario, $senha)
     {
         try {
-            $this->pdo = new PDO("mysql:dbname=" . $nome . ";host=" . $host, $usuario, $senha); //conexao com banco de dados
+            $this->pdo = new PDO("mysql:dbname=" . $nome . ";host=" . $host, $usuario, $senha); //conexao com banco de dados 
 
         } catch (PDOException $e) {
             echo "ERRO NO BANCO DE DADOS " . $e->getMessage(); //caso tenha algum erro ao se conectar aparece aqui
         }
     }
 
-    public function listarProdutos()
+    public function listarProdutos() //Lista os produtos cadastrados no banco
     {
 
         $sql = $this->pdo->prepare("SELECT P.PRODUTO_ID, P.PRODUTO_NOME, P.PRODUTO_DESC, P.PRODUTO_PRECO, P.PRODUTO_DESCONTO, C.CATEGORIA_NOME, P.PRODUTO_ATIVO  
@@ -24,7 +24,7 @@ class Produto
         ORDER BY P.PRODUTO_ID ASC");
         $sql->execute();
 
-        if ($sql->rowCount() > 0) {
+        if ($sql->rowCount() > 0) { //Verifica se está retornando alguma linha do banco
 
             return $sql;
         } else {
@@ -33,7 +33,7 @@ class Produto
     }
 
 
-    public function deletarProduto()
+    public function deletarProduto() 
     {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
@@ -48,7 +48,6 @@ class Produto
 
     public function cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo)
     {
-
         $sql = $this->pdo->prepare("INSERT INTO PRODUTO (PRODUTO_NOME, PRODUTO_DESC, PRODUTO_PRECO, PRODUTO_DESCONTO, CATEGORIA_ID, PRODUTO_ATIVO)
         VALUES ('$nome', '$descricao', '$preco', '$precoDesconto', '$categoria', '$produtoAtivo')");
         $sql->execute();
@@ -87,6 +86,17 @@ class Produto
             echo "Nenhuma categoria encontrada!";
         }
     }
+
+    /*public function cadastrarEstoque($produtoId, $produtoQtd) //Cadastra o estoque do produto
+    {
+        $produtoQtd = $_POST['PRODUTO_QTD'];
+
+        $sql = $this->pdo->prepare("INSERT INTO ESTOQUE
+        (PRODUTO_ID, PRODUTO_QTD)
+        VALUES ('$', ' $produtoQtd')");
+        $sql->execute();
+        
+    }*/
 }
 /*
 public function cadastrarCategorias()

@@ -165,8 +165,8 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';
                                 echo '<td>' . $product_data['PRODUTO_PRECO'] . '</td>';
                                 echo '<td>' . $product_data['PRODUTO_DESCONTO'] . '</td>';
-                                echo '<td>' . $product_data['CATEGORIA_NOME'] .'</td>';
-                                echo '<td>223</td>'; //Trocar para a variavel equivalente a estoque
+                                echo '<td>' . $product_data['CATEGORIA_NOME'] .'</td>'; 
+                                echo '<td>223</td>';
                                 echo '<td>' . $product_data['PRODUTO_DESC'] . '</td>';
                                 echo '<td>' . $product_data['PRODUTO_ATIVO'] . '</td>';
                                 echo '<td>' .
