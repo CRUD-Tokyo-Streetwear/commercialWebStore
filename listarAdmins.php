@@ -165,25 +165,26 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 if ($admin_data['ADM_IMAGEM']) {
                                     echo '<td><img src="' . $admin_data['ADM_IMAGEM'] . '" alt="Imagem do Administrador" class="rounded-1 object-fit-contain" style="width: 60px; height:60px;"></td>';
                                 } else {
-                                    echo '<td><svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 16 16" style="width: 40px;">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                </svg></td>';
+                                    echo '<td> <img src="images\homem-usuario.png" width="40px"> </td>';
                                 }
                                 echo '<td>' . $admin_data['ADM_NOME'] . '</td>';
                                 echo '<td>' . $admin_data['ADM_EMAIL'] . '</td>';
                                 echo '<td>' . $admin_data['ADM_ATIVO'] . '</td>';
                                 echo '<td>' ;
 
-                                echo '<div class= "d-flex justify-content-center" >';
+
+                                    // botao atualizar 
+                                    echo '<div class= "d-flex justify-content-center" >';
                                     echo '<form action="" method="POST">';
                                     echo '<input type="hidden" name="edit" value="' . $admin_data["ADM_ID"] . '">';
-                                    echo '<button type="submit" name="atualizar_admin" style="border: none; outline: none; background: transparent;"  >
-                                    <img src="images/pencilIcon.png" style= "width:22px;" > </button>';
+
+                                    echo '<button type="button" name="atualizar_admin" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  data-id="<?php echo $admin_data["ADM_ID"]; style="border: none; outline: none; background: transparent;"  >
+                                    <img src="images/pencilIcon.png" style= "width:22px;" >
+                                    </button>';
                                     echo '</form>';
                                     echo '<br>';
 
-
+                                    // botao excluir
                                     echo '<form action="" method="POST">';
                                     echo '<input type="hidden" name="delete" value="' . $admin_data["ADM_ID"] . '">';
                                     echo '<button type="submit" name="excluir_admin" style="border: none; outline: none; background: transparent;"  >
@@ -197,8 +198,44 @@ $p = new Produto("charlie", "localhost", "root", "");
                             };
                             ?>
 
-                            <?php
-                            
+                                <!-- modal -->
+
+                                
+
+                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Administrador</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="" method="POST">
+                                                <div class="mb-3">
+                                                    <label for="nome" class="form-label">Nome:</label>
+                                                    <input type="text" class="form-control" id="nome" name="nome">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="email" class="form-label">Email:</label>
+                                                    <input type="email" class="form-control" id="email" name="email" 
+                                                    value="<?php  ?>" >
+                                                </div>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="status" name="status">
+                                                    <label class="form-check-label" for="status">Status</label>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ignorar</button>
+                                            <button type="button" class="btn btn-primary">Salvar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <?php   
+                            //deletar usuario                         
                             if (isset($_POST['delete'])) {
 
                                 $admId = $_POST['delete'];
@@ -210,7 +247,6 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo 'Não foi possível excluir o administrador.';
                                 }
                             } 
-                            
                             ?>
                             
                         </tbody>
@@ -221,6 +257,7 @@ $p = new Produto("charlie", "localhost", "root", "");
         </div> <!--Fecha a div do menu lateral-->
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script src="script.js"></script>
 </body>
 
 </html>
