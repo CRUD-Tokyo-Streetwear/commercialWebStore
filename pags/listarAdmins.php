@@ -197,7 +197,6 @@ $p = new Produto("charlie", "localhost", "root", "");
                             ?>
 
                             <?php
-                            
                             if (isset($_POST['delete'])) {
 
                                 $admId = $_POST['delete'];
@@ -209,7 +208,6 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo 'Não foi possível excluir o administrador.';
                                 }
                             } 
-                            
                             ?>
                             
                         </tbody>

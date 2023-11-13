@@ -121,26 +121,23 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                     <!--Cadastro Produto-->
                     <div class="d-flex justify-content-between ms-4 mt-3 mb-3">
-                        <form id="produtoForm" method="POST " class="row g-3">
-                            <div class="col-md-6">
-                                <label for="nome" class="form-label">Nome</label>
-                                <input type="text" class="form-control" name="nome">
+                        <form id="produtoForm" method="POST" class="col">
+                            <div class="d-flex mb-5">
+                                <label for="nome" class="form-label col-4 fs-5">Nome</label>
+                                <input type="text" class="form-control col" name="nome">
                             </div>
-                            <div class="col-md-6">
-                                <label for="preco" class="form-label">Preço</label>
-                                <input type="text" class="form-control" name="preco" required>
+                            <div class="d-flex mb-5">
+                                <label for="preco" class="form-label col-4 fs-5">Preço</label>
+                                <input type="text" class="form-control" id="preco" name="preco" required>
                             </div>
-                            <div class="col-md-6">
-                                <label for="precoDesconto" class="form-label">Desconto</label>
+                            <div class="d-flex mb-5">
+                                <label for="precoDesconto" class="form-label col-4 fs-5">Desconto</label>
                                 <input type="text" class="form-control" id="precoDesconto" name="preco_desconto">
                             </div>
-                            <div class="col-md-6">
-                                <label for="Estoque" class="form-label">Estoque</label>
-                                <input type="text" class="form-control" name="estoque">
-                            </div>
-                            <div class="col-md-6 mt-5">
+                            <div class="d-flex mb-5">
                                 <select name="categoria" class="form-select" aria-label="Default select example">
-                                    <option selected>Categoria</option>
+
+                                    <option>Categoria</option>
 
                                     <?php
                                     $result = $p->listarCategorias();
@@ -151,43 +148,53 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                                 </select>
                             </div>
-                            <div class="col-md-6">
-                                <label for="precoDesconto" class="form-label">Imagem URL</label>
-                                <input type="text" class="form-control" id="imagemUrl" name="imagem_url">
-                                <button type="submit" class="btn btn-secondary" name="botaoImagem" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Custom button</button>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="descricao" class="form-label">Descrição</label>
-                                <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
-                            </div>
-                            <div class="d-flex mb-5 mt-5 form-check">
-                                <input type="checkbox" class="form-check-input" id="produtoAtivo" name="produto_ativo">
-                                <label class="form-check-label ms-2" for="produtoAtivo">Produto Ativo</label>
-                            </div>
-                            <div class="col-md-6">
-                                <button type="submit" class="btn btn-dark" name="enviaForm">Cadastrar</button>
-                            </div>
+                            <div class="mb-5">
+                                <label for="imagemUrl" class="form-label">Imagem URL</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="imagemUrl" name="imagem_url">
+                                </div>
+                                <div class="mb-5">
+                                    <label for="estoque" class="form-label">Estoque</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="estoque" name="produtoQtd">
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-5">
+                                    <label for="descricao" class="form-label col-4 fs-5">Descrição</label>
+                                    <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
+                                </div>
+                                <div class="d-flex mb-5 form-check">
+                                    <input type="checkbox" class="form-check-input" id="produtoAtivo" name="produto_ativo" checked>
+                                    <label class="form-check-label ms-2" for="produtoAtivo">Produto Ativo</label>
+                                </div>
+                                <button type="submit" class="btn btn-dark" name="botao">Cadastrar</button>
 
-                            <?php
-                            if (isset($_POST['enviaForm'])) {
-                                
-                                $nome = $_POST['nome'];
-                                $preco = $_POST['preco'];
-                                $precoDesconto = $_POST['preco_desconto'];
-                                $estoque = $_POST['estoque'];
-                                $descricao = $_POST['descricao'];
-                                $categoria = $p->pegaIdCategoria();
-                                $produtoAtivo = $_POST['produto_ativo'];
-                                $urlImagem = $_POST['imagem_url'];
+                                <?php
+                                if (isset($_POST['botao'])) {
 
-                                if ($p->cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo)) {
-                                    echo "Produto cadastrado com sucesso!";
-                                } else {
-                                    echo "Produto já cadastrado!";
+                                    //Cadastra na tabela de produto
+                                    $nome = $_POST['nome'];
+                                    $preco = floatval($_POST['preco']);
+                                    $precoDesconto = floatval($_POST['preco_desconto']);
+                                    $descricao = $_POST['descricao'];
+                                    $categoria = $p->pegaIdCategoria();
+                                    $produtoAtivo = $_POST['produto_ativo'];
+                                    //Cadastra na tabela de imagem_produto
+                                    $urlImagem = $_POST['imagem_url'];
+
+                                    if ($p->cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo) && isset($categoria)) {
+                                        $GLOBALS['produto_id'] = $p->pegaIdProduto($nome, $descricao);
+                                        $p->cadastrarEstoque(); //Estoque é cadastrado direto pelo método
+                                        $p->cadastrarImagem();
+                                        echo "Produto cadastrado com sucesso!";
+                                        print_r($produtoAtivo);
+                                    } else {
+                                        echo "Falha ao cadastrar produto...Dica: Faltou selecionar uma categoria";
+                                        print_r($produtoAtivo);
+                                    }
                                 }
-                            }
+                                ?>
 
-                            ?>
                         </form>
                     </div><!--Fecha a div do formulário-->
 

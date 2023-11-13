@@ -157,18 +157,23 @@ $p = new Produto("charlie", "localhost", "root", "");
                             <?php
                             $result = $p->listarProdutos();
 
+                            if(isset($result)){
                             while ($product_data = $result->fetch()) {
 
                                 $product_data['PRODUTO_ATIVO'] = $product_data['PRODUTO_ATIVO'] == 1 ? 'Ativo' : 'Inativo'; //Trocar os valores 0 e 1 para Ativo ou Não
 
                                 echo '<tr>';
                                 echo '<th scope="row">' . $product_data['PRODUTO_ID'] . "</th>";
-                                echo '<td><img src="../images\camisa.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>'; 
+                                if(isset($product_data['IMAGEM_URL'])){
+                                    echo '<td><img src="'.$product_data['IMAGEM_URL'] .'" alt="Imagem do produto" class="rounded-4" style="width: 70px; height: 70px; object-fit: contain;"></td>'; 
+                                }else{
+                                    echo '<td><img src="../images/noProductImage.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>'; 
+                                }
                                 echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';
                                 echo '<td>' . $product_data['PRODUTO_PRECO'] . '</td>';
                                 echo '<td>' . $product_data['PRODUTO_DESCONTO'] . '</td>';
                                 echo '<td>' . $product_data['CATEGORIA_NOME'] .'</td>'; 
-                                echo '<td>223</td>';
+                                echo '<td>' .$product_data['PRODUTO_QTD'] . '</td>';
                                 echo '<td>' . $product_data['PRODUTO_DESC'] . '</td>';
                                 echo '<td>' . $product_data['PRODUTO_ATIVO'] . '</td>';
                                 echo '<td>' .
@@ -181,9 +186,10 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     '</td>';
                                 echo '</tr>';
                             }
+                        }
 
                             if ($p->deletarProduto()) {
-                                header("location: listarProdutos.php");  //Não está atualizando a pág
+                                header("location: listarProdutos.php");  
                             }
 
                             ?>
