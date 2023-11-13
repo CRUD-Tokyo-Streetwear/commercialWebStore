@@ -9,7 +9,7 @@ if (!isset($_SESSION['ADM_ID'])) {
 require_once('../sistema/usuario.php');
 require_once('../sistema/produto.php');
 $u = new Usuario("charlie", "localhost", "root", "");
-$p = new Produto("charlie", "localhost", "root", ""); 
+$p = new Produto("charlie", "localhost", "root", "");
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +19,7 @@ $p = new Produto("charlie", "localhost", "root", "");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charlie StreetWear</title>
-    <link rel="icon" href="images\Charlie.png">
+    <link rel="icon" href="../images\Charlie.png">
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
@@ -35,20 +35,20 @@ $p = new Produto("charlie", "localhost", "root", "");
             </a>
             <div class="d-flex justify-content-end me-5">
                 <div class="d-flex">
-                <?php
-            $admId = $_SESSION["ADM_ID"];
-            $imagem = $u->mostrarImagemAdmin($admId);
-            $imagemPadrao = 'images/userIcon.png';
-            
-            if($imagem){
-              echo '<img class="imgPerfil rounded-circle object-fit-cover " src="' . $imagem . '" width="60px" height="60px" >';
-            }else{
-              echo '<svg xmlns="http://www.w3.org/2000/svg" class="" fill="white" viewBox="0 0 16 16" style="cursor: pointer;" width="50">
+                    <?php
+                    $admId = $_SESSION["ADM_ID"];
+                    $imagem = $u->mostrarImagemAdmin($admId);
+                    $imagemPadrao = 'images/userIcon.png';
+
+                    if ($imagem) {
+                        echo '<img class="imgPerfil rounded-circle object-fit-cover " src="' . $imagem . '" width="60px" height="60px" >';
+                    } else {
+                        echo '<svg xmlns="http://www.w3.org/2000/svg" class="" fill="white" viewBox="0 0 16 16" style="cursor: pointer;" width="50">
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
               <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
             </svg>';
-            }
-        ?>
+                    }
+                    ?>
                     <div class="ms-3 d-flex flex-column justify-content-center align-items-center">
                         <div class="d-flex flex-row align-items-center">
                             <div class="dropdown">
@@ -118,14 +118,15 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                 <!--Barra de pesquisa, add produto e exibir em icone grande produtos-->
                 <div class="col col-11 mt-5 mb-5 d-flex justify-content-between">
-                    <form class="d-flex justify-content-between col col-md-4 py-2 px-3" style="background-color: #f0f0f0;">
-                        <input class="form-control border border-0 fs-5" type="search" placeholder="Pesquisar" aria-label="Search" style="background-color: #f0f0f0;">
-                        <button class="btn" type="submit"><img src="../images\loupeIcon.png" alt="Icone de lupa da barra de pesquisa" style="width:32px;"></button>
+
+                    <form action="" class="d-flex justify-content-between col col-md-4 py-2 px-3" style="background-color: #f0f0f0;">
+                        <input type="text" value="<?php if (isset($_GET['search'])) {echo $_GET['search'];} ?>" name="search" class="form-control border border-0 fs-5" placeholder="Pesquisar" aria-label="Pesquisar" style="background-color: #f0f0f0;">
+                        <button type="submit" class="border border-0 ms-1"><img src="../images\loupeIcon.png" alt="Icone de lupa da barra de pesquisa" style="width:32px;"></button>
                     </form>
 
                     <div class="col col-xl-3 d-flex justify-content-around align-items-center">
                         <a href="cadastroProdutos.php" class="nav-link text-light">
-                            <div class="d-flex align-items-center fs-5 p-2" style="background-color: #88d02c;">
+                            <div class="d-flex align-items-center fs-5 p-2" style="background-color: #88d02c; font-weight: 600">
                                 Adicionar produto
                             </div>
                         </a>
@@ -143,7 +144,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 <th class="py-3" scope="col">ID</th>
                                 <th class="py-3" scope="col">Foto</th>
                                 <th class="py-3" scope="col">Nome</th>
-                                <th class="py-3" scope="col">Preço</th> 
+                                <th class="py-3" scope="col">Preço</th>
                                 <th class="py-3" scope="col">Desconto</th>
                                 <th class="py-3" scope="col">Categoria</th>
                                 <th class="py-3" scope="col">Estoque</th>
@@ -155,41 +156,42 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                         <tbody class="align-middle">
                             <?php
-                            $result = $p->listarProdutos();
 
-                            if(isset($result)){
-                            while ($product_data = $result->fetch()) {
+                            $result = !isset($_GET['search']) ? $p->listarProdutos() : $p->pesquisarProduto(); //Verifica se será listado todos os produtos ou somente os produtos pesquisados
 
-                                $product_data['PRODUTO_ATIVO'] = $product_data['PRODUTO_ATIVO'] == 1 ? 'Ativo' : 'Inativo'; //Trocar os valores 0 e 1 para Ativo ou Não
+                            if (isset($result)) {
+                                while ($product_data = $result->fetch()) {
 
-                                echo '<tr>';
-                                echo '<th scope="row">' . $product_data['PRODUTO_ID'] . "</th>";
-                                if(isset($product_data['IMAGEM_URL'])){
-                                    echo '<td><img src="'.$product_data['IMAGEM_URL'] .'" alt="Imagem do produto" class="rounded-4" style="width: 70px; height: 70px; object-fit: contain;"></td>'; 
-                                }else{
-                                    echo '<td><img src="../images/noProductImage.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>'; 
+                                    $product_data['PRODUTO_ATIVO'] = $product_data['PRODUTO_ATIVO'] == 1 ? 'Ativo' : 'Inativo'; //Trocar os valores 0 e 1 para Ativo ou Não
+
+                                    echo '<tr>';
+                                    echo '<th scope="row">' . $product_data['PRODUTO_ID'] . "</th>";
+                                    if (isset($product_data['IMAGEM_URL'])) {
+                                        echo '<td><img src="' . $product_data['IMAGEM_URL'] . '" alt="Imagem do produto" class="rounded-4" style="width: 70px; height: 70px; object-fit: contain;"></td>';
+                                    } else {
+                                        echo '<td><img src="../images/noProductImage.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>';
+                                    }
+                                    echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';
+                                    echo '<td>' . $product_data['PRODUTO_PRECO'] . '</td>';
+                                    echo '<td>' . $product_data['PRODUTO_DESCONTO'] . '</td>';
+                                    echo '<td>' . $product_data['CATEGORIA_NOME'] . '</td>';
+                                    echo '<td>' . $product_data['PRODUTO_QTD'] . '</td>';
+                                    echo '<td>' . $product_data['PRODUTO_DESC'] . '</td>';
+                                    echo '<td>' . $product_data['PRODUTO_ATIVO'] . '</td>';
+                                    echo '<td>' .
+                                        '<a class="text-decoration-none pe-2" href="#">' .
+                                        '<img src="../images\pencilIcon.png" alt="Icone de lápis para edição" style="width: 17px;">' .
+                                        '</a>' .
+                                        '<a class="ms-2" href="#">' .
+                                        '<img src="../images\trashCanIcon.png" alt="Icone de lixeira para exclusão" style="width: 17px;">' .
+                                        '</a>' .
+                                        '</td>';
+                                    echo '</tr>';
                                 }
-                                echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';
-                                echo '<td>' . $product_data['PRODUTO_PRECO'] . '</td>';
-                                echo '<td>' . $product_data['PRODUTO_DESCONTO'] . '</td>';
-                                echo '<td>' . $product_data['CATEGORIA_NOME'] .'</td>'; 
-                                echo '<td>' .$product_data['PRODUTO_QTD'] . '</td>';
-                                echo '<td>' . $product_data['PRODUTO_DESC'] . '</td>';
-                                echo '<td>' . $product_data['PRODUTO_ATIVO'] . '</td>';
-                                echo '<td>' .
-                                    '<a class="text-decoration-none pe-2" href="#">' .
-                                    '<img src="../images\pencilIcon.png" alt="Icone de lápis para edição" style="width: 17px;">' .
-                                    '</a>' .
-                                    '<a class="ms-2" href="#">' .
-                                    '<img src="../images\trashCanIcon.png" alt="Icone de lixeira para exclusão" style="width: 17px;">' .
-                                    '</a>' .
-                                    '</td>';
-                                echo '</tr>';
                             }
-                        }
 
                             if ($p->deletarProduto()) {
-                                header("location: listarProdutos.php");  
+                                header("location: listarProdutos.php");
                             }
 
                             ?>

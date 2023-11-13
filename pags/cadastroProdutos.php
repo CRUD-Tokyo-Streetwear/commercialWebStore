@@ -19,7 +19,7 @@ $p = new Produto("charlie", "localhost", "root", "");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charlie StreetWear</title>
-    <link rel="icon" href="images\Charlie.png">
+    <link rel="icon" href="../images\Charlie.png">
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
@@ -164,8 +164,8 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
                                 </div>
                                 <div class="d-flex mb-5 form-check">
-                                    <input type="checkbox" class="form-check-input" id="produtoAtivo" name="produto_ativo" checked>
-                                    <label class="form-check-label ms-2" for="produtoAtivo">Produto Ativo</label>
+                                    <input type="checkbox" class="form-check-input" id="produto_Ativo" name="produto_ativo" checked>
+                                    <label class="form-check-label ms-2" for="produto_Ativo">Produto Ativo</label>
                                 </div>
                                 <button type="submit" class="btn btn-dark" name="botao">Cadastrar</button>
 
@@ -177,7 +177,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     $preco = floatval($_POST['preco']);
                                     $precoDesconto = floatval($_POST['preco_desconto']);
                                     $descricao = $_POST['descricao'];
-                                    $categoria = $p->pegaIdCategoria();
+                                    $categoria = $p->pegaIdCategoria(); 
                                     $produtoAtivo = $_POST['produto_ativo'];
                                     //Cadastra na tabela de imagem_produto
                                     $urlImagem = $_POST['imagem_url'];

@@ -35,6 +35,29 @@ class Produto
         }
     }
 
+    public function pesquisarProduto() //Pesquisa instâncias de produtos do BD
+    {
+        $pesquisa = $_GET['search'];
+
+        $sql = $this->pdo->prepare("SELECT P.PRODUTO_ID, I.IMAGEM_URL, P.PRODUTO_NOME, P.PRODUTO_DESC, P.PRODUTO_PRECO, P.PRODUTO_DESCONTO, C.CATEGORIA_NOME, E.PRODUTO_QTD, P.PRODUTO_ATIVO  
+    FROM PRODUTO P 
+    INNER JOIN CATEGORIA C ON P.CATEGORIA_ID = C.CATEGORIA_ID
+    INNER JOIN ESTOQUE E ON P.PRODUTO_ID = E.PRODUTO_ID
+    INNER JOIN PRODUTO_IMAGEM I ON P.PRODUTO_ID = I.PRODUTO_ID
+    WHERE P.PRODUTO_NOME LIKE :pesquisa OR P.PRODUTO_DESC LIKE :pesquisa
+    ORDER BY P.PRODUTO_ID ASC");
+
+        $pesquisa = "%$pesquisa%";
+        $sql->bindParam(':pesquisa', $pesquisa, PDO::PARAM_STR);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            return $sql;
+        } else {
+            echo '<div class="fs-5" style="position: absolute; top: 53%; left: 58%; transform: translate(-50%, -50%);">Nenhum produto encontrado...</div>';
+        }
+    }
+
     public function deletarProduto()
     {
         if (isset($_GET['id'])) {
@@ -67,7 +90,7 @@ class Produto
         }
     }
 
-    
+
     public function cadastrarEstoque() //Cadastra o estoque do produto na tabela de estoque
     {
         $produtoQtd = $_POST['produtoQtd'];
@@ -77,7 +100,6 @@ class Produto
         (PRODUTO_ID, PRODUTO_QTD)
         VALUES ('$produtoId', ' $produtoQtd')");
         $sql->execute();
-        
     }
 
     public function cadastrarImagem() //Cadastra a imagem do produto na tabela de imagens do produto
@@ -89,11 +111,10 @@ class Produto
         $sql = $this->pdo->prepare("INSERT INTO PRODUTO_IMAGEM (IMAGEM_ORDEM, PRODUTO_ID, IMAGEM_URL)
         VALUES ('$imagemOrdem,', '$produtoId', '$imagemUrl')");
         $sql->execute();
-        
     }
 
     public function pegaIdProduto($nome, $descricao)   //Pega o ID do produto de acordo com o nome e descrição dele
-    {  
+    {
         $sql = $this->pdo->prepare("SELECT PRODUTO_ID
         FROM PRODUTO
         WHERE PRODUTO_NOME = '$nome' AND PRODUTO_DESC = '$descricao'");
@@ -102,7 +123,7 @@ class Produto
         if ($sql->rowCount() > 0) { //Verifica se está retornando alguma linha do banco
             $produto_id = $sql->fetch();
             return $produto_id['PRODUTO_ID'];
-        } 
+        }
     }
 
     public function pegaIdCategoria() // Pega o ID da tabela categoria para inserir na tabela produto
@@ -119,7 +140,7 @@ class Produto
         if ($sql->rowCount() > 0) {
             $result = $sql->fetch();
             return $result['CATEGORIA_ID'];
-        } 
+        }
     }
 
     public function listarCategorias() //Lista as categorias dos produtos

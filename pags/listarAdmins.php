@@ -19,7 +19,7 @@ $p = new Produto("charlie", "localhost", "root", "");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charlie StreetWear</title>
-    <link rel="icon" href="images\Charlie.png">
+    <link rel="icon" href="../images\Charlie.png">
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
@@ -118,15 +118,17 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                 <!--Barra de pesquisa, add produto e exibir em icone grande produtos-->
                 <div class="col col-11 mt-5 mb-5 d-flex justify-content-between">
-                    <form class="d-flex justify-content-between col col-md-4 py-2 px-3" style="background-color: #f0f0f0;">
-                        <input class="form-control border border-0 fs-5" type="search" placeholder="Pesquisar" aria-label="Search" style="background-color: #f0f0f0;">
-                        <button class="btn"><img src="../images\loupeIcon.png" alt="Icone de lupa da barra de pesquisa" style="width:32px;"></button>
+                    <form action="" class="d-flex justify-content-between col col-md-4 py-2 px-3" style="background-color: #f0f0f0;">
+                        <input type="text" value="<?php if (isset($_GET['search'])) {
+                                                        echo $_GET['search'];
+                                                    } ?>" name="search" class="form-control border border-0 fs-5" placeholder="Pesquisar" aria-label="Pesquisar" style="background-color: #f0f0f0;">
+                        <button type="submit" class="border border-0 ms-1"><img src="../images\loupeIcon.png" alt="Icone de lupa da barra de pesquisa" style="width:32px;"></button>
                     </form>
 
                     <div class="col col-xl-3 d-flex justify-content-around align-items-center">
-                            <div class="d-flex align-items-center fs-5 p-2" style="background-color: #88d02c; font-weight: 600; white-space: nowrap;">
-                                Adicionar Administrador
-                            </div>
+                        <div class="d-flex align-items-center fs-5 p-2 text-light" style="background-color: #88d02c; font-weight: 600; white-space: nowrap;">
+                            Adicionar Administrador
+                        </div>
                         <div>
                             <img src="../images\squaresWindowIcon.png" alt="Janela de quadrados para expandir os produtos" style="width:40px;">
                         </div>
@@ -134,7 +136,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                 </div>
 
                 <!--Tela central-->
-                <div class="col col-11 bg-light overflow-y-scroll" style="height: 63%;">
+                <div class="col col-11 bg-light overflow-y-scroll" style="height: 60vh;">
 
                     <table class="table table-hover text-center">
 
@@ -152,29 +154,31 @@ $p = new Produto("charlie", "localhost", "root", "");
                         <tbody class="align-middle">
 
                             <?php
-                            $result = $u->listarAdmins();
 
-                            while ($admin_data = $result->fetch()) {
+                            $result = !isset($_GET['search']) ? $u->listarAdmins() : $u->pesquisarAdmin(); //Verifica se será listado todos os produtos ou somente os produtos pesquisados
 
-                                $admin_data['ADM_ATIVO'] = $admin_data['ADM_ATIVO'] == 1 ? 'Ativo' : 'Inativo'; //Trocar os valores 0 e 1 para Ativo ou Não
+                            if (isset($result)) {
+                                while ($admin_data = $result->fetch()) {
 
-                                echo '<tr>';
-                                echo '<th scope="row">' . $admin_data['ADM_ID'] . "</th>";
+                                    $admin_data['ADM_ATIVO'] = $admin_data['ADM_ATIVO'] == 1 ? 'Ativo' : 'Inativo'; //Trocar os valores 0 e 1 para Ativo ou Não
 
-                                if ($admin_data['ADM_IMAGEM']) {
-                                    echo '<td><img src="' . $admin_data['ADM_IMAGEM'] . '" alt="Imagem do Administrador" class="rounded-1 object-fit-contain" style="width: 60px; height:60px;"></td>';
-                                } else {
-                                    echo '<td><svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 16 16" style="width: 40px;">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                </svg></td>';
-                                }
-                                echo '<td>' . $admin_data['ADM_NOME'] . '</td>';
-                                echo '<td>' . $admin_data['ADM_EMAIL'] . '</td>';
-                                echo '<td>' . $admin_data['ADM_ATIVO'] . '</td>';
-                                echo '<td>' ;
+                                    echo '<tr>';
+                                    echo '<th scope="row">' . $admin_data['ADM_ID'] . "</th>";
 
-                                echo '<div class= "d-flex justify-content-center" >';
+                                    if ($admin_data['ADM_IMAGEM']) {
+                                        echo '<td><img src="' . $admin_data['ADM_IMAGEM'] . '" alt="Imagem do Administrador" class="rounded-1 object-fit-contain" style="width: 60px; height:60px;"></td>';
+                                    } else {
+                                        echo '<td><svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 16 16" style="width: 40px;">
+                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                    </svg></td>';
+                                    }
+                                    echo '<td>' . $admin_data['ADM_NOME'] . '</td>';
+                                    echo '<td>' . $admin_data['ADM_EMAIL'] . '</td>';
+                                    echo '<td>' . $admin_data['ADM_ATIVO'] . '</td>';
+                                    echo '<td>';
+
+                                    echo '<div class= "d-flex justify-content-center" >';
                                     echo '<form action="" method="POST">';
                                     echo '<input type="hidden" name="edit" value="' . $admin_data["ADM_ID"] . '">';
                                     echo '<button type="submit" class="me-2" name="atualizar_admin" style="border: none; outline: none; background: transparent;"  >
@@ -188,15 +192,13 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo '<button type="submit" class="ms-2" name="excluir_admin" style="border: none; outline: none; background: transparent;"  >
                                     <img src="../images/trashCanIcon.png" style= "width:18px;" > </button>';
                                     echo '</form>';
-                                    
+
                                     echo '</div>';
                                     echo '</td>';
                                     echo '</tr>';
-
+                                }
                             }
-                            ?>
-
-                            <?php
+                        
                             if (isset($_POST['delete'])) {
 
                                 $admId = $_POST['delete'];
@@ -207,9 +209,9 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 } else {
                                     echo 'Não foi possível excluir o administrador.';
                                 }
-                            } 
+                            }
                             ?>
-                            
+
                         </tbody>
                     </table>
                 </div>
