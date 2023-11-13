@@ -58,21 +58,22 @@ class Usuario
     }
 
 
-    public function mostrarDadosAdmin()
+    public function mostrarDadosAdmin($admId)
     {
-        if (isset($_SESSION['ADM_ID'])) { // Verifique se a sessão está ativa
-            $sessao = $_SESSION['ADM_ID'];
-            $sql = $this->pdo->prepare("SELECT ADM_NOME, ADM_EMAIL FROM ADMINISTRADOR WHERE ADM_ID = :id");
-            $sql->bindValue(":id", $sessao);
+         // Verifique se a sessão está ativa
+            $sql = $this->pdo->prepare("SELECT ADM_NOME, ADM_EMAIL, ADM_ATIVO, ADM_IMAGEM FROM ADMINISTRADOR WHERE ADM_ID = :id");
+            $sql->bindValue(":id", $admId);
             $sql->execute();
 
             if ($sql->rowCount() > 0) { // Verifique se o usuário existe no banco
                 $resultado = $sql->fetch(PDO::FETCH_ASSOC);
                 return $resultado; // Retorna um array associativo com todos os dados do usuário
             }
-        }
         return false; // Retorna falso se a sessão não estiver ativa ou o usuário não existir
     }
+
+
+    
 
 
 
@@ -124,21 +125,7 @@ class Usuario
         }
     }
 
-    public function listarAdmins() //Exibe a lista de admins cadastrados
-    {
-
-        $sql = $this->pdo->prepare("SELECT ADM_ID, ADM_IMAGEM, ADM_NOME, ADM_EMAIL, ADM_ATIVO 
-        FROM ADMINISTRADOR");
-        $sql->execute();
-
-        if ($sql->rowCount() > 0) {
-
-            return $sql;
-        } else {
-            echo "Nenhum Administrador encontrado";
-        }
-    }
-
+   
 
     public function atualizarDadosAdmin($admId, $novoNome, $novoEmail, $novaSenha)
     {
@@ -191,5 +178,45 @@ class Usuario
         }
     }
 
+    public function listarAdmins()
+{
+    if (isset($_SESSION['ADM_ID'])) {
+        $sql = $this->pdo->prepare("SELECT ADM_ID, ADM_NOME, ADM_EMAIL, ADM_IMAGEM, ADM_ATIVO FROM ADMINISTRADOR");
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            $admins = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return $admins;
+        } else {
+            return array(); // Retorna um array vazio se não houver administradores no banco
+        }
+    } else {
+        return false; // Retorna falso se o usuário não estiver logado
+    }
+}
+
+// function atualizarAdminModal($admId, $admNome, $admEmail, $admStatus){
+
+//     try {
+
+//     $sql = $this->pdo->prepare
+//     ("UPDATE ADMINISTRADOR SET ADM_NOME = :novoNome, ADM_EMAIL = :novoEmail, ADM_STATUS = :novoStatus WHERE ADM_ID = :id");
+//     $sql->bindValue(":novoNome", $admNome);
+//     $sql->bindValue(":novoEmail", $admEmail);
+//     $sql->bindValue(":novoStatus", $admStatus);
+//     $sql->bindValue(":id", $admId);
+//     $sql->execute();
+
+//     $this->pdo->commit();
+//         return true;
+//     } catch (PDOException $e) {
+//         // Se ocorrer um erro, desfaz a transação
+//         $this->pdo->rollBack();
+//         echo "Erro ao atualizar administrador: " . $e->getMessage();
+//         return false;
+//     }
+    
+//     }
 
 }
+

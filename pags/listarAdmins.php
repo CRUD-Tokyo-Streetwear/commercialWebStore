@@ -8,6 +8,9 @@ if (!isset($_SESSION['ADM_ID'])) {
 
 require_once('../sistema/usuario.php');
 require_once('../sistema/produto.php');
+require_once('fetch.php');
+
+
 $u = new Usuario("charlie", "localhost", "root", "");
 $p = new Produto("charlie", "localhost", "root", "");
 ?>
@@ -21,8 +24,14 @@ $p = new Produto("charlie", "localhost", "root", "");
     <title>Charlie StreetWear</title>
     <link rel="icon" href="images\Charlie.png">
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body class="bg-light overflow-y-hidden">
@@ -55,7 +64,8 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     <p class="m-0 pe-1">
                                         <?php
-                                        echo $u->mostrarDadosAdmin()['ADM_NOME'];
+                                        $admId = $_SESSION['ADM_ID'];
+                                        echo $u->mostrarDadosAdmin($admId)['ADM_NOME'];
                                         ?>
                                     </p>
                                 </a>
@@ -134,6 +144,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                 </div>
 
                 <!--Tela central-->
+
                 <div class="col col-11 bg-light overflow-y-scroll" style="height: 63%;">
 
                     <table class="table table-hover text-center">
@@ -150,56 +161,60 @@ $p = new Produto("charlie", "localhost", "root", "");
                         </thead>
 
                         <tbody class="align-middle">
-
                             <?php
-                            $result = $u->listarAdmins();
+                            
+                            $admins = $u->listarAdmins();
 
-                            while ($admin_data = $result->fetch()) {
-                                $admin_data['ADM_ATIVO'] = $admin_data['ADM_ATIVO'] == 1 ? 'Ativo' : 'Inativo';
-                                echo '<tr>';
-                                echo '<th scope="row">' . $admin_data['ADM_ID'] . "</th>";
+                            foreach($admins as $admin){
+                                $admin['ADM_ATIVO'] = $admin['ADM_ATIVO'] == 1 ? 'Ativo' : 'Inativo';
+                                
+                                $nome = $admin['ADM_NOME'];
+                                $email = $admin['ADM_EMAIL'];
 
-                                if ($admin_data['ADM_IMAGEM']) {
-                                    echo '<td><img src="' . $admin_data['ADM_IMAGEM'] . '" alt="Imagem do Administrador" class="rounded-1 object-fit-contain" style="width: 60px; height:60px;"></td>';
-                                } else {
-                                    echo '<td> <img src="images\homem-usuario.png" width="40px"> </td>';
-                                }
-                                echo '<td>' . $admin_data['ADM_NOME'] . '</td>';
-                                echo '<td>' . $admin_data['ADM_EMAIL'] . '</td>';
-                                echo '<td>' . $admin_data['ADM_ATIVO'] . '</td>';
-                                echo '<td>' ;
+                                echo "<tr>";
 
-
-                                    // botao atualizar 
-                                    echo '<div class= "d-flex justify-content-center" >';
-                                    echo '<form action="" method="POST">';
-                                    echo '<input type="hidden" name="edit" value="' . $admin_data["ADM_ID"] . '">';
-
-                                    echo '<button type="button" name="atualizar_admin" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  data-id="<?php echo $admin_data["ADM_ID"]; style="border: none; outline: none; background: transparent;"  >
-                                    <img src="../images\pencilIcon.png" style= "width:22px;" >
-                                    </button>';
-                                    echo '</form>';
-                                    echo '<br>';
-
-                                    // botao excluir
-                                    echo '<form action="" method="POST">';
-                                    echo '<input type="hidden" name="delete" value="' . $admin_data["ADM_ID"] . '">';
-                                    echo '<button type="submit" name="excluir_admin" style="border: none; outline: none; background: transparent;"  >
-                                    <img src="../images\trashCanIcon.png" style= "width:22px;" > </button>';
-                                    echo '</form>';
+                                    echo "<td> ".$admin['ADM_ID'] ." </td>";
                                     
-                                    echo '</div>';
-                                    echo '</td>';
-                                    echo '</tr>';
+                                    if ($admin['ADM_IMAGEM']) {
+                                        echo '<td> <img src="' . $admin['ADM_IMAGEM'] . '" alt="Imagem do Administrador" class="rounded-1 object-fit-contain" style="width: 60px; height:60px;"></td>';
+                                    } else {
+                                        echo '<td> <img src="../images\homem-usuario.png" width="40px"> </td>';
+                                    }
 
-                            };
+                                    echo "<td> ".$admin['ADM_NOME'] ." </td>";
+                                    echo "<td> ".$admin['ADM_EMAIL'] ." </td>";
+                                    echo "<td> ".$admin['ADM_ATIVO'] ." </td>";
+
+                            echo '<td>' ;
+                                echo '<div class= "d-flex justify-content-center" >';
+                                
+                                // botao atualizar 
+                                
+                                echo '<button type="button" name="edit" value="Edit" id="'.$admin['ADM_ID'].'"
+                                 class="btn btn-primary open-modal edit_data" data-bs-toggle="modal" data-bs-target="#add_data_Modal" style="border: none; outline: none; background: transparent;">';
+                                echo '<img src="../images\pencilIcon.png" style="width:22px;" >';
+                                echo '</button>';
+
+                                echo '<br>';
+
+              
+                                    // botao excluir
+                                        echo '<form action="" method="POST">';
+                                        echo '<input type="hidden" name="delete" value="'. $admin["ADM_ID"] . '">';
+                                        echo '<button type="submit" name="excluir_admin" style="border: none; outline: none; background: transparent;"  >
+                                        <img src="../images\trashCanIcon.png" style= "width:22px;" > </button>';
+                                        echo '</form>';
+                            echo '</td>';
+
+                                echo '</div>';
+                                echo '</tr>'; 
+
+                              };
                             ?>
 
-                                <!-- modal -->
 
-                                
-
-                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                              <!-- modal -->
+                            <div class="modal fade" id="add_data_Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"        aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -207,7 +222,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="" method="POST">
+                                            <form method="POST" id="insert_form">
                                                 <div class="mb-3">
                                                     <label for="nome" class="form-label">Nome:</label>
                                                     <input type="text" class="form-control" id="nome" name="nome">
@@ -218,49 +233,85 @@ $p = new Produto("charlie", "localhost", "root", "");
                                                     value="<?php  ?>" >
                                                 </div>
                                                 <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="status" name="status">
                                                     <label class="form-check-label" for="status">Status</label>
+                                                    <input type="checkbox" class="form-check-input" id="status" name="status">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ignorar</button>
+                                                    
+                                                    <input type="hidden" name="admId" id="admId">
+                                                    <button type="submit" class="btn btn-primary" id="enviar" value="enviar" name="enviar" >Salvar</button>
                                                 </div>
                                             </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ignorar</button>
-                                            <button type="button" class="btn btn-primary">Salvar</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
 
-                            
+                            <!-- AJAX -->
+                            <script>
+                                $(document).ready(function(){
+
+                                    $(document).on('click', '.edit_data', function(){ //ao clicar no botao com classe .edit_data é coletado o id
+                                        var admId = $(this).attr("id"); // id do adm guardado nessa variavel
+
+                                        console.log("Administrador ID:", admId); 
+                                        $.ajax({
+                                            url: "fetch.php", // Substitua pela URL correta do seu servidor
+                                            method: "POST",
+                                            data: { admId: admId },
+                                            dataType: "json",
+                                            success: function (data) {
+                                                console.log("Dados do administrador:", data);
+
+                                            // Preencher os campos do modal com os dados recebidos
+                                            $('#nome').val(data.ADM_NOME);
+                                            $('#email').val(data.ADM_EMAIL);
+                                            $('#status').prop('checked', data.ADM_ATIVO == 1);
+                                            $('#admId').val(data.ADM_ID);
+                                            $('#enviar').val("Update");
+
+                                            // Exibir o modal
+                                            $('#add_data_Modal').modal('show');
+                                            },
+                                            error: function (jqXHR, textStatus, errorThrown) {
+                                            console.error("Erro na solicitação Ajax:", textStatus, errorThrown);
+                                            }
+                                        })
+                                        
+                                    })
+
+                                })
+                            </script>
 
 
-                        
+
+
                             <?php   
-                            //deletar usuario                         
-                            if (isset($_POST['delete'])) {
+                                //deletar usuario                         
+                                if (isset($_POST['delete'])) {
 
-                                $admId = $_POST['delete'];
+                                    $admId = $_POST['delete'];
 
-                                if ($u->excluirAdmin($admId)) {
-                                    echo '<script>setTimeout(function(){ window.location.href = "listarAdmins.php"; }, 0010);</script>';
-                                    exit;
-                                } else {
-                                    echo 'Não foi possível excluir o administrador.';
-                                }
-                            } 
+                                    if ($u->excluirAdmin($admId)) {
+                                        echo '<script>setTimeout(function(){ window.location.href = "listarAdmins.php"; }, 0010);</script>';
+                                        exit;
+                                    } else {
+                                        echo 'Não foi possível excluir o administrador.';
+                                    }
+                                } 
                             ?>
-                            
                         </tbody>
                     </table>
                 </div>
 
             </div>
         </div> <!--Fecha a div do menu lateral-->
-
-        <script src="script.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-        <script src="script.js"></script>
+        
+        
+        <script src="script\script.js"></script>
+</script>
 </body>
 
 </html>

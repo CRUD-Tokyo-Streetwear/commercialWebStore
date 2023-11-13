@@ -78,7 +78,8 @@ require_once('../sistema/usuario.php');
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                   <p class="m-0 pe-1">
                     <?php
-                    echo $u->mostrarDadosAdmin()['ADM_NOME'];
+                    $admId = $_SESSION['ADM_ID'];
+                    echo $u->mostrarDadosAdmin($admId)['ADM_NOME'];
                     ?>
                     </p>
                 </a>
@@ -182,7 +183,10 @@ require_once('../sistema/usuario.php');
     <label for="inputPassword3" class="col-sm-2 col-form-label">Nome</label>
     <div class="col-sm-10">
     <input required type="text" name="nome" class="form-control" id="inputEmail3" style="width: 500px;" 
-    value="<?php echo $u->mostrarDadosAdmin()['ADM_NOME']?> ">
+    value="<?php 
+    $admId = $_SESSION['ADM_ID'];
+    echo $u->mostrarDadosAdmin($admId)['ADM_NOME'];
+    ?> ">
     </div>
   </div>
 
@@ -190,7 +194,10 @@ require_once('../sistema/usuario.php');
     <label for="inputPassword3" class="col-sm-2 col-form-label">Email</label>
     <div class="col-sm-10">
     <input required type="email" name="email" class="form-control" id="inputEmail3" style="width: 500px;"
-    value="<?php echo $u->mostrarDadosAdmin()['ADM_EMAIL']?>">
+    value="<?php
+     $admId = $_SESSION['ADM_ID'];
+     echo $u->mostrarDadosAdmin($admId)['ADM_EMAIL'];
+     ?>">
     </div>
   </div>
 
