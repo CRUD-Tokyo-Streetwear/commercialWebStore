@@ -120,7 +120,9 @@ $p = new Produto("charlie", "localhost", "root", "");
                 <div class="col col-11 mt-5 mb-5 d-flex justify-content-between">
 
                     <form action="" class="d-flex justify-content-between col col-md-4 py-2 px-3" style="background-color: #f0f0f0;">
-                        <input type="text" value="<?php if (isset($_GET['search'])) {echo $_GET['search'];} ?>" name="search" class="form-control border border-0 fs-5" placeholder="Pesquisar" aria-label="Pesquisar" style="background-color: #f0f0f0;">
+                        <input type="text" value="<?php if (isset($_GET['search'])) {
+                                                        echo $_GET['search'];
+                                                    } ?>" name="search" class="form-control border border-0 fs-5" placeholder="Pesquisar" aria-label="Pesquisar" style="background-color: #f0f0f0;">
                         <button type="submit" class="border border-0 ms-1"><img src="../images\loupeIcon.png" alt="Icone de lupa da barra de pesquisa" style="width:32px;"></button>
                     </form>
 
@@ -178,20 +180,35 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo '<td>' . $product_data['PRODUTO_QTD'] . '</td>';
                                     echo '<td>' . $product_data['PRODUTO_DESC'] . '</td>';
                                     echo '<td>' . $product_data['PRODUTO_ATIVO'] . '</td>';
-                                    echo '<td>' .
-                                        '<a class="text-decoration-none pe-2" href="#">' .
-                                        '<img src="../images\pencilIcon.png" alt="Icone de lápis para edição" style="width: 17px;">' .
-                                        '</a>' .
-                                        '<a class="ms-2" href="#">' .
-                                        '<img src="../images\trashCanIcon.png" alt="Icone de lixeira para exclusão" style="width: 17px;">' .
-                                        '</a>' .
-                                        '</td>';
+                                    echo '<td>';
+                                    echo '<div class= "d-flex justify-content-center" >';
+                                    echo '<form action="" method="POST">';
+                                    echo '<input type="hidden" name="edit" value="' . $product_data['PRODUTO_ID'] . '">';   //ícone de lápis para editar instâncias
+                                    echo '<button type="submit" class="me-2" name="atualizar_produto" style="border: none; outline: none; background: transparent;"  >
+                                    <img src="../images/pencilIcon.png" style= "width:18px;" > 
+                                    </button>';
+                                    
+                                    echo '<input type="hidden" name="delete" value="' . $product_data['PRODUTO_ID'] . '">'; //ícone de lixeira para deletar instâncias
+                                    echo '<button type="submit" class="ms-2" name="excluir_produto" style="border: none; outline: none; background: transparent;" >
+                                    <img src="../images/trashCanIcon.png" style= "width:18px;" > 
+                                    </button>';
+                                    echo '</form>';
+                                    echo '</div>';
+                                    echo '</td>';
                                     echo '</tr>';
                                 }
                             }
 
-                            if ($p->deletarProduto()) {
-                                header("location: listarProdutos.php");
+                            if (isset($_POST['delete'])) {  //Chama o método de excluir produto se a pessoa clicar no ícone de lixeira
+
+                                $produtoId = $_POST['delete'];
+
+                                if ($p->excluirProduto($produtoId)) {
+                                    echo '<script>setTimeout(function(){ window.location.href = "listarProdutos.php"; }, 0010);</script>';
+                                    exit;
+                                } else {
+                                    echo 'Não foi possível excluir o produto.';
+                                }
                             }
 
                             ?>

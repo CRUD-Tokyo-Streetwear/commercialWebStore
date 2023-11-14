@@ -30,12 +30,12 @@ class Produto
 
         if ($sql->rowCount() > 0) { //Verifica se está retornando alguma linha do banco
             return $sql;
-        } else {
+        } else {                    //Aviso caso nenhum produto esteja cadastrado
             echo '<div class="fs-5" style="position: absolute; top: 53%; left: 58%; transform: translate(-50%, -50%);">Nenhum produto cadastrado...</div>';
         }
     }
 
-    public function pesquisarProduto() //Pesquisa instâncias de produtos do BD
+    public function pesquisarProduto() //Pesquisa instâncias de produto do BD
     {
         $pesquisa = $_GET['search'];
 
@@ -45,7 +45,7 @@ class Produto
     INNER JOIN ESTOQUE E ON P.PRODUTO_ID = E.PRODUTO_ID
     INNER JOIN PRODUTO_IMAGEM I ON P.PRODUTO_ID = I.PRODUTO_ID
     WHERE P.PRODUTO_NOME LIKE :pesquisa OR P.PRODUTO_DESC LIKE :pesquisa
-    ORDER BY P.PRODUTO_ID ASC");
+    ORDER BY P.PRODUTO_ID ASC"); //Pesquisa baseada no nome e na descrição do produto
 
         $pesquisa = "%$pesquisa%";
         $sql->bindParam(':pesquisa', $pesquisa, PDO::PARAM_STR);
@@ -53,22 +53,19 @@ class Produto
 
         if ($sql->rowCount() > 0) {
             return $sql;
-        } else {
+        } else  //Aviso de nenhuma instância encontrada no BD 
+        {
             echo '<div class="fs-5" style="position: absolute; top: 53%; left: 58%; transform: translate(-50%, -50%);">Nenhum produto encontrado...</div>';
         }
     }
 
-    public function deletarProduto()
+    public function excluirProduto($produtoId)  //Exclui uma instância de produto do BD
     {
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
+        $sql = $this->pdo->prepare("DELETE FROM PRODUTO WHERE PRODUTO_ID = :id");
+        $sql->bindValue(":id", $produtoId);
+        $sql->execute();
 
-            if (!empty($id)) {
-                $sql = $this->pdo->prepare("DELETE FROM PRODUTO
-            WHERE PRODUTO_ID = $id");
-                $sql->execute();
-            }
-        }
+        return true;
     }
 
     public function cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo) //Cadastra o produto na tabela de produtos
@@ -132,6 +129,7 @@ class Produto
             $categoria = $_POST['categoria'];
         }
 
+        //SELECT compara a string da categoria selecionada no BD para achar o ID
         $sql = $this->pdo->prepare("SELECT CATEGORIA_ID 
         FROM CATEGORIA
         WHERE CATEGORIA_NOME = '$categoria'");
@@ -155,5 +153,4 @@ class Produto
             echo "Nenhuma categoria encontrada!";
         }
     }
-
 }

@@ -183,16 +183,12 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo '<input type="hidden" name="edit" value="' . $admin_data["ADM_ID"] . '">';
                                     echo '<button type="submit" class="me-2" name="atualizar_admin" style="border: none; outline: none; background: transparent;"  >
                                     <img src="../images/pencilIcon.png" style= "width:18px;" > </button>';
-                                    echo '</form>';
-                                    echo '<br>';
 
-
-                                    echo '<form action="" method="POST">';
                                     echo '<input type="hidden" name="delete" value="' . $admin_data["ADM_ID"] . '">';
                                     echo '<button type="submit" class="ms-2" name="excluir_admin" style="border: none; outline: none; background: transparent;"  >
-                                    <img src="../images/trashCanIcon.png" style= "width:18px;" > </button>';
+                                    <img src="../images/trashCanIcon.png" style= "width:18px;" > 
+                                    </button>';
                                     echo '</form>';
-
                                     echo '</div>';
                                     echo '</td>';
                                     echo '</tr>';

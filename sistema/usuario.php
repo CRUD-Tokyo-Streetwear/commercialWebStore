@@ -29,7 +29,7 @@ class Usuario
             values (:n, :e, :s, 1) ");
             $sql->bindValue(":n", $nome);
             $sql->bindValue(":e", $email);
-            $sql->bindValue(":s", md5($senha));
+            $sql->bindValue(":s", md5($senha)); 
             $sql->execute();
             return true; // usuario nao existia e foi cadastrado
         }
