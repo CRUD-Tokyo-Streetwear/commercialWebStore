@@ -55,7 +55,7 @@ $u = new Usuario("charlie", "localhost", "root", "");
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                   <p class="m-0 pe-1">
                     <?php
-                    echo $u->mostrarDadosAdmin()['ADM_NOME'];
+                    echo $u->mostrarDadosAdmin()['ADM_NOME']; //Mostra o nome do Admin no canto superior direito
                     ?>
                   </p>
                 </a>
