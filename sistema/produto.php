@@ -59,7 +59,6 @@ class Produto
             return $sql;
         } else {
             echo "Nenhuma categoria encontrada!";
-
         }
     }
 }
