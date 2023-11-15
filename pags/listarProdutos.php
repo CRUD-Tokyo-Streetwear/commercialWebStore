@@ -174,8 +174,8 @@ $p = new Produto("charlie", "localhost", "root", "");
                                         echo '<td><img src="../images/noProductImage.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>';
                                     }
                                     echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';
-                                    echo '<td>' . $product_data['PRODUTO_PRECO'] . '</td>';
-                                    echo '<td>' . $product_data['PRODUTO_DESCONTO'] . '</td>';
+                                    echo '<td>' . 'R$ ' . $product_data['PRODUTO_PRECO'] . '</td>';
+                                    echo '<td>' . $product_data['PRODUTO_DESCONTO'] . '%' . '</td>';
                                     echo '<td>' . $product_data['CATEGORIA_NOME'] . '</td>';
                                     echo '<td>' . $product_data['PRODUTO_QTD'] . '</td>';
                                     echo '<td>' . $product_data['PRODUTO_DESC'] . '</td>';
@@ -187,7 +187,8 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo '<button type="submit" class="me-2" name="atualizar_produto" style="border: none; outline: none; background: transparent;"  >
                                     <img src="../images/pencilIcon.png" style= "width:18px;" > 
                                     </button>';
-                                    
+                                    echo '</form>';
+                                    echo '<form action="" method="POST">';
                                     echo '<input type="hidden" name="delete" value="' . $product_data['PRODUTO_ID'] . '">'; //ícone de lixeira para deletar instâncias
                                     echo '<button type="submit" class="ms-2" name="excluir_produto" style="border: none; outline: none; background: transparent;" >
                                     <img src="../images/trashCanIcon.png" style= "width:18px;" > 

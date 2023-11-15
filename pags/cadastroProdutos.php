@@ -192,10 +192,8 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     $p->cadastrarEstoque(); //Estoque é cadastrado direto pelo método
                                     $p->cadastrarImagem();
                                     echo "Produto cadastrado com sucesso!";
-                                    print_r($produtoAtivo);
                                 } else {
-                                    echo "Falha ao cadastrar produto...Dica: Faltou selecionar uma categoria";
-                                    print_r($produtoAtivo);
+                                    echo "Falha ao cadastrar produto... Verifique se todos os campos foram preenchidos";
                                 }
                             }
                             ?>
