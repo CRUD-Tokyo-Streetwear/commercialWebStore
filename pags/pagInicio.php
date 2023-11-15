@@ -90,7 +90,7 @@ $u = new Usuario("charlie", "localhost", "root", "");
               </a>
             </li>
             <li>
-              <a href="perfil.php"  class="d-flex align-items-center nav-link px-0 text-light">
+              <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
                 <img src="../images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
               </a>
             </li>
