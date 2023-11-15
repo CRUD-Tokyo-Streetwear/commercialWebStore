@@ -29,7 +29,7 @@ class Usuario
             values (:n, :e, :s, 1) ");
             $sql->bindValue(":n", $nome);
             $sql->bindValue(":e", $email);
-            $sql->bindValue(":s", md5($senha));
+            $sql->bindValue(":s", md5($senha)); 
             $sql->execute();
             return true; // usuario nao existia e foi cadastrado
         }
@@ -78,7 +78,7 @@ class Usuario
     public function atualizarImagem($upload, $admId)
     {
         if (isset($_SESSION['ADM_ID'])) {
-            $pastaImagem = 'imagemAdm/';
+            $pastaImagem = '../imagemAdm/';
             $nomeImagem = $upload['name'];
             $novoNomeImagem = uniqid();
             $extensaoImagem = strtolower(pathinfo($nomeImagem, PATHINFO_EXTENSION));
@@ -123,7 +123,7 @@ class Usuario
         }
     }
 
-    public function listarAdmins()
+    public function listarAdmins() //Exibe a lista de admins cadastrados
     {
 
         $sql = $this->pdo->prepare("SELECT ADM_ID, ADM_IMAGEM, ADM_NOME, ADM_EMAIL, ADM_ATIVO 
@@ -167,18 +167,47 @@ class Usuario
         }
     }
 
-    public function deletarAdmin()
+    public function excluirAdmin($admId)
     {
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
+        if (isset($_SESSION["ADM_ID"])) {
 
-            if (!empty($id)) {
-                $sql = $this->pdo->prepare("DELETE FROM ADMINISTRADOR
-            WHERE ADM_ID = $id");
-                $sql->execute();
+            $sql = $this->pdo->prepare("DELETE FROM ADMINISTRADOR WHERE ADM_ID = :id");
+            $sql->bindValue(":id", $admId);
+            $sql->execute();
 
-                //header("location: listarAdmins.php"); Mudar de volta para a página para atualiza-lá
+            if ($sql->rowCount() > 0) {
+                if ($_SESSION["ADM_ID"] == $admId) {
+                    session_destroy();
+                    echo '<script>setTimeout(function(){ window.location.href = "listarAdmins.php"; }, 0010);</script>';
+                    exit;
+                }
+                return true;
+            } else {
+                return false;
             }
+        } else {
+            return false;
+        }
+    }
+
+    public function pesquisarAdmin() //Pesquisa instâncias de administradores do BD
+    {
+        $pesquisa = $_GET['search'];
+
+        $sql = $this->pdo->prepare("SELECT ADM_ID, ADM_IMAGEM, ADM_NOME, ADM_EMAIL, ADM_ATIVO   
+        FROM ADMINISTRADOR
+        WHERE ADM_NOME LIKE :pesquisa
+        ORDER BY ADM_ID ASC");
+
+
+        $pesquisa = "%$pesquisa%";
+        $sql->bindParam(':pesquisa', $pesquisa, PDO::PARAM_STR);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            return $sql;
+        } else {
+            echo '<div class="fs-5" style="position: absolute; top: 53%; left: 58%; transform: translate(-50%, -50%);">Nenhum administrador encontrado...</div>';
         }
     }
 }
