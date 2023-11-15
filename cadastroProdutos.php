@@ -114,13 +114,16 @@ $p = new Produto("charlie", "localhost", "root", "");
             </div>
 
             <!--Tela central-->
-            <div class="container justify-content-center align-items-center mt-5" style="height: 63%; max-width: 40vw;">
+
+            <div class="container justify-content-center align-items-center mt-5" style="height: 100%; max-width: 40vw;">
+                <div class="text-end mb-5" >
+                    <button type="button" class="btn" style="background-color:#88d02c">adicionar categoria</button>
+                </div>
                 <div class="container d-flex flex-column align-items-start justify-content-center border rounded-4 mt-5">
 
 
-
                     <!--Cadastro Produto-->
-                    <div class="d-flex justify-content-between ms-4 mt-3 mb-3">
+                    <div class="d-flex justify-content-between ms-2 me-2 mt-3 mb-3">
                         <form id="produtoForm" method="POST " class="row g-3">
                             <div class="col-md-6">
                                 <label for="nome" class="form-label">Nome</label>
@@ -138,7 +141,8 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 <label for="Estoque" class="form-label">Estoque</label>
                                 <input type="text" class="form-control" name="Estoque">
                             </div>
-                            <div class="col-md-6 mt-5">
+
+                            <div class="col-md-6 mt-5"> <!--Div da categoria-->
                                 <select class="form-select" aria-label="Default select example">
 
                                     <option selected>Categoria</option>
@@ -151,25 +155,27 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     ?>
 
                                 </select>
-                            </div>
+
+                            </div><!--fecha a segunda div categoria-->
                             <div class="col-md-6">
                                 <label for="precoDesconto" class="form-label">Imagem URL</label>
                                 <input type="text" class="form-control" id="imagemUrl" name="imagem_url">
-                                <button type="submit" class="btn btn-secondary" name="botaoImagem" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Custom button</button>
+                                <button type="submit" class="btn btn-secondary" name="botaoImagem" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Adicionar mais imagens</button>
                             </div>
                             <div class="col-md-6">
                                 <label for="descricao" class="form-label">Descrição</label>
                                 <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
                             </div>
-                            <div class="d-flex mb-5 mt-5 form-check">
+                            <div class="d-flex mb-5 ms-3 mt-5 form-check">
                                 <input type="checkbox" class="form-check-input" value="0" id="produtoAtivo" name="produto_ativo" checked>
                                 <label class="form-check-label ms-2" for="produtoAtivo">Produto Ativo</label>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 ms-2">
                                 <button type="submit" class="btn btn-dark" name="botao">Cadastrar</button>
                             </div>
-                            <?php
 
+
+                            <?php
 
                             if (isset($_POST['botao'])) {
 
@@ -187,22 +193,20 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 }
                             }
 
+
                             //cadastro categoria
 
 
                             if (isset($_POST['botao'])) {
                             }
                             ?>
+
                         </form>
-                    </div>
-                </div>
 
-
-
-
-            </div>
-
-        </div>
+                    </div><!--fecha a segunda div do formulario-->
+                </div><!--fecha a segunda div da tela central-->
+            </div><!--fecha a primeira div da tela central-->
+        </div><!--fecha a segunda div do menu lateral-->
     </div> <!--Fecha a div do menu lateral-->
 
 
