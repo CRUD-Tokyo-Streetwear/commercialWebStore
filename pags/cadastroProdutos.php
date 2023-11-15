@@ -115,10 +115,59 @@ $p = new Produto("charlie", "localhost", "root", "");
 
             <!--Tela central-->
             <div class="container justify-content-center align-items-center mt-5" style="height: 100%; max-width: 40vw;">
-                <div class="text-end mb-5">
-                    <button type="button" class="btn" style="background-color:#88d02c">adicionar categoria</button>
+                <div class="text-end mb-5 text-light">
+                    <button type="button" class="btn" style="background-color:#88d02c; font-weight: 600" data-bs-toggle="modal" data-bs-target="#exampleModal">adicionar categoria</button>
                 </div>
-                <div class="container d-flex flex-column align-items-start justify-content-center border rounded-4 mt-5">
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar nova categoria</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="novaCategoria" method="POST">
+                                    <div class="mb-3">
+                                        <label for="nome" class="form-label">Nome</label>
+                                        <input type="text" class="form-control" name="nome_categoria">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="descricao" class="form-label">Descrição</label>
+                                        <textarea class="form-control" id="descricao" name="descricao_categoria" rows="3" required></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="checkbox" class="form-check-input" id="produto_Ativo" name="produto_ativo_categoria" checked>
+                                        <label class="form-check-label ms-2" for="produto_Ativo">Categoria ativo</label>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-primary" name="salvar_categoria">Salvar</button>
+                            </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <?php
+
+                    if(isset($_POST['salvar_categoria'])){
+                        $nome_categoria = $_POST['nome_categoria'];
+                        $descricao_categoria = $_POST ['descricao_categoria'];
+                        $produto_ativo_categoria = $_POST ['produto_ativo_categoria'];
+
+                        if ($p-> adicionarCategoria($nome_categoria, $descricao_categoria, $produto_ativo_categoria)){
+                            echo '<script>setTimeout(function(){ window.location.href = "cadastroProdutos.php"; }, 0010);</script>';
+                        }
+                    } 
+
+
+
+                ?>
+                <div class="container d-flex flex-column align-items-start justify-content-center border rounded-4 mt-5" style="background-color:#f0f0f0">
 
                     <!--Cadastro Produto-->
                     <div class="d-flex justify-content-between ms-2 me-2 mt-3 mb-3">
@@ -199,6 +248,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 }
                             }
                             ?>
+
 
                         </form>
                     </div><!--Fecha a div do formulário-->

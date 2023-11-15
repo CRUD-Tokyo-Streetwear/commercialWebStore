@@ -153,4 +153,20 @@ class Produto
             echo "Nenhuma categoria encontrada!";
         }
     }
+    
+    public function adicionarCategoria($nome_categoria, $descricao_categoria, $produto_ativo_categoria) //Inserindo nova categoria no banco de dados
+    {
+        $sql = $this ->pdo->prepare ("INSERT INTO categoria (categoria_nome, categoria_desc, categoria_ativo)
+        VALUES (:n, :c, :a)");
+    
+        $sql-> bindValue (":n", $nome_categoria);
+        $sql-> bindValue (":c", $descricao_categoria);
+        $sql-> bindValue (":a", $produto_ativo_categoria);
+        $sql-> execute ();
+        return true; 
+            
+    }
 }
+
+
+
