@@ -55,7 +55,7 @@ $u = new Usuario("charlie", "localhost", "root", "");
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                   <p class="m-0 pe-1">
                     <?php
-                    echo $u->mostrarDadosAdmin()['ADM_NOME'];
+                    echo $u->mostrarDadosAdmin()['ADM_NOME']; //Mostra o nome do Admin no canto superior direito
                     ?>
                   </p>
                 </a>
@@ -90,7 +90,7 @@ $u = new Usuario("charlie", "localhost", "root", "");
               </a>
             </li>
             <li>
-              <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
+              <a href="perfil.php"  class="d-flex align-items-center nav-link px-0 text-light">
                 <img src="../images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
               </a>
             </li>
