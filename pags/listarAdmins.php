@@ -8,7 +8,6 @@ if (!isset($_SESSION['ADM_ID'])) {
 
 require_once('../sistema/usuario.php');
 require_once('../sistema/produto.php');
-require_once('fetch.php');
 
 
 $u = new Usuario("charlie", "localhost", "root", "");
@@ -240,7 +239,8 @@ $p = new Produto("charlie", "localhost", "root", "");
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ignorar</button>
                                                     
                                                     <input type="hidden" name="admId" id="admId">
-                                                    <button type="submit" class="btn btn-primary" id="enviar" value="enviar" name="enviar" >Salvar</button>
+                                                    <button type="submit" 
+                                                    class="btn btn-primary" id="enviar" value="enviar" name="enviar" >Salvar</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -248,45 +248,83 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 </div>
                             </div>
 
-
                             <!-- AJAX -->
+
+                            <!-- Pegar dados do ADM com AJAX -->
                             <script>
-                                $(document).ready(function(){
+                                $(document).ready(function(){ // isso diz que só sera executado o ajax apos a pagina estar totalmente carregada
+                        
+                                    var admId;
 
-                                    $(document).on('click', '.edit_data', function(){ //ao clicar no botao com classe .edit_data é coletado o id
-                                        var admId = $(this).attr("id"); // id do adm guardado nessa variavel
+                                    function carregarDadosAdm(admId) {
+                                            $.ajax({
+                                                url: "mostrarDadosModal_ajax.php", // Substitua pela URL correta do seu servidor
+                                                method: "POST",
+                                                data: { admId: admId },
+                                                dataType: "json",
+                                                success: function (data) {
+                                                    console.log("Dados do administrador:", data);
 
-                                        console.log("Administrador ID:", admId); 
-                                        $.ajax({
-                                            url: "fetch.php", // Substitua pela URL correta do seu servidor
-                                            method: "POST",
-                                            data: { admId: admId },
-                                            dataType: "json",
-                                            success: function (data) {
-                                                console.log("Dados do administrador:", data);
+                                                    // Preencher os campos do modal com os dados recebidos
+                                                    $('#nome').val(data.ADM_NOME);
+                                                    $('#email').val(data.ADM_EMAIL);
+                                                    $('#status').prop('checked', data.ADM_ATIVO == 1);
+                                                    $('#admId').val(data.ADM_ID);
+                                                    $('#enviar').val("Update");
 
-                                            // Preencher os campos do modal com os dados recebidos
-                                            $('#nome').val(data.ADM_NOME);
-                                            $('#email').val(data.ADM_EMAIL);
-                                            $('#status').prop('checked', data.ADM_ATIVO == 1);
-                                            $('#admId').val(data.ADM_ID);
-                                            $('#enviar').val("Update");
+                                                    // Exibir o modal
+                                                    $('#add_data_Modal').modal('show');
+                                                },
+                                                error: function (jqXHR, textStatus, errorThrown) {
+                                                    console.error("Erro na solicitação Ajax:", textStatus, errorThrown);
+                                                }
+                                            });
+                                        }
+                                        $(document).on('click', '.edit_data', function(){ 
+                                            // ao clicar no botao com classe .edit_data é coletado o id
+                                            admId = $(this).attr("id"); // id do adm guardado nessa variável
 
-                                            // Exibir o modal
-                                            $('#add_data_Modal').modal('show');
-                                            },
-                                            error: function (jqXHR, textStatus, errorThrown) {
-                                            console.error("Erro na solicitação Ajax:", textStatus, errorThrown);
-                                            }
-                                        })
-                                        
-                                    })
+                                            console.log("Administrador ID:", admId); 
+                                            carregarDadosAdm(admId);
+                                        });
 
-                                })
+
+                                       // ATUALIZAR DADOS COM AJAX //
+                                            $('#insert_form').submit(function(e) {
+                                                e.preventDefault(); // Evitar que o formulário seja enviado normalmente
+
+                                                // Coletar os dados do formulário
+                                                var nome = $('#nome').val();
+                                                var email = $('#email').val();
+                                                var status = $('#status').prop('checked') ? 1 : 0; // 1 se estiver marcado, 0 se não estiver
+
+                                                // Executar a solicitação AJAX para atualizar os dados
+                                                $.ajax({
+                                                    url: "atualizar_admin_ajax.php", 
+                                                    method: "POST",
+                                                    data: {
+                                                        admId: admId, // Usar o valor já coletado
+                                                        nome: nome,
+                                                        email: email,
+                                                        status: status
+                                                    },
+                                                    dataType: "json",
+                                                    success: function(data) {
+                                                        console.log("Dados atualizados com sucesso:", data);
+                                                        // Fechar o modal após a atualização
+                                                        $('#add_data_Modal').modal('hide');
+                                                        location.reload();
+                                            
+                                                    },
+                                                    error: function (jqXHR, textStatus, errorThrown) {
+                                                        
+                                                        console.error("Erro na solicitação Ajax:", textStatus, errorThrown);
+                                                        console.log("Resposta do servidor:", jqXHR.responseText);
+                                                    }
+                                                });
+                                            });
+                                        });
                             </script>
-
-
-
 
                             <?php   
                                 //deletar usuario                         

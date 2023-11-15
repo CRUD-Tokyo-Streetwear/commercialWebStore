@@ -57,26 +57,6 @@ class Usuario
         }
     }
 
-
-    public function mostrarDadosAdmin($admId)
-    {
-         // Verifique se a sessão está ativa
-            $sql = $this->pdo->prepare("SELECT ADM_NOME, ADM_EMAIL, ADM_ATIVO, ADM_IMAGEM FROM ADMINISTRADOR WHERE ADM_ID = :id");
-            $sql->bindValue(":id", $admId);
-            $sql->execute();
-
-            if ($sql->rowCount() > 0) { // Verifique se o usuário existe no banco
-                $resultado = $sql->fetch(PDO::FETCH_ASSOC);
-                return $resultado; // Retorna um array associativo com todos os dados do usuário
-            }
-        return false; // Retorna falso se a sessão não estiver ativa ou o usuário não existir
-    }
-
-
-    
-
-
-
     public function atualizarImagem($upload, $admId)
     {
         if (isset($_SESSION['ADM_ID'])) {
@@ -125,6 +105,20 @@ class Usuario
         }
     }
 
+    
+    public function mostrarDadosAdmin($admId)
+    {
+         // Verifique se a sessão está ativa
+            $sql = $this->pdo->prepare("SELECT ADM_NOME, ADM_EMAIL, ADM_ATIVO, ADM_IMAGEM FROM ADMINISTRADOR WHERE ADM_ID = :id");
+            $sql->bindValue(":id", $admId);
+            $sql->execute();
+
+            if ($sql->rowCount() > 0) { // Verifique se o usuário existe no banco
+                $resultado = $sql->fetch(PDO::FETCH_ASSOC);
+                return $resultado; // Retorna um array associativo com todos os dados do usuário
+            }
+        return false; // Retorna falso se a sessão não estiver ativa ou o usuário não existir
+    }
    
 
     public function atualizarDadosAdmin($admId, $novoNome, $novoEmail, $novaSenha)
@@ -155,6 +149,31 @@ class Usuario
         }
     }
 
+    public function atualizarDadosAdminModal($admId, $novoNome, $novoEmail, $novoStatus)
+    {
+            // Verificar se o novo email já está em uso
+            $sqlCheckEmail = $this->pdo->prepare("SELECT ADM_ID FROM ADMINISTRADOR WHERE ADM_EMAIL = :novoEmail AND ADM_ID != :id");
+            $sqlCheckEmail->bindValue(":novoEmail", $novoEmail);
+            $sqlCheckEmail->bindValue(":id", $admId);
+            $sqlCheckEmail->execute();
+    
+            if($sqlCheckEmail->rowCount() > 0) {
+                // O novo email já está em uso, exibir um erro
+                return false;
+            } else {
+                // Atualizar os dados do usuário
+                $sql = $this->pdo->prepare("UPDATE ADMINISTRADOR SET ADM_NOME = :novoNome, ADM_EMAIL = :novoEmail, ADM_ATIVO = :novoStatus WHERE ADM_ID = :id");
+                $sql->bindValue(":novoNome", $novoNome);
+                $sql->bindValue(":novoEmail", $novoEmail);
+                $sql->bindValue(":novoStatus", $novoStatus);
+                $sql->bindValue(":id", $admId);
+                $sql->execute();
+    
+                return true; // Dados atualizados com sucesso
+            }
+    }
+
+
     public function excluirAdmin($admId)
     {
         if (isset($_SESSION["ADM_ID"])) {
@@ -166,7 +185,6 @@ class Usuario
             if ($sql->rowCount() > 0) {
                 if ($_SESSION["ADM_ID"] == $admId) {
                     session_destroy();
-                    echo '<script>setTimeout(function(){ window.location.href = "listarAdmins.php"; }, 0010);</script>';
                     exit;
                 }
                 return true;
@@ -195,28 +213,6 @@ class Usuario
     }
 }
 
-// function atualizarAdminModal($admId, $admNome, $admEmail, $admStatus){
-
-//     try {
-
-//     $sql = $this->pdo->prepare
-//     ("UPDATE ADMINISTRADOR SET ADM_NOME = :novoNome, ADM_EMAIL = :novoEmail, ADM_STATUS = :novoStatus WHERE ADM_ID = :id");
-//     $sql->bindValue(":novoNome", $admNome);
-//     $sql->bindValue(":novoEmail", $admEmail);
-//     $sql->bindValue(":novoStatus", $admStatus);
-//     $sql->bindValue(":id", $admId);
-//     $sql->execute();
-
-//     $this->pdo->commit();
-//         return true;
-//     } catch (PDOException $e) {
-//         // Se ocorrer um erro, desfaz a transação
-//         $this->pdo->rollBack();
-//         echo "Erro ao atualizar administrador: " . $e->getMessage();
-//         return false;
-//     }
-    
-//     }
 
 }
 
