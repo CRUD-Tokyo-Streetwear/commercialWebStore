@@ -95,7 +95,6 @@ class Produto
         }
     }
 
-
     public function cadastrarEstoque() //Cadastra o estoque do produto na tabela de estoque
     {
         $produtoQtd = $_POST['produtoQtd'];
