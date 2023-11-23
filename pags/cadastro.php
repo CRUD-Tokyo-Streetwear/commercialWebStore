@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastrar Administrador</title>
-  <link rel="icon" href="images\Charlie.png">
+  <link rel="icon" href="../images\Charlie.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
 
   <!--Imagem da Logo Principal-->
   <div class="d-flex justify-content-center mt-5">
-    <img src="../images/logoCharlieBranco.svg" class="img-fluid object-fit-cover" alt="logo Charlie" width="210px">
+    <img src="../images\logoCharlieBranco.svg" class="img-fluid object-fit-cover" alt="logo Charlie" width="210px">
   </div>
 
   <!--Formulário Cadastro de Admin-->

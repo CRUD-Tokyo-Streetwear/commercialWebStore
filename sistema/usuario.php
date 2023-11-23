@@ -29,9 +29,8 @@ class Usuario
             values (:n, :e, :s, 1) ");
             $sql->bindValue(":n", $nome);
             $sql->bindValue(":e", $email);
-            $sql->bindValue(":s", md5($senha));
+            $sql->bindValue(":s", md5($senha)); 
             $sql->execute();
-            header("location: index.php");
             return true; // usuario nao existia e foi cadastrado
         }
     }
@@ -183,7 +182,7 @@ class Usuario
             $sql = $this->pdo->prepare("DELETE FROM ADMINISTRADOR WHERE ADM_ID = :id");
             $sql->bindValue(":id", $admId);
             $sql->execute();
-    
+
             if ($sql->rowCount() > 0) {
                 if ($_SESSION["ADM_ID"] == $admId) {
                     session_destroy();
@@ -194,7 +193,7 @@ class Usuario
                 return false;
             }
         } else {
-            return false; 
+            return false;
         }
     }
 
@@ -215,6 +214,25 @@ class Usuario
     }
 }
 
+    public function pesquisarAdmin() //Pesquisa instâncias de administradores do BD
+    {
+        $pesquisa = $_GET['search'];
 
+        $sql = $this->pdo->prepare("SELECT ADM_ID, ADM_IMAGEM, ADM_NOME, ADM_EMAIL, ADM_ATIVO   
+        FROM ADMINISTRADOR
+        WHERE ADM_NOME LIKE :pesquisa OR ADM_EMAIL LIKE :pesquisa
+        ORDER BY ADM_ID ASC");
+
+
+        $pesquisa = "%$pesquisa%";
+        $sql->bindParam(':pesquisa', $pesquisa, PDO::PARAM_STR);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            return $sql;
+        } else {
+            echo '<div class="fs-5" style="position: absolute; top: 53%; left: 58%; transform: translate(-50%, -50%);">Nenhum administrador encontrado...</div>';
+        }
+    }
 }
 
