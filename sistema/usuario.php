@@ -158,7 +158,7 @@ class Usuario
             $sqlCheckEmail->execute();
     
             if($sqlCheckEmail->rowCount() > 0) {
-                // O novo email já está em uso, exibir um erro
+                
                 return false;
             } else {
                 // Atualizar os dados do usuário
@@ -171,6 +171,8 @@ class Usuario
     
                 return true; // Dados atualizados com sucesso
             }
+
+          
     }
 
 

@@ -211,7 +211,6 @@ $p = new Produto("charlie", "localhost", "root", "");
                               };
                             ?>
 
-
                               <!-- modal -->
                             <div class="modal fade" id="add_data_Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"        aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -303,7 +302,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                                     url: "atualizar_admin_ajax.php", 
                                                     method: "POST",
                                                     data: {
-                                                        admId: admId, // Usar o valor já coletado
+                                                        admId: admId, // Usando o valor já coletado
                                                         nome: nome,
                                                         email: email,
                                                         status: status
@@ -314,10 +313,9 @@ $p = new Produto("charlie", "localhost", "root", "");
                                                         // Fechar o modal após a atualização
                                                         $('#add_data_Modal').modal('hide');
                                                         location.reload();
-                                            
                                                     },
                                                     error: function (jqXHR, textStatus, errorThrown) {
-                                                        
+                                                        $('#add_data_Modal').modal('hide');
                                                         console.error("Erro na solicitação Ajax:", textStatus, errorThrown);
                                                         console.log("Resposta do servidor:", jqXHR.responseText);
                                                     }
