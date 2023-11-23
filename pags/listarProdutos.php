@@ -170,7 +170,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo '<th scope="row">' . $product_data['PRODUTO_ID'] . "</th>";
                                     if (isset($product_data['IMAGEM_URL'])) {
                                         echo '<td><img src="' . $product_data['IMAGEM_URL'] . '" alt="Imagem do produto" class="rounded-4" style="width: 70px; height: 70px; object-fit: contain;"></td>';
-                                    } else if($product_data['IMAGEM_URL'] == NULL){
+                                    } else if($product_data['IMAGEM_URL'] == NULL || $product_data['IMAGEM_URL'] === ''){
                                         echo '<td><img src="../images/noProductImage.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>';
                                     }
                                     echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';

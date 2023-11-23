@@ -196,7 +196,7 @@ class Usuario
 
         $sql = $this->pdo->prepare("SELECT ADM_ID, ADM_IMAGEM, ADM_NOME, ADM_EMAIL, ADM_ATIVO   
         FROM ADMINISTRADOR
-        WHERE ADM_NOME LIKE :pesquisa
+        WHERE ADM_NOME LIKE :pesquisa OR ADM_EMAIL LIKE :pesquisa
         ORDER BY ADM_ID ASC");
 
 
