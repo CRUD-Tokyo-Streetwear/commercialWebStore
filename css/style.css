@@ -1,0 +1,6 @@
+/*Define o tamanho do botão de add mais inputs para URL*/
+#addInput {
+    --bs-btn-padding-y: .25rem;
+    --bs-btn-padding-x: .5rem;
+    --bs-btn-font-size: .75rem;
+} 

@@ -75,44 +75,43 @@ $p = new Produto("charlie", "localhost", "root", "");
         </div>
     </nav>
 
-    <!--Menu lateral-->
-    <div class="container-fluid">
-        <div class="row flex-nowrap">
-            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 min-vh-100 bg-dark">
-                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
-                    <span class="fs-5 pb-3 mb-md-0 d-none d-sm-inline">
-                        Menu
-                    </span>
-                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
-                        <li class="nav-item">
-                            <a href="pagInicio.php" class="d-flex align-items-center nav-link px-0 text-light">
-                                <img src="../images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
-                                <img src="../images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="listarAdmins.php" class="d-flex align-items-center nav-link px-0 text-light">
-                                <img src="../images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                                <img src="../images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="cadastroProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                                <img src="../images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
+     <!--Menu lateral-->
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 min-vh-100 bg-dark">
+        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+          <span class="fs-5 pb-3 mb-md-0 d-none d-sm-inline">
+            Menu
+          </span>
+          <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
+            <li class="nav-item">
+              <a href="pagInicio.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="../images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
+              </a>
+            </li>
+            <li>
+              <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="../images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
+              </a>
+            </li>
+            <li>
+              <a href="listarAdmins.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="../images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
+              </a>
+            </li>
+            <li>
+              <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="../images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
+              </a>
+            </li>
+            <li>
+              <a href="cadastroProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="../images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
             <!--Orienta na vertical a tela central, barra de pesquisa, add produto-->
             <div class="col flex-wrap d-flex justify-content-start align-items-center flex-column" style="background-color: #d9d9d9;">
 

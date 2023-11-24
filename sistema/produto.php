@@ -104,7 +104,7 @@ class Produto
         (PRODUTO_ID, PRODUTO_QTD)
         VALUES ('$produtoId', '$produtoQtd')");
         $sql->execute();
-    }
+    } 
 
     public function cadastrarImagem() //Cadastra a imagem do produto na tabela de imagens do produto
     {
@@ -113,7 +113,7 @@ class Produto
         $imagemOrdem = 0;
 
         $sql = $this->pdo->prepare("INSERT INTO PRODUTO_IMAGEM (IMAGEM_ORDEM, PRODUTO_ID, IMAGEM_URL)
-        VALUES ('$imagemOrdem,', '$produtoId', '$imagemUrl')");
+        VALUES ('$imagemOrdem', '$produtoId', '$imagemUrl')");
         $sql->execute();
     }
 

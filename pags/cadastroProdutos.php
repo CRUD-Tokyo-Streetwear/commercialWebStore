@@ -22,7 +22,7 @@ $p = new Produto("charlie", "localhost", "root", "");
     <link rel="icon" href="../images\Charlie.png">
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body class="bg-light">
@@ -154,15 +154,15 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                 <?php
 
-                    if(isset($_POST['salvar_categoria'])){
-                        $nome_categoria = $_POST['nome_categoria'];
-                        $descricao_categoria = $_POST ['descricao_categoria'];
-                        $produto_ativo_categoria = $_POST ['produto_ativo_categoria'];
+                if (isset($_POST['salvar_categoria'])) {
+                    $nome_categoria = $_POST['nome_categoria'];
+                    $descricao_categoria = $_POST['descricao_categoria'];
+                    $produto_ativo_categoria = $_POST['produto_ativo_categoria'];
 
-                        if ($p-> adicionarCategoria($nome_categoria, $descricao_categoria, $produto_ativo_categoria)){
-                            echo '<script>setTimeout(function(){ window.location.href = "cadastroProdutos.php"; }, 0010);</script>';
-                        }
-                    } 
+                    if ($p->adicionarCategoria($nome_categoria, $descricao_categoria, $produto_ativo_categoria)) {
+                        echo '<script>setTimeout(function(){ window.location.href = "cadastroProdutos.php"; }, 0010);</script>';
+                    }
+                }
 
 
 
@@ -207,8 +207,11 @@ $p = new Produto("charlie", "localhost", "root", "");
                             </div>
                             <div class="col-md-6">
                                 <label for="precoDesconto" class="form-label">Imagem URL</label>
+                                <!--botão para add mais campos de URL-->
+                                <div id="containerImagens">
                                 <input type="text" class="form-control" id="imagemUrl" name="imagem_url">
-                                <button type="submit" class="btn btn-secondary" name="botaoImagem" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Adicionar mais imagens</button>
+                                </div>
+                                <button type="button" class="btn btn-secondary" name="botaoImagem" id="addInput" onclick="adicionarInputUrl()">Adicionar mais imagens</button>
                             </div>
                             <div class="col-md-6">
                                 <label for="descricao" class="form-label">Descrição</label>
@@ -221,7 +224,6 @@ $p = new Produto("charlie", "localhost", "root", "");
                             <div class="col-md-6 ms-2">
                                 <button type="submit" class="btn btn-dark" name="botao">Cadastrar</button>
                             </div>
-
 
                             <?php
                             if (isset($_POST['botao'])) {
@@ -240,13 +242,13 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     $GLOBALS['produto_id'] = $p->pegaIdProduto($nome, $descricao);
                                     $p->cadastrarEstoque(); //Estoque é cadastrado direto pelo método
                                     $p->cadastrarImagem();
+
                                     echo "Produto cadastrado com sucesso!";
                                 } else {
                                     echo "Falha ao cadastrar produto... Verifique se todos os campos foram preenchidos";
                                 }
                             }
                             ?>
-
 
                         </form>
                     </div><!--Fecha a div do formulário-->
@@ -255,6 +257,7 @@ $p = new Produto("charlie", "localhost", "root", "");
         </div><!--Fecha a segunda div do menu lateral-->
     </div><!--Fecha a div do menu lateral-->
 
+    <script src="../script/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 
