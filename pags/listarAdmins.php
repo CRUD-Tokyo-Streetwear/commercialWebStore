@@ -75,44 +75,43 @@ $p = new Produto("charlie", "localhost", "root", "");
         </div>
     </nav>
 
-    <!--Menu lateral-->
-    <div class="container-fluid">
-        <div class="row flex-nowrap">
-            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 min-vh-100 bg-dark">
-                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
-                    <span class="fs-5 pb-3 mb-md-0 d-none d-sm-inline">
-                        Menu
-                    </span>
-                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
-                        <li class="nav-item">
-                            <a href="pagInicio.php" class="d-flex align-items-center nav-link px-0 text-light">
-                                <img src="../images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
-                                <img src="../images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="listarAdmins.php" class="d-flex align-items-center nav-link px-0 text-light">
-                                <img src="../images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                                <img src="../images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="cadastroProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                                <img src="../images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
+     <!--Menu lateral-->
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 min-vh-100 bg-dark">
+        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+          <span class="fs-5 pb-3 mb-md-0 d-none d-sm-inline">
+            Menu
+          </span>
+          <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
+            <li class="nav-item">
+              <a href="pagInicio.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="../images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
+              </a>
+            </li>
+            <li>
+              <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="../images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
+              </a>
+            </li>
+            <li>
+              <a href="listarAdmins.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="../images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
+              </a>
+            </li>
+            <li>
+              <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="../images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
+              </a>
+            </li>
+            <li>
+              <a href="cadastroProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="../images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
             <!--Orienta na vertical a tela central, barra de pesquisa, add produto-->
             <div class="col flex-wrap d-flex justify-content-start align-items-center flex-column" style="background-color: #d9d9d9;">
 
@@ -126,7 +125,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                     </form>
 
                     <div class="col col-xl-3 d-flex justify-content-around align-items-center">
-                        <div class="d-flex align-items-center fs-5 p-2 text-light" style="background-color: #88d02c; font-weight: 600; white-space: nowrap;">
+                        <div class="d-flex align-items-center fs-5 p-2 text-light rounded-1" style="background-color: #88d02c; font-weight: 600; white-space: nowrap;">
                             Adicionar Administrador
                         </div>
                         <div>
@@ -183,7 +182,9 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo '<input type="hidden" name="edit" value="' . $admin_data["ADM_ID"] . '">';
                                     echo '<button type="submit" class="me-2" name="atualizar_admin" style="border: none; outline: none; background: transparent;"  >
                                     <img src="../images/pencilIcon.png" style= "width:18px;" > </button>';
-
+                                    echo '</form>';
+                                    
+                                    echo '<form>';
                                     echo '<input type="hidden" name="delete" value="' . $admin_data["ADM_ID"] . '">';
                                     echo '<button type="submit" class="ms-2" name="excluir_admin" style="border: none; outline: none; background: transparent;"  >
                                     <img src="../images/trashCanIcon.png" style= "width:18px;" > 

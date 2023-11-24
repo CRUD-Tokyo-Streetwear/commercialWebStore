@@ -61,14 +61,22 @@ class Produto
 
     public function excluirProduto($produtoId)  //Exclui uma instância de produto do BD
     {
-        $sql = $this->pdo->prepare("DELETE FROM PRODUTO WHERE PRODUTO_ID = :id");
-        $sql->bindValue(":id", $produtoId);
-        $sql->execute();
+        $sqlProduto = $this->pdo->prepare("DELETE FROM PRODUTO WHERE PRODUTO_ID = :id");
+        $sqlProduto->bindValue(":id", $produtoId);
+        $sqlProduto->execute();
+
+        $sqlProdutoImagem = $this->pdo->prepare("DELETE FROM PRODUTO_IMAGEM WHERE PRODUTO_ID = :id");
+        $sqlProdutoImagem->bindValue(":id", $produtoId);
+        $sqlProdutoImagem->execute();
+
+        $sqlEstoque = $this->pdo->prepare("DELETE FROM ESTOQUE WHERE PRODUTO_ID = :id");
+        $sqlEstoque->bindValue(":id", $produtoId);
+        $sqlEstoque->execute();
 
         return true;
     }
 
-    public function cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo) //Cadastra o produto na tabela de produtos
+    public function cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo) //Cadastra o produto na tabela de produto
     {
         $sqlSelect = $this->pdo->prepare("SELECT PRODUTO_NOME, PRODUTO_DESC
         FROM PRODUTO
@@ -87,7 +95,6 @@ class Produto
         }
     }
 
-
     public function cadastrarEstoque() //Cadastra o estoque do produto na tabela de estoque
     {
         $produtoQtd = $_POST['produtoQtd'];
@@ -95,9 +102,9 @@ class Produto
 
         $sql = $this->pdo->prepare("INSERT INTO ESTOQUE
         (PRODUTO_ID, PRODUTO_QTD)
-        VALUES ('$produtoId', ' $produtoQtd')");
+        VALUES ('$produtoId', '$produtoQtd')");
         $sql->execute();
-    }
+    } 
 
     public function cadastrarImagem() //Cadastra a imagem do produto na tabela de imagens do produto
     {
@@ -106,7 +113,7 @@ class Produto
         $imagemOrdem = 0;
 
         $sql = $this->pdo->prepare("INSERT INTO PRODUTO_IMAGEM (IMAGEM_ORDEM, PRODUTO_ID, IMAGEM_URL)
-        VALUES ('$imagemOrdem,', '$produtoId', '$imagemUrl')");
+        VALUES ('$imagemOrdem', '$produtoId', '$imagemUrl')");
         $sql->execute();
     }
 

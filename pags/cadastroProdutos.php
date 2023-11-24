@@ -22,7 +22,7 @@ $p = new Produto("charlie", "localhost", "root", "");
     <link rel="icon" href="../images\Charlie.png">
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body class="bg-light">
@@ -115,8 +115,8 @@ $p = new Produto("charlie", "localhost", "root", "");
 
             <!--Tela central-->
             <div class="container justify-content-center align-items-center mt-5" style="height: 100%; max-width: 40vw;">
-                <div class="text-end mb-5 text-light">
-                    <button type="button" class="btn" style="background-color:#88d02c; font-weight: 600" data-bs-toggle="modal" data-bs-target="#exampleModal">adicionar nova categoria</button>
+                <div class="text-end mb-5">
+                    <button type="button" class="text-light btn rounded-1" style="background-color:#202020; font-weight: 500" data-bs-toggle="modal" data-bs-target="#exampleModal">Adicionar nova categoria</button>
                 </div>
 
                 <!-- Modal -->
@@ -132,7 +132,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                         <label for="nome" class="form-label">Nome</label>
                                         <input type="text" class="form-control" name="nome_categoria">
                                     </div>
-                                    <div class="mt-4" style="position: fixed; top: 0; left: 0;">
+                                    <div class="mt-2" >
                                         <label for="descricao" class="form-label">Descrição</label>
                                         <textarea class="form-control" id="descricao" name="descricao_categoria" rows="3" required></textarea>
                                     </div>
@@ -207,9 +207,9 @@ $p = new Produto("charlie", "localhost", "root", "");
                             <div class="col-md-6">
                                 <label for="precoDesconto" class="form-label">Imagem URL</label>
                                 <input type="text" class="form-control" id="imagemUrl" name="imagem_url">
-                                <button type="submit" class="btn btn-secondary" name="botaoImagem" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Adicionar mais imagens</button>
+                                <button type="submit" class="text-light btn btn-sm rounded-1" style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .4rem;  --bs-btn-font-size: .70rem; background-color:#202020;" name="botaoImagem">Adicionar mais imagens</button>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 ">
                                 <label for="descricao" class="form-label">Descrição</label>
                                 <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
                             </div>
@@ -218,8 +218,9 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 <label class="form-check-label ms-2" for="produto_Ativo">Produto Ativo</label>
                             </div>
                             <div class="col-md-6 ms-1">
-                                <button type="submit" class="btn btn-dark" name="botao">Cadastrar</button>
+                                <button type="submit" class="text-light btn" style="background-color:#000000;"botao>Cadastrar</button>
                             </div>
+
 
                                 <?php
                                 if (isset($_POST['botao'])) {
@@ -239,6 +240,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                         $GLOBALS['produto_id'] = $p->pegaIdProduto($nome, $descricao);
                                         $p->cadastrarEstoque(); //Estoque é cadastrado direto pelo método
                                         $p->cadastrarImagem();
+
                                         echo '<p style="color: green;">Produto cadastrado com sucesso!</p>';
                                     } else {
                                         echo '<p style= "color: red;"Falha ao cadastrar produto...Dica: Faltou selecionar uma categoria</p>';
@@ -247,6 +249,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 ?>
 
                         </form>
+
                     </div><!--Fecha a div do formulário-->
                 </div><!--Fecha a segunda div da tela central-->
             </div><!--Fecha tela central-->
