@@ -141,7 +141,7 @@ require_once('../sistema/usuario.php');
     <!--Tela central-->
     <div class=" d-flex align-items-center col col-11 mt-4" style="height: 100%;">
       <div class="container col-2"></div> <!--Coluna que empurra o retângulo principal pro centro-->
-      <div class="container d-flex flex-column align-items-center justify-content-center border rounded-4 mb-5" style="height: 80%;">
+      <div class="container d-flex flex-column align-items-center justify-content-center border rounded-4 mb-5" style="background-color:#F0F0F0; height: 80%;">
 
       <?php
     $admId = $_SESSION["ADM_ID"];

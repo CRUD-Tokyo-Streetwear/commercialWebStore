@@ -116,7 +116,7 @@ $p = new Produto("charlie", "localhost", "root", "");
             <!--Tela central-->
             <div class="container justify-content-center align-items-center mt-5" style="height: 100%; max-width: 40vw;">
                 <div class="text-end mb-5 text-light">
-                    <button type="button" class="btn" style="background-color:#88d02c; font-weight: 600" data-bs-toggle="modal" data-bs-target="#exampleModal">adicionar categoria</button>
+                    <button type="button" class="btn" style="background-color:#88d02c; font-weight: 600" data-bs-toggle="modal" data-bs-target="#exampleModal">adicionar nova categoria</button>
                 </div>
 
                 <!-- Modal -->
@@ -125,7 +125,6 @@ $p = new Produto("charlie", "localhost", "root", "");
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar nova categoria</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <form id="novaCategoria" method="POST">
@@ -133,7 +132,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                         <label for="nome" class="form-label">Nome</label>
                                         <input type="text" class="form-control" name="nome_categoria">
                                     </div>
-                                    <div class="mb-3">
+                                    <div class="mt-4" style="position: fixed; top: 0; left: 0;">
                                         <label for="descricao" class="form-label">Descrição</label>
                                         <textarea class="form-control" id="descricao" name="descricao_categoria" rows="3" required></textarea>
                                     </div>
@@ -154,15 +153,15 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                 <?php
 
-                    if(isset($_POST['salvar_categoria'])){
-                        $nome_categoria = $_POST['nome_categoria'];
-                        $descricao_categoria = $_POST ['descricao_categoria'];
-                        $produto_ativo_categoria = $_POST ['produto_ativo_categoria'];
+                if (isset($_POST['salvar_categoria'])) {
+                    $nome_categoria = $_POST['nome_categoria'];
+                    $descricao_categoria = $_POST['descricao_categoria'];
+                    $produto_ativo_categoria = $_POST['produto_ativo_categoria'];
 
-                        if ($p-> adicionarCategoria($nome_categoria, $descricao_categoria, $produto_ativo_categoria)){
-                            echo '<script>setTimeout(function(){ window.location.href = "cadastroProdutos.php"; }, 0010);</script>';
-                        }
-                    } 
+                    if ($p->adicionarCategoria($nome_categoria, $descricao_categoria, $produto_ativo_categoria)) {
+                        echo '<script>setTimeout(function(){ window.location.href = "cadastroProdutos.php"; }, 0010);</script>';
+                    }
+                }
 
 
 
@@ -218,37 +217,34 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 <input type="checkbox" class="form-check-input" id="produto_Ativo" name="produto_ativo" checked>
                                 <label class="form-check-label ms-2" for="produto_Ativo">Produto Ativo</label>
                             </div>
-                            <div class="col-md-6 ms-2">
+                            <div class="col-md-6 ms-1">
                                 <button type="submit" class="btn btn-dark" name="botao">Cadastrar</button>
                             </div>
 
+                                <?php
+                                if (isset($_POST['botao'])) {
 
-                            <?php
-                            if (isset($_POST['botao'])) {
+                                    //Cadastra na tabela de produto
+                                    $nome = $_POST['nome'];
+                                    $preco = floatval($_POST['preco']);
+                                    $precoDesconto = floatval($_POST['preco_desconto']);
+                                    $descricao = $_POST['descricao'];
+                                    $categoria = $p->pegaIdCategoria();
+                                    $produtoAtivo = $_POST['produto_ativo'];
+                                    //Cadastra na tabela de imagem_produto
+                                    $urlImagem = $_POST['imagem_url'];
 
-                                //Cadastra na tabela de produto
-                                $nome = $_POST['nome'];
-                                $preco = floatval($_POST['preco']);
-                                $precoDesconto = floatval($_POST['preco_desconto']);
-                                $descricao = $_POST['descricao'];
-                                $categoria = $p->pegaIdCategoria();
-                                $produtoAtivo = $_POST['produto_ativo'];
-                                //Cadastra na tabela de imagem_produto
-                                $urlImagem = $_POST['imagem_url'];
 
-                                if ($p->cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo) && isset($categoria)) {
-                                    $GLOBALS['produto_id'] = $p->pegaIdProduto($nome, $descricao);
-                                    $p->cadastrarEstoque(); //Estoque é cadastrado direto pelo método
-                                    $p->cadastrarImagem();
-                                    echo "Produto cadastrado com sucesso!";
-                                    print_r($produtoAtivo);
-                                } else {
-                                    echo "Falha ao cadastrar produto...Dica: Faltou selecionar uma categoria";
-                                    print_r($produtoAtivo);
+                                    if ($p->cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo) && isset($categoria)) {
+                                        $GLOBALS['produto_id'] = $p->pegaIdProduto($nome, $descricao);
+                                        $p->cadastrarEstoque(); //Estoque é cadastrado direto pelo método
+                                        $p->cadastrarImagem();
+                                        echo '<p style="color: green;">Produto cadastrado com sucesso!</p>';
+                                    } else {
+                                        echo '<p style= "color: red;"Falha ao cadastrar produto...Dica: Faltou selecionar uma categoria</p>';
+                                    }
                                 }
-                            }
-                            ?>
-
+                                ?>
 
                         </form>
                     </div><!--Fecha a div do formulário-->
