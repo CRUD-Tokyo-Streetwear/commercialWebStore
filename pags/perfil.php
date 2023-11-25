@@ -146,7 +146,7 @@ if (!isset($_SESSION['ADM_ID'])) {
 
           echo '<div class="imagemP">';
           if ($imagem) {
-            echo '<img class="imgPerfil rounded-circle object-fit-cover  " src="' . $imagem . '" width="250px" height="250px">';
+            echo '<img class="imgPerfil rounded-circle object-fit-cover  " src="' . $imagem . '" width="230px" height="230px">';
           } else {
             echo '<svg xmlns="http://www.w3.org/2000/svg" fill="dark" viewBox="0 0 16 16" style="cursor: pointer;" width="200px">
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -193,7 +193,7 @@ if (!isset($_SESSION['ADM_ID'])) {
               </div>
             </div>
 
-            <input type="submit" name="enviarDados" class="btn btn-dark" style="width: 100px;">
+            <input type="submit" name="enviarDados" class="btn btn-dark" style="width: 75px;">
 
           </form>
 

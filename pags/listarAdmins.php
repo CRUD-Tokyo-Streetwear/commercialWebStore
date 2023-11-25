@@ -125,7 +125,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                     </form>
 
                     <div class="col col-xl-3 d-flex justify-content-around align-items-center">
-                        <div class="d-flex align-items-center fs-5 p-2 text-light rounded-1" style="background-color: #88d02c; font-weight: 600; white-space: nowrap;">
+                        <div class="d-flex align-items-center fs-5 p-2 text-light rounded-1" style="background-color: #202020; font-weight: 600; white-space: nowrap;">
                             Adicionar Administrador
                         </div>
                         <div>

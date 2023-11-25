@@ -136,14 +136,14 @@ $p = new Produto("charlie", "localhost", "root", "");
                                         <label for="descricao" class="form-label">Descrição</label>
                                         <textarea class="form-control" id="descricao" name="descricao_categoria" rows="3" required></textarea>
                                     </div>
-                                    <div class="mb-3">
+                                    <div class="mt-3">
                                         <input type="checkbox" class="form-check-input" id="produto_Ativo" name="produto_ativo_categoria" checked>
                                         <label class="form-check-label ms-2" for="produto_Ativo">Categoria ativo</label>
                                     </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btn-primary" name="salvar_categoria">Salvar</button>
+                                <button type="submit" class="btn btn-dark" name="salvar_categoria">Salvar</button>
                             </div>
                             </form>
 
@@ -159,7 +159,8 @@ $p = new Produto("charlie", "localhost", "root", "");
                     $produto_ativo_categoria = $_POST['produto_ativo_categoria'];
 
                     if ($p->adicionarCategoria($nome_categoria, $descricao_categoria, $produto_ativo_categoria)) {
-                        echo '<script>setTimeout(function(){ window.location.href = "cadastroProdutos.php"; }, 0010);</script>';
+                        echo '<script>setTimeout(function(){ window.location.href = "cadastroProdutos.php"; }, 1500);</script>';
+                        echo '<div class="alert alert-success" role="alert">Categoria cadastrada com sucesso!</div>'; 
                     }
                 }
 
