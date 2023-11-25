@@ -164,9 +164,6 @@ $p = new Produto("charlie", "localhost", "root", "");
                             echo '<script>setTimeout(function(){ window.location.href = "cadastroProdutos.php"; }, 0010);</script>';
                         }
                     } 
-
-
-
                 ?>
                 <div class="container d-flex flex-column align-items-start justify-content-center border rounded-4 mt-5" style="background-color:#f0f0f0">
 
@@ -206,11 +203,24 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                                 </select>
                             </div>
+
+
+
                             <div class="col-md-6">
-                                <label for="precoDesconto" class="form-label">Imagem URL</label>
-                                <input type="text" class="form-control" id="imagemUrl" name="imagem_url">
-                                <button type="submit" class="btn btn-secondary" name="botaoImagem" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Adicionar mais imagens</button>
+                                
+                                <!-- Campo de url -->
+                                <div id="containerImagens" class="col-md-6">
+                                <label for="botaoAdicionarImagem" class="form-label">Imagem URL</label>
+                                <input type="text" class="form-control imagem-url"  name="imagem_url[]">
+                                </div>
+
+                                <br>
+                                    
+                                <!-- Botao de adicionar mais campos -->
+                                <button type="button" class="btn btn-secondary" id="botaoAdicionarImagem" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Adicionar mais imagens</button>
+
                             </div>
+
                             <div class="col-md-6">
                                 <label for="descricao" class="form-label">Descrição</label>
                                 <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
@@ -219,6 +229,8 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 <input type="checkbox" class="form-check-input" id="produto_Ativo" name="produto_ativo" checked>
                                 <label class="form-check-label ms-2" for="produto_Ativo">Produto Ativo</label>
                             </div>
+
+                            <!-- salvar alterações -->
                             <div class="col-md-6 ms-2">
                                 <button type="submit" class="btn btn-dark" name="botao">Cadastrar</button>
                             </div>
@@ -226,7 +238,6 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                             <?php
                             if (isset($_POST['botao'])) {
-
                                 //Cadastra na tabela de produto
                                 $nome = $_POST['nome'];
                                 $preco = floatval($_POST['preco']);
@@ -234,20 +245,18 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 $descricao = $_POST['descricao'];
                                 $categoria = $p->pegaIdCategoria();
                                 $produtoAtivo = $_POST['produto_ativo'];
-                                //Cadastra na tabela de imagem_produto
-                                $urlImagem = $_POST['imagem_url'];
 
+                                //Cadastra na tabela de imagem_produto
                                 if ($p->cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo) && isset($categoria)) {
-                                    $GLOBALS['produto_id'] = $p->pegaIdProduto($nome, $descricao);
-                                    $p->cadastrarEstoque(); //Estoque é cadastrado direto pelo método
-                                    $p->cadastrarImagem();
+                                    $produtoId = $p->pegaIdProduto($nome, $descricao);
+                                    $p->cadastrarEstoque($produtoId);
+                                    $p->cadastrarImagens($produtoId);
                                     echo "Produto cadastrado com sucesso!";
                                 } else {
                                     echo "Falha ao cadastrar produto... Verifique se todos os campos foram preenchidos";
                                 }
                             }
                             ?>
-
 
                         </form>
                     </div><!--Fecha a div do formulário-->
@@ -257,6 +266,7 @@ $p = new Produto("charlie", "localhost", "root", "");
     </div><!--Fecha a div do menu lateral-->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="../script/adicionarImagens.js"></script>
 </body>
 
 </html>
