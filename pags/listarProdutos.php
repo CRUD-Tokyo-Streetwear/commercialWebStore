@@ -20,6 +20,9 @@ $p = new Produto("charlie", "localhost", "root", "");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charlie StreetWear</title>
     <link rel="icon" href="../images\Charlie.png">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
@@ -160,18 +163,37 @@ $p = new Produto("charlie", "localhost", "root", "");
                         <tbody class="align-middle">
                             <?php
 
-                            $result = !isset($_GET['search']) ? $p->listarProdutos() : $p->pesquisarProduto(); //Verifica se será listado todos os produtos ou somente os produtos pesquisados
+                            $result = !isset($_GET['search']) ? $p->listarProdutos() : $p->pesquisarProduto();
+                            //Verifica se será listado todos os produtos ou somente os produtos pesquisados
 
                             if (isset($result)) {
-                                while ($product_data = $result->fetch()) {
+                                $produtos = []; // Array para armazenar os produtos
 
-                                    $product_data['PRODUTO_ATIVO'] = $product_data['PRODUTO_ATIVO'] == 1 ? 'Ativo' : 'Inativo'; //Trocar os valores 0 e 1 para Ativo ou Não
+                                while ($product_data = $result->fetch()) {
+                                    // Verifica se o produto já foi adicionado ao array de produtos
+                                    if (!isset($produtos[$product_data['PRODUTO_ID']])) {
+                                        // Se não, adiciona o produto ao array
+                                        $produtos[$product_data['PRODUTO_ID']] = $product_data;
+                                    }
+                                }
+
+                                // Agora, itera sobre os produtos únicos e exibe na tabela
+                                foreach ($produtos as $product_data) {
+                                    $product_data['PRODUTO_ATIVO'] = $product_data['PRODUTO_ATIVO'] == 1 ? 'Ativo' : 'Inativo'; // Trocar os valores 0 e 1 para Ativo ou Não
 
                                     echo '<tr>';
                                     echo '<th scope="row">' . $product_data['PRODUTO_ID'] . "</th>";
+
                                     if (isset($product_data['IMAGEM_URL']) && $product_data['IMAGEM_URL'] !== "") {
-                                        echo '<td><img src="' . $product_data['IMAGEM_URL'] . '" alt="Imagem do produto" class="rounded-4" style="width: 70px; height: 70px; object-fit: contain;"></td>';
-                                    } else{
+
+                                        // botao para aparecer carrossel de imagem
+                                        echo '<td>';
+                                        echo '<button type="button" class="btn btn-link" data-toggle="modal" data-target="#carouselModal' . $product_data['PRODUTO_ID'] . '">
+                                                  <img src="' . $product_data['IMAGEM_URL'] . '" alt="Imagem do produto" class="rounded-4" style="width: 70px; height: 70px; object-fit: contain;">
+                                               </button>';
+                                        echo '</td>';
+
+                                    } else {
                                         echo '<td><img src="../images/noProductImage.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>';
                                     }
                                     echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';
@@ -184,22 +206,21 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo '<td>';
                                     echo '<div class= "d-flex justify-content-center" >';
                                     echo '<form action="" method="POST">';
-                                    echo '<input type="hidden" name="edit" value="' . $product_data['PRODUTO_ID'] . '">';   //ícone de lápis para editar instâncias
+                                    echo '<input type="hidden" name="edit" value="' . $product_data['PRODUTO_ID'] . '">'; // ícone de lápis para editar instâncias
                                     echo '<button type="submit" class="me-2" name="atualizar_produto" style="border: none; outline: none; background: transparent;"  >
-                                    <img src="../images/pencilIcon.png" style= "width:18px;" > 
-
-                                    </button>';
+                                                <img src="../images/pencilIcon.png" style= "width:18px;" > 
+                                            </button>';
                                     echo '</form>';
                                     echo '<form action="" method="POST">';
-                                    echo '<input type="hidden" name="delete" value="' . $product_data['PRODUTO_ID'] . '">'; //ícone de lixeira para deletar instâncias
+                                    echo '<input type="hidden" name="delete" value="' . $product_data['PRODUTO_ID'] . '">'; // ícone de lixeira para deletar instâncias
                                     echo '<button type="submit" class="ms-2" name="excluir_produto" style="border: none; outline: none; background: transparent;" >
-                                    <img src="../images/trashCanIcon.png" style= "width:18px;" > 
-                                    </button>';
+                                                <img src="../images/trashCanIcon.png" style= "width:18px;" > 
+                                            </button>';
                                     echo '</form>';
-
                                     echo '</div>';
                                     echo '</td>';
                                     echo '</tr>';
+                                    
                                 }
                             }
 
@@ -222,6 +243,13 @@ $p = new Produto("charlie", "localhost", "root", "");
 
             </div>
         </div> <!--Fecha a div do menu lateral-->
+
+        <script>
+            $(document).ready(function () {
+                // Inicializa o carrossel quando a página é carregada
+                $('.carousel').carousel();
+            });
+        </script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
