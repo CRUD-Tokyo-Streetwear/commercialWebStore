@@ -54,8 +54,9 @@ $p = new Produto("charlie", "localhost", "root", "");
                             <div class="dropdown">
                                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     <p class="m-0 pe-1">
-                                        <?php
-                                        echo $u->mostrarDadosAdmin()['ADM_NOME'];
+                                    <?php
+                                        $admId = $_SESSION['ADM_ID'];
+                                        echo $u->mostrarDadosAdmin($admId)['ADM_NOME'];
                                         ?>
                                     </p>
                                 </a>
@@ -168,9 +169,9 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                                     echo '<tr>';
                                     echo '<th scope="row">' . $product_data['PRODUTO_ID'] . "</th>";
-                                    if (isset($product_data['IMAGEM_URL'])) {
+                                    if (isset($product_data['IMAGEM_URL']) && $product_data['IMAGEM_URL'] !== "") {
                                         echo '<td><img src="' . $product_data['IMAGEM_URL'] . '" alt="Imagem do produto" class="rounded-4" style="width: 70px; height: 70px; object-fit: contain;"></td>';
-                                    } else if($product_data['IMAGEM_URL'] == NULL || $product_data['IMAGEM_URL'] === ''){
+                                    } else{
                                         echo '<td><img src="../images/noProductImage.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>';
                                     }
                                     echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';
@@ -186,6 +187,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo '<input type="hidden" name="edit" value="' . $product_data['PRODUTO_ID'] . '">';   //ícone de lápis para editar instâncias
                                     echo '<button type="submit" class="me-2" name="atualizar_produto" style="border: none; outline: none; background: transparent;"  >
                                     <img src="../images/pencilIcon.png" style= "width:18px;" > 
+
                                     </button>';
                                     echo '</form>';
                                     echo '<form action="" method="POST">';
@@ -194,6 +196,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     <img src="../images/trashCanIcon.png" style= "width:18px;" > 
                                     </button>';
                                     echo '</form>';
+
                                     echo '</div>';
                                     echo '</td>';
                                     echo '</tr>';

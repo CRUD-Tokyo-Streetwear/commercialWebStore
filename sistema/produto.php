@@ -95,27 +95,15 @@ class Produto
         }
     }
 
-    public function cadastrarEstoque() //Cadastra o estoque do produto na tabela de estoque
+    public function cadastrarEstoque($produtoId) //Cadastra o estoque do produto na tabela de estoque
     {
         $produtoQtd = $_POST['produtoQtd'];
-        $produtoId = $GLOBALS['produto_id'];
 
         $sql = $this->pdo->prepare("INSERT INTO ESTOQUE
         (PRODUTO_ID, PRODUTO_QTD)
         VALUES ('$produtoId', '$produtoQtd')");
         $sql->execute();
     } 
-
-    public function cadastrarImagem() //Cadastra a imagem do produto na tabela de imagens do produto
-    {
-        $imagemUrl = $_POST['imagem_url'];
-        $produtoId = $GLOBALS['produto_id'];
-        $imagemOrdem = 0;
-
-        $sql = $this->pdo->prepare("INSERT INTO PRODUTO_IMAGEM (IMAGEM_ORDEM, PRODUTO_ID, IMAGEM_URL)
-        VALUES ('$imagemOrdem', '$produtoId', '$imagemUrl')");
-        $sql->execute();
-    }
 
     public function pegaIdProduto($nome, $descricao)   //Pega o ID do produto de acordo com o nome e descrição dele
     {
@@ -182,6 +170,20 @@ class Produto
 
         return true;
     }
+    public function cadastrarImagens($produtoId){
+    $imagemUrls = $_POST['imagem_url']; //imagens do formulario foram colocadas em um array
+
+    $sql = $this->pdo->prepare("INSERT INTO PRODUTO_IMAGEM (IMAGEM_ORDEM, PRODUTO_ID, IMAGEM_URL) VALUES (:imagemOrdem, :produtoId, :imagemUrl)");
+
+    foreach ($imagemUrls as $ordem => $imagemUrl) { //$imagemUrls é o array completo, $ordem é o indice do array, $imagemUrl é o conteudo da url
+        $sql->bindValue(':imagemOrdem', $ordem, PDO::PARAM_INT);
+        $sql->bindValue(':produtoId', $produtoId, PDO::PARAM_INT);
+        $sql->bindValue(':imagemUrl', $imagemUrl, PDO::PARAM_STR);
+        $sql->execute();
+    }
+}
+    
+
 
 
 }
