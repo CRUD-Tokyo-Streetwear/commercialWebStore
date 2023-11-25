@@ -154,8 +154,6 @@ if (!isset($_SESSION['ADM_ID'])) {
             </svg>';
           }
           echo '</div><br>';
-
-
           ?>
 
 

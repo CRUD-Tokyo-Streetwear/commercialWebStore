@@ -212,7 +212,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                         </tbody>
                     </table>
                 </div>
-
+                
             </div>
         </div> <!--Fecha a div do menu lateral-->
 

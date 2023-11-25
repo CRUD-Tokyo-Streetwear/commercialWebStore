@@ -150,7 +150,7 @@ class Produto
 
     public function listarCategorias() //Lista as categorias dos produtos
     {
-        $sql = $this->pdo->prepare("SELECT CATEGORIA_NOME 
+        $sql = $this->pdo->prepare("SELECT CATEGORIA_ID, CATEGORIA_NOME, CATEGORIA_DESC, CATEGORIA_ATIVO 
         FROM CATEGORIA");
         $sql->execute();
 
@@ -171,8 +171,19 @@ class Produto
         $sql-> bindValue (":a", $produto_ativo_categoria);
         $sql-> execute ();
         return true; 
-            
     }
+
+
+    public function excluirCategoria($categoriaId)  //Exclui uma instância de produto do BD
+    {
+        $sqlProduto = $this->pdo->prepare("DELETE FROM CATEGORIA WHERE CATEGORIA_ID = :id");
+        $sqlProduto->bindValue(":id", $categoriaId);
+        $sqlProduto->execute();
+
+        return true;
+    }
+
+
 }
 
 
