@@ -234,5 +234,20 @@ class Usuario
             echo '<div class="fs-5" style="position: absolute; top: 53%; left: 58%; transform: translate(-50%, -50%);">Nenhum administrador encontrado...</div>';
         }
     }
+
+    public function removerImagemPerfil(){
+        if (isset($_SESSION["ADM_ID"])) {
+
+            $admId = $_SESSION["ADM_ID"];
+            $sql = $this->pdo->prepare("UPDATE ADMINISTRADOR SET ADM_IMAGEM = '' WHERE ADM_ID = :id");
+            $sql->bindValue(":id", $admId);
+            $sql->execute();
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
 }
 

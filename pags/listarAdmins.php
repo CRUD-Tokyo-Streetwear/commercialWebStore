@@ -134,15 +134,74 @@ $p = new Produto("charlie", "localhost", "root", "");
                         <button type="submit" class="border border-0 ms-1"><img src="../images\loupeIcon.png" alt="Icone de lupa da barra de pesquisa" style="width:32px;"></button>
                     </form>
 
+
                     <div class="col col-xl-3 d-flex justify-content-around align-items-center">
-                        <div class="d-flex align-items-center fs-5 p-2 text-light" style="background-color: #88d02c; font-weight: 600; white-space: nowrap;">
-                            Adicionar Administrador
-                        </div>
+
+                        <button type="button" class="btn" style="background-color:#88d02c; font-weight: 600" data-bs-toggle="modal" data-bs-target="#modalAdicionarAdm">
+                            <div class="d-flex align-items-center fs-6 p-2" style="background-color: #88d02c; font-weight: 600; color:#ffffff">
+                                Adicionar Administrador
+                            </div>
+                        </button>
                         <div>
-                            <img src="../images\addIcon.png" alt="Janela de quadrados para expandir os produtos" style="width:40px;">
+                            <img src="../images\squaresWindowIcon.png" alt="Janela de quadrados para expandir os produtos" style="width:40px;">
                         </div>
                     </div>
                 </div>
+
+                <!--MODAL ADICIONAR ADM -->
+                <div class="modal fade" id="modalAdicionarAdm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Adm</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                <form method="POST">
+                                    <div class="mb-3">
+                                        <label for="nomeAdm" class="form-label">Nome</label>
+                                        <input type="text" class="form-control" id="nomeAdm" name="nomeAdmin">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="emailAdm" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="emailAdm" name="emailAdmin">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="senhaAdm" class="form-label">Senha</label>
+                                        <input type="password" class="form-control" id="senhaAdm" name="senhaAdmin">
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                        <button type="submit" class="btn btn-primary" name="cadastrarAdmin">Cadastrar</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <?php
+                    if(isset($_POST['cadastrarAdmin'])){
+                        $nome = $_POST['nomeAdmin'];
+                        $email = $_POST['emailAdmin'];
+                        $senha = $_POST['senhaAdmin'];
+
+                        if($u->cadastrar($nome, $email, $senha)){
+                            echo '<script>setTimeout(function(){ window.location.href = "listarAdmins.php"; }, 0010);</script>';
+                        }else{
+                            echo '<div class="alert alert-danger" role="alert">
+                                    Usuario já Cadastado cadastrado no banco
+                                  </div>';
+                        }
+                    }
+                ?>
+
 
                 <!--Tela central-->
                 <div class="col col-11 bg-light overflow-y-scroll" style="height: 60vh;">
@@ -188,11 +247,11 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo "<td> " . $admin['ADM_ATIVO'] . " </td>";
 
                                     echo '<td>';
-                                    
+
                                     // botao atualizar 
 
                                     echo '<div class= "d-flex justify-content-center" >';
-                                    
+
                                     echo '<button type="button" name="edit" value="Edit" id="' . $admin['ADM_ID'] . '"
                                     class="btn btn-primary open-modal edit_data" data-bs-toggle="modal" data-bs-target="#add_data_Modal" style="border: none; outline: none; background: transparent; padding-top: 2px;">';
                                     echo '<img src="../images\pencilIcon.png" style="width:18px;" >';

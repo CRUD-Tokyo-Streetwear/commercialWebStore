@@ -15,9 +15,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Charlie StreetWear</title>
   <link rel="icon" href="../images\Charlie.png">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
   <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body class="bg-light overflow-y-hidden">
@@ -36,7 +40,7 @@ require_once('../sistema/usuario.php');
     }
   
     if($upload['size'] > 5242880){
-      echo '<div class="alert alert-danger" role="alert">
+      echo '<div class="fs-5 alert alert-danger" style="position: absolute; top: 20%; left: 58%; transform: translate(-50%, -50%);">
       Não foi possivel carregar a imagem pois o arquivo é muito grande!! MAX 5MB
     </div>';
     }else{
@@ -144,24 +148,62 @@ require_once('../sistema/usuario.php');
       <div class="container col-2"></div> <!--Coluna que empurra o retângulo principal pro centro-->
       <div class="container d-flex flex-column align-items-center justify-content-center border rounded-4 mb-5" style="height: 80%;">
 
-      <?php
-    $admId = $_SESSION["ADM_ID"];
-    $imagemDefault = "images/userIcon.png";
-    $imagem = $u->mostrarImagemAdmin($admId);
 
-    echo '<div class="imagemP">';
-    if ($imagem) {
-        echo '<img class="imgPerfil rounded-circle object-fit-cover  " src="' . $imagem . '" width="250px" height="250px">';
-    } else {
-      echo '<svg xmlns="http://www.w3.org/2000/svg" fill="dark" viewBox="0 0 16 16" style="cursor: pointer;" width="200px">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-            </svg>';
-    }
-    echo '</div><br>';
+      <div class="imagem-perfil-container">
+        <?php
+      $admId = $_SESSION["ADM_ID"];
+      $imagemDefault = "images/userIcon.png";
+      $imagem = $u->mostrarImagemAdmin($admId);
 
-
+      if ($imagem) {
+          echo '<img id="profile-picture" class="imgPerfil rounded-circle object-fit-cover "
+          src="' . $imagem . '" width="250px" height="250px">';
+          echo '<span class="remove-image-text">Remover imagem</span>';
+          echo '</br>' . '</br>';
+      } else {
+        echo '<svg xmlns="http://www.w3.org/2000/svg" fill="dark" viewBox="0 0 16 16" style="cursor: pointer;" width="250px">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+              </svg>';
+          echo '</br>' . '</br>';
+      }
     ?>
+      </div>
+      
+      <script>
+        document.getElementById('profile-picture').addEventListener('click', function() {
+            removerImagem();
+          });
+     </script>
+
+      <script>
+          function removerImagem() {
+              // Confirmação usando confirm
+              if (confirm("Tem certeza de que deseja remover a imagem do perfil?")) {
+                  // Executar a solicitação AJAX para remover a imagem
+                  $.ajax({
+                      url: "remover_imagem_ajax.php",
+                      method: "POST",
+                      dataType: "json",
+                      success: function (data) {
+                          if (data.success) {
+                              console.log("Imagem removida com sucesso");
+                              location.reload(); // Recarregue a página como exemplo
+                          } else {
+                              console.error("Erro ao remover imagem:", data.error);
+                              location.reload(); // Recarregue a página como exemplo
+                          }
+                      },
+                      error: function (jqXHR, textStatus, errorThrown) {
+                          console.error("Erro na solicitação Ajax:", textStatus, errorThrown);
+                          console.log("Resposta do servidor:", jqXHR.responseText);
+                      }
+                  });
+              }
+            }
+      </script>
+
+
 
 
      <!-- formulario de imagem -->
