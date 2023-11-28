@@ -20,6 +20,9 @@ $p = new Produto("charlie", "localhost", "root", "");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charlie StreetWear</title>
     <link rel="icon" href="../images\Charlie.png">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
@@ -54,7 +57,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                             <div class="dropdown">
                                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     <p class="m-0 pe-1">
-                                    <?php
+                                        <?php
                                         $admId = $_SESSION['ADM_ID'];
                                         echo $u->mostrarDadosAdmin($admId)['ADM_NOME'];
                                         ?>
@@ -123,13 +126,13 @@ $p = new Produto("charlie", "localhost", "root", "");
                     <form action="" class="d-flex justify-content-between col col-md-4 py-2 px-3" style="background-color: #f0f0f0;">
                         <input type="text" value="<?php if (isset($_GET['search'])) {
                                                         echo $_GET['search'];
-                                                    } ?>" name="search" class="form-control border border-0 fs-5" placeholder="Pesquisar" aria-label="Pesquisar" style="background-color: #f0f0f0;">
+                                                    } ?>" name="search" class="form-control border border-0 fs-5" placeholder="Pesquisar produto" aria-label="Pesquisar" style="background-color: #f0f0f0;">
                         <button type="submit" class="border border-0 ms-1"><img src="../images\loupeIcon.png" alt="Icone de lupa da barra de pesquisa" style="width:32px;"></button>
                     </form>
 
-                    <div class="col col-xl-3 d-flex justify-content-around align-items-center">
+                    <div class="col col-xl-4 d-flex justify-content-evenly align-items-center">
                         <a href="cadastroProdutos.php" class="nav-link text-light">
-                            <div class="d-flex align-items-center fs-5 p-2 rounded-1" style="background-color:#202020; font-weight: 600">
+                            <div class="fs-5 p-2 rounded-2" style="background-color: #202020; font-weight: 600">
                                 Adicionar produto
                             </div>
                         </a>
@@ -160,18 +163,36 @@ $p = new Produto("charlie", "localhost", "root", "");
                         <tbody class="align-middle">
                             <?php
 
-                            $result = !isset($_GET['search']) ? $p->listarProdutos() : $p->pesquisarProduto(); //Verifica se será listado todos os produtos ou somente os produtos pesquisados
+                            $result = !isset($_GET['search']) ? $p->listarProdutos() : $p->pesquisarProduto();
+                            //Verifica se será listado todos os produtos ou somente os produtos pesquisados
 
                             if (isset($result)) {
-                                while ($product_data = $result->fetch()) {
+                                $produtos = []; // Array para armazenar os produtos
 
-                                    $product_data['PRODUTO_ATIVO'] = $product_data['PRODUTO_ATIVO'] == 1 ? 'Ativo' : 'Inativo'; //Trocar os valores 0 e 1 para Ativo ou Não
+                                while ($product_data = $result->fetch()) {
+                                    // Verifica se o produto já foi adicionado ao array de produtos
+                                    if (!isset($produtos[$product_data['PRODUTO_ID']])) {
+                                        // Se não, adiciona o produto ao array
+                                        $produtos[$product_data['PRODUTO_ID']] = $product_data;
+                                    }
+                                }
+
+                                // Agora, itera sobre os produtos únicos e exibe na tabela
+                                foreach ($produtos as $product_data) {
+                                    $product_data['PRODUTO_ATIVO'] = $product_data['PRODUTO_ATIVO'] == 1 ? 'Ativo' : 'Inativo'; // Trocar os valores 0 e 1 para Ativo ou Não
 
                                     echo '<tr>';
                                     echo '<th scope="row">' . $product_data['PRODUTO_ID'] . "</th>";
+
                                     if (isset($product_data['IMAGEM_URL']) && $product_data['IMAGEM_URL'] !== "") {
-                                        echo '<td><img src="' . $product_data['IMAGEM_URL'] . '" alt="Imagem do produto" class="rounded-4" style="width: 70px; height: 70px; object-fit: contain;"></td>';
-                                    } else{
+
+                                        // botao para aparecer carrossel de imagem
+                                        echo '<td>';
+                                        echo '<button type="button" class="btn btn-link" data-toggle="modal" data-target="#carouselModal' . $product_data['PRODUTO_ID'] . '">
+                                                  <img src="' . $product_data['IMAGEM_URL'] . '" alt="Imagem do produto" class="rounded-4" style="width: 70px; height: 70px; object-fit: contain;">
+                                               </button>';
+                                        echo '</td>';
+                                    } else {
                                         echo '<td><img src="../images/noProductImage.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>';
                                     }
                                     echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';
@@ -183,20 +204,20 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo '<td>' . $product_data['PRODUTO_ATIVO'] . '</td>';
                                     echo '<td>';
                                     echo '<div class= "d-flex justify-content-center" >';
-                                    echo '<form action="" method="POST">';
-                                    echo '<input type="hidden" name="edit" value="' . $product_data['PRODUTO_ID'] . '">';   //ícone de lápis para editar instâncias
-                                    echo '<button type="submit" class="me-2" name="atualizar_produto" style="border: none; outline: none; background: transparent;"  >
-                                    <img src="../images/pencilIcon.png" style= "width:18px;" > 
 
-                                    </button>';
-                                    echo '</form>';
+                                    //Botao para Atualizar produto
+                                    echo '<button type="button" name="edit" value="Edit" id="' . $product_data['PRODUTO_ID'] . '"
+                                    class="btn btn-primary open-modal edit_data" data-bs-toggle="modal" data-bs-target="#add_data_Modal" style="border: none; outline: none; background: transparent; padding-top: 2px;">';
+                                    echo '<img src="../images\pencilIcon.png" style="width:18px;" >';
+                                    echo '</button>';
+
+                                    //Botao para Deletar produto
                                     echo '<form action="" method="POST">';
-                                    echo '<input type="hidden" name="delete" value="' . $product_data['PRODUTO_ID'] . '">'; //ícone de lixeira para deletar instâncias
+                                    echo '<input type="hidden" name="delete" value="' . $product_data['PRODUTO_ID'] . '">'; // ícone de lixeira para deletar instâncias
                                     echo '<button type="submit" class="ms-2" name="excluir_produto" style="border: none; outline: none; background: transparent;" >
-                                    <img src="../images/trashCanIcon.png" style= "width:18px;" > 
-                                    </button>';
+                                                <img src="../images/trashCanIcon.png" style= "width:18px;" > 
+                                            </button>';
                                     echo '</form>';
-
                                     echo '</div>';
                                     echo '</td>';
                                     echo '</tr>';
@@ -216,12 +237,214 @@ $p = new Produto("charlie", "localhost", "root", "");
                             }
 
                             ?>
+
+                            <!-- Modal att produto -->
+                            <div class="modal fade" id="add_data_Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Produto</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="POST" id="insert_form">
+
+                                                <div class="d-flex justify-content-around text-light">
+                                                    <label for="url_img1" class="form-label bg-primary text-center border border-black border-1" style="width: 25px; height: 25px;">1</label>
+                                                    <label for="url_img2" class="form-label bg-primary text-center border border-black border-1" style="width: 25px; height: 25px;">2</label>
+                                                    <label for="url_img3" class="form-label bg-primary text-center border border-black border-1" style="width: 25px; height: 25px;">3</label>
+
+                                                </div>
+
+                                                <div id="container_imagens_produto">
+                                                    <div id="img_produto1"></div>
+                                                    <div id="img_produto2"></div>
+                                                    <div id="img_produto3"></div>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <div>Imagem URL 1:</div>
+                                                    <input type="url" class="form-control mb-2" id="url_img1" name="url_img1">
+
+                                                    <div>Imagem URL 2:</div>
+                                                    <input type="url" class="form-control mb-2" id="url_img2" name="url_img2">
+
+                                                    <div>Imagem URL 2:</div>
+                                                    <input type="url" class="form-control" id="url_img3" name="url_img3">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="nome" class="form-label">Nome:</label>
+                                                    <input type="text" class="form-control" id="nome" name="nome">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="desc" class="form-label">Descrição:</label>
+                                                    <input type="text" class="form-control" id="desc" name="desc">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="preco" class="form-label">Preço:</label>
+                                                    <input type="text" class="form-control" id="preco" name="preco">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="desconto" class="form-label">Desconto:</label>
+                                                    <input type="text" class="form-control" id="desconto" name="desconto">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <select name="categoria" id="categoria" class="form-select" aria-label="Default select example">
+                                                        <?php
+                                                        $result = $p->listarCategorias();
+
+                                                        if (isset($result)) {
+                                                            while ($categoria_data = $result->fetch()) {
+
+                                                                if ($categoria_data['CATEGORIA_ATIVO'] == 1) echo '<option> ' . $categoria_data['CATEGORIA_NOME'] . '</option>';
+                                                            }
+                                                        }
+                                                        ?>
+
+                                                    </select>
+
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="estoque" class="form-label">Estoque:</label>
+                                                    <input type="text" class="form-control" id="estoque" name="estoque">
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label" for="status">Status</label>
+                                                    <input type="checkbox" class="form-check-input" id="status" name="status">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ignorar</button>
+
+                                                    <input type="hidden" name="produtoId" id="produtoId">
+                                                    <button type="submit" class="btn btn-primary" id="enviar" value="enviar" name="enviar">Salvar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- AJAX -->
+
+                            <!-- Pegar dados do ADM com AJAX -->
+                            <script>
+                                $(document).ready(function() {
+                                    var produtoId;
+
+                                    function carregarDadosProduto(produtoId) {
+                                        $.ajax({
+                                            url: "mostrarDadosModal_ajax.php",
+                                            method: "POST",
+                                            data: {
+                                                produtoId: produtoId
+                                            },
+                                            dataType: "json",
+                                            success: function(data) {
+                                                console.log("Dados do produto:", data);
+
+                                                // Alterar as classes do elemento #container_imagens_produto
+                                                var containerImagens = $('#container_imagens_produto');
+                                                if (data.IMAGEM_URL !== null && data.IMAGEM_URL !== '') {
+                                                    containerImagens.removeClass('d-flex justify-content-center').addClass('d-flex justify-content-between');
+                                                } else {
+                                                    containerImagens.removeClass('d-flex justify-content-between').addClass('d-flex justify-content-center');
+                                                }
+
+                                                // Criar elemento de imagem e atribuir a URL
+                                                var imagemUrl = data.IMAGEM_URL || 'https://anest-iwata.com.br/wp-content/uploads/2016/10/Sem-imagem.png';
+                                                var imagemElement = $('<img>').attr('src', imagemUrl);
+                                                // Adicionar a imagem à div com id 'img_produto1'
+                                                $('#img_produto1').empty().append(imagemElement);
+                                                imagemElement.addClass('object-fit-contain mb-3');
+                                                imagemElement.attr('width', 250);
+                                                imagemElement.attr('height', 150);
+
+                                                // Preencher os campos do modal com os dados recebidos
+                                                $('#url_img1').val(imagemUrl); // Use a URL correta aqui
+                                                $('#nome').val(data.PRODUTO_NOME);
+                                                $('#preco').val(data.PRODUTO_PRECO);
+                                                $('#desconto').val(data.PRODUTO_DESCONTO);
+                                                $('#desc').val(data.PRODUTO_DESC);
+                                                $('#categoria').val(data.CATEGORIA_NOME);
+                                                $('#estoque').val(data.PRODUTO_QTD);
+                                                $('#status').prop('checked', data.PRODUTO_ATIVO == 1);
+                                                $('#produtoId').val(data.PRODUTO_ID);
+                                                $('#enviar').val("Update");
+
+                                                // Exibir o modal
+                                                $('#add_data_Modal').modal('show');
+                                            },
+                                            error: function(jqXHR, textStatus, errorThrown) {
+                                                console.error("Erro na solicitação Ajax:", textStatus, errorThrown);
+                                            }
+                                        });
+                                    }
+
+                                    $(document).on('click', '.edit_data', function() {
+                                        produtoId = $(this).attr("id");
+                                        console.log("Produto ID:", produtoId);
+                                        carregarDadosProduto(produtoId);
+                                    });
+
+
+                                // ATUALIZAR DADOS COM AJAX //
+                                $('#insert_form').submit(function(e) {
+                                e.preventDefault(); // Evitar que o formulário seja enviado normalmente
+
+                                // Coletar os dados do formulário
+                                var url_img = $('#url_img').val();
+                                var nome = $('#nome').val();
+                                var preco = $('#preco').val();
+                                var desconto = $('#desconto').val();
+                                var desc = $('#desc').val();
+                                var categoria = $('#categoria').val();
+                                var estoque = $('#estoque').val();
+                                var status = $('#status').prop('checked') ? 1 : 0; // 1 se estiver marcado, 0 se não estiver
+
+                                // Executar a solicitação AJAX para atualizar os dados
+                                $.ajax({
+                                    url: "atualizar_modal_ajax.php",
+                                    method: "POST",
+                                    data: {
+                                        produtoId: produtoId, // Usando o valor já coletado
+                                        nome: nome,
+                                        preco: preco,
+                                        desconto: desconto,
+                                        desc: desc,
+                                        categoria: categoria,
+                                        estoque: estoque,
+                                        status: status,
+                                    },
+                                    dataType: "json",
+                                    success: function(data) {
+                                        console.log("Dados atualizados com sucesso:", data);
+                                        // Fechar o modal após a atualização
+                                        $('#add_data_Modal').modal('hide');
+                                        location.reload();
+                                    },
+                                    error: function(jqXHR, textStatus, errorThrown) {
+                                        $('#add_data_Modal').modal('hide');
+                                        console.error("Erro na solicitação Ajax:", textStatus, errorThrown);
+                                        console.log("Resposta do servidor:", jqXHR.responseText);
+                                    }
+                                });
+                                });
+                                });
+                            </script>
+
                         </tbody>
                     </table>
                 </div>
 
             </div>
         </div> <!--Fecha a div do menu lateral-->
+
+        <script>
+            $(document).ready(function() {
+                // Inicializa o carrossel quando a página é carregada
+                $('.carousel').carousel();
+            });
+        </script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

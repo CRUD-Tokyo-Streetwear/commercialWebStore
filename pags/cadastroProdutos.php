@@ -54,7 +54,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                             <div class="dropdown">
                                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     <p class="m-0 pe-1">
-                                    <?php
+                                        <?php
                                         $admId = $_SESSION['ADM_ID'];
                                         echo $u->mostrarDadosAdmin($admId)['ADM_NOME'];
                                         ?>
@@ -117,14 +117,18 @@ $p = new Produto("charlie", "localhost", "root", "");
             <!--Tela central-->
             <div class="container justify-content-center align-items-center mt-5" style="height: 100%; max-width: 40vw;">
 
-                <div class="d-flex justify-content-end">
-                    <div class="text-light me-5">
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color:#88d02c; font-weight: 600">Categorias</button>
-                    </div>
+                <div class="d-flex justify-content-end align-items-center">
+                    <a href="categorias.php" class="nav-link text-light">
+                        <div class="fs-5 p-2 rounded-2" style="background-color: #202020; font-weight: 600">
+                            Categorias
+                        </div>
+                    </a>
 
-                    <div class="text-light">
-                        <button type="button" class="btn" style="background-color:#88d02c; font-weight: 600" data-bs-toggle="modal" data-bs-target="#exampleModal">adicionar categoria</button>
-                    </div>
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <div class="fs-5 p-2 text-light rounded-2" style="background-color: #202020; font-weight: 600;">
+                            adicionar categoria
+                        </div>
+                    </button>
                 </div>
 
                 <!-- Modal Atuliza Categoria-->
@@ -155,7 +159,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                             while ($categoria_data = $result->fetch()) {
                                                 echo '<tr>';
                                                 echo  '<th id="categoria_nome"> <p>' . $categoria_data['CATEGORIA_NOME'] . '</p> </th>';
-                                                echo    '<td id="categoria_desc"> <p>'. $categoria_data['CATEGORIA_DESC'] . '</p></td>';
+                                                echo    '<td id="categoria_desc"> <p>' . $categoria_data['CATEGORIA_DESC'] . '</p></td>';
                                                 echo    '<td>';
                                                 echo        '<div class="d-flex justify-content-center">';
 
@@ -235,7 +239,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                         <label for="nome" class="form-label">Nome</label>
                                         <input type="text" class="form-control" name="nome_categoria" required>
                                     </div>
-                                    <div class="mt-2" >
+                                    <div class="mt-2">
                                         <label for="descricao" class="form-label">Descrição</label>
                                         <textarea class="form-control" id="descricao" name="descricao_categoria" rows="3" required></textarea>
                                     </div>
@@ -263,7 +267,7 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                     if ($p->adicionarCategoria($nome_categoria, $descricao_categoria, $produto_ativo_categoria)) {
                         echo '<script>setTimeout(function(){ window.location.href = "cadastroProdutos.php"; }, 1500);</script>';
-                        echo '<div class="alert alert-success" role="alert">Categoria cadastrada com sucesso!</div>'; 
+                        echo '<div class="alert alert-success" role="alert">Categoria cadastrada com sucesso!</div>';
                     }
                 }
 
@@ -292,6 +296,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     <input type="text" class="form-control" id="estoque" name="produtoQtd">
                                 </div>
                             </div>
+
                             <div class="col-md-6 mt-5"><!--div da categoria-->
                                 <select name="categoria" class="form-select" aria-label="Default select example">
 
@@ -314,18 +319,17 @@ $p = new Produto("charlie", "localhost", "root", "");
 
 
                             <div class="col-md-6">
-                                
+
                                 <!-- Campo de url -->
                                 <div id="containerImagens" class="col-md-6">
-                                <label for="botaoAdicionarImagem" class="form-label">Imagem URL</label>
-                                <input type="text" class="form-control imagem-url"  name="imagem_url[]">
+                                    <label for="botaoAdicionarImagem" class="form-label">Imagem URL</label>
+                                    <input type="text" class="form-control imagem-url" name="imagem_url[]">
                                 </div>
 
                                 <br>
-                                    
-                                <!-- Botao de adicionar mais campos -->
-                                <button type="button" class="btn btn-secondary" id="botaoAdicionarImagem" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Adicionar mais imagens</button>
 
+                                <!-- Botao de adicionar mais campos -->
+                                <button type="button" class="btn btn-dark" id="botaoAdicionarImagem" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Adicionar mais imagens</button>
                             </div>
 
                             <div class="col-md-6">
@@ -345,13 +349,16 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                             <?php
                             if (isset($_POST['botao'])) {
+
+                                $nomeCategoria = $_POST['categoria'];
+
                                 //Cadastra na tabela de produto
                                 $nome = $_POST['nome'];
                                 $preco = floatval($_POST['preco']);
                                 $precoDesconto = floatval($_POST['preco_desconto']);
                                 $descricao = $_POST['descricao'];
-                                $categoria = $p->pegaIdCategoria();
-                                $produtoAtivo = $_POST['produto_ativo'];
+                                $categoria = $p->pegaIdCategoria($nomeCategoria);
+                                $produtoAtivo = isset($_POST['produto_ativo']) ? 1 : 0;
 
                                 //Cadastra na tabela de imagem_produto
                                 if ($p->cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo) && isset($categoria)) {

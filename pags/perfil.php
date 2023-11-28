@@ -15,12 +15,11 @@ if (!isset($_SESSION['ADM_ID'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Charlie StreetWear</title>
   <link rel="icon" href="../images\Charlie.png">
-  <link rel="stylesheet" href="../css/style.css">
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
   <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/style.css">
 
 </head>
 
@@ -102,49 +101,46 @@ if (!isset($_SESSION['ADM_ID'])) {
   </nav>
 
   <!--Menu lateral-->
-  <div class="d-flex justify-content-between" style="height: calc(100vh - 93px);">
-    <div>
-      <div class="row flex-nowrap">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark" style="position: fixed; left:0;">
-          <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-            <span class="fs-5 d-none d-sm-inline">Menu</span>
-            <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
-              <li class="nav-item">
-                <a href="pagInicio.php" class="d-flex align-items-center nav-link align-middle px-0 text-light">
-                  <img src="../images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
-                </a>
-              </li>
-              <li>
-                <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
-                  <img src="../images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
-                </a>
-              </li>
-              <li>
-                <a href="listarAdmins.php" class="d-flex align-items-center nav-link px-0 text-light">
-                  <img src="../images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
-                </a>
-              </li>
-              <li>
-                <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                  <img src="../images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
-                </a>
-              </li>
-              <li>
-                <a href="cadastroProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                  <img src="../images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
-                </a>
-              </li>
-
-            </ul>
-          </div>
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 min-vh-100 bg-dark">
+        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+          <span class="fs-5 pb-3 mb-md-0 d-none d-sm-inline">
+            Menu
+          </span>
+          <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
+            <li class="nav-item">
+              <a href="pagInicio.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="../images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
+              </a>
+            </li>
+            <li>
+              <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="../images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
+              </a>
+            </li>
+            <li>
+              <a href="listarAdmins.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="../images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
+              </a>
+            </li>
+            <li>
+              <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="../images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
+              </a>
+            </li>
+            <li>
+              <a href="cadastroProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
+                <img src="../images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
-    </div>
 
-    <!--Tela central-->
-    <div class=" d-flex align-items-center col col-10 mt-4" style="height: 100%;">
+      <!--Tela central-->
+    <div class=" d-flex align-items-center col col-10 mt-4" style="height: 90vh;">
       <div class="container d-flex flex-column align-items-center justify-content-center border rounded-4 mb-5" style="height: 80%;">
-
 
         <div class="imagem-perfil-container">
           <?php
@@ -153,25 +149,59 @@ if (!isset($_SESSION['ADM_ID'])) {
           $imagem = $u->mostrarImagemAdmin($admId);
 
           if ($imagem) {
-            echo '<img id="profile-picture" class="imgPerfil rounded-circle object-fit-cover"
-          src="' . $imagem . '" width="250px" height="250px">';
+            echo '<img id="profile-picture" class="imgPerfil rounded-circle object-fit-cover mb-3"
+            src="' . $imagem . '" width="250px" height="250px">';
+            echo '<span class="remove-image-text">Remover imagem</span>';
           } else {
-            echo '<svg xmlns="http://www.w3.org/2000/svg" fill="dark" viewBox="0 0 16 16" style="cursor: pointer;" width="250px">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-              </svg>';
-            echo '</br></br>';
+            echo '<svg xmlns="http://www.w3.org/2000/svg" fill="dark" viewBox="0 0 16 16" class="mb-3" style="cursor: pointer;" width="250px">
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                </svg>';
           }
           ?>
         </div>
+
+        <style>
+          .imagem-perfil-container {
+            position: relative;
+            display: inline-block;
+          }
+
+          #profile-picture:hover {
+            height: 220px;
+            width: 220px;
+            transition: ease-in-out 0.1s;
+            opacity: 0.7;
+          }
+
+          #profile-picture {
+            transition: ease-in-out 0.1s;
+          }
+
+          .remove-image-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 0px 1em;
+            border-radius: 5px;
+            display: none;
+          }
+
+          .imagem-perfil-container:hover .remove-image-text {
+            display: block;
+            color: white;
+            text-wrap: nowrap;
+            pointer-events: none;
+          }
+        </style>
 
         <script>
           document.getElementById('profile-picture').addEventListener('click', function() {
             removerImagem();
           });
-        </script>
 
-        <script>
           function removerImagem() {
             // Confirmação usando confirm
             if (confirm("Tem certeza de que deseja remover a imagem do perfil?")) {
@@ -198,9 +228,6 @@ if (!isset($_SESSION['ADM_ID'])) {
           }
         </script>
 
-
-
-
         <!-- formulario de imagem -->
         <div class="row mb-3">
           <form action="perfil.php" enctype="multipart/form-data" method="POST">
@@ -208,8 +235,6 @@ if (!isset($_SESSION['ADM_ID'])) {
             <input class="btn btn-dark" type="submit" name="submit" value="Salvar" style="width: 380px;">
           </form>
         </div>
-
-
 
         <!-- formulario dados perfil -->
         <form action="" method="POST">
@@ -267,12 +292,11 @@ if (!isset($_SESSION['ADM_ID'])) {
     }
     ?>
 
-
-  </div><!--Fecha a segunda div do menu lateral-->
-  </div><!--Fecha a div do menu lateral-->
+    </div>
+  </div> <!--Fecha a div do menu lateral-->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  <script src="script.js"></script>
+  <script src="../script/script.js"></script>
 </body>
 
 </html>

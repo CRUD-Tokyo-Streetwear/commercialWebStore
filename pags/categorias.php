@@ -9,6 +9,7 @@ if (!isset($_SESSION['ADM_ID'])) {
 require_once('../sistema/usuario.php');
 require_once('../sistema/produto.php');
 
+
 $u = new Usuario("charlie", "localhost", "root", "");
 $p = new Produto("charlie", "localhost", "root", "");
 ?>
@@ -83,44 +84,45 @@ $p = new Produto("charlie", "localhost", "root", "");
         </div>
     </nav>
 
-     <!--Menu lateral-->
-  <div class="container-fluid">
-    <div class="row flex-nowrap">
-      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 min-vh-100 bg-dark">
-        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
-          <span class="fs-5 pb-3 mb-md-0 d-none d-sm-inline">
-            Menu
-          </span>
-          <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
-            <li class="nav-item">
-              <a href="pagInicio.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="../images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
-              </a>
-            </li>
-            <li>
-              <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="../images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
-              </a>
-            </li>
-            <li>
-              <a href="listarAdmins.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="../images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
-              </a>
-            </li>
-            <li>
-              <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="../images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
-              </a>
-            </li>
-            <li>
-              <a href="cadastroProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="../images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
-              </a>
-            </li>
-          </ul>
-        </div>
+    <!--Menu lateral-->
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 min-vh-100 bg-dark">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+                    <span class="fs-5 pb-3 mb-md-0 d-none d-sm-inline">
+                        Menu
+                    </span>
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
+                        <li class="nav-item">
+                            <a href="pagInicio.php" class="d-flex align-items-center nav-link px-0 text-light">
+                                <img src="../images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
+                                <img src="../images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="listarAdmins.php" class="d-flex align-items-center nav-link px-0 text-light">
+                                <img src="../images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
+                                <img src="../images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="cadastroProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
+                                <img src="../images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-      </div><!--Orienta na vertical a tela central, barra de pesquisa, add produto-->
+            <!--Orienta na vertical a tela central, barra de pesquisa, add produto-->
             <div class="col flex-wrap d-flex justify-content-start align-items-center flex-column" style="background-color: #d9d9d9;">
 
                 <!--Barra de pesquisa, add produto e exibir em icone grande produtos-->
@@ -128,79 +130,72 @@ $p = new Produto("charlie", "localhost", "root", "");
                     <form action="" class="d-flex justify-content-between col col-md-4 py-2 px-3" style="background-color: #f0f0f0;">
                         <input type="text" value="<?php if (isset($_GET['search'])) {
                                                         echo $_GET['search'];
-                                                    } ?>" name="search" class="form-control border border-0 fs-5" placeholder="Pesquisar administrador" aria-label="Pesquisar" style="background-color: #f0f0f0;">
+                                                    } ?>" name="search" class="form-control border border-0 fs-5" placeholder="Pesquisar categoria" aria-label="Pesquisar" style="background-color: #f0f0f0;">
                         <button type="submit" class="border border-0 ms-1"><img src="../images\loupeIcon.png" alt="Icone de lupa da barra de pesquisa" style="width:32px;"></button>
                     </form>
 
 
-                    <div class="col col-xl-4 d-flex justify-content-around align-items-center">
+                    <div class="col col-xl-3 d-flex justify-content-around align-items-center">
 
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modalAdicionarAdm">
+                        <!--Botão para add nova categoria-->
+                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <div class="fs-5 p-2 text-light rounded-2" style="background-color: #202020; font-weight: 600;">
-                                Adicionar Administrador
+                                adicionar categoria
                             </div>
                         </button>
 
-                        <div class="me-3">
+                        <!--Quadrado para redimensionar os produtos-->
+                        <div>
                             <img src="../images\squaresWindowIcon.png" alt="Janela de quadrados para expandir os produtos" style="width:40px;">
                         </div>
+
                     </div>
                 </div>
 
-                <!--MODAL ADICIONAR ADM -->
-                <div class="modal fade" id="modalAdicionarAdm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <!-- Modal Adicionar Categoria-->
+                <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Adm</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar nova categoria</h1>
                             </div>
                             <div class="modal-body">
-
-                                <form method="POST">
+                                <form id="novaCategoria" method="POST">
                                     <div class="mb-3">
-                                        <label for="nomeAdm" class="form-label">Nome</label>
-                                        <input type="text" class="form-control" id="nomeAdm" name="nomeAdmin">
+                                        <label for="nome" class="form-label">Nome</label>
+                                        <input type="text" class="form-control" name="nome_categoria" required>
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label for="emailAdm" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="emailAdm" name="emailAdmin">
+                                    <div class="mt-2">
+                                        <label for="descricao" class="form-label">Descrição</label>
+                                        <textarea class="form-control" id="descricao" name="descricao_categoria" rows="3" required></textarea>
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label for="senhaAdm" class="form-label">Senha</label>
-                                        <input type="password" class="form-control" id="senhaAdm" name="senhaAdmin">
+                                    <div class="mt-3">
+                                        <input type="checkbox" class="form-check-input" id="produto_Ativo" name="produto_ativo_categoria" checked>
+                                        <label class="form-check-label ms-2" for="produto_Ativo">Categoria ativo</label>
                                     </div>
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                        <button type="submit" class="btn btn-primary" name="cadastrarAdmin">Cadastrar</button>
-                                    </div>
-
-                                </form>
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-dark" name="salvar_categoria">Salvar</button>
+                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
 
-                
                 <?php
-                    if(isset($_POST['cadastrarAdmin'])){
-                        $nome = $_POST['nomeAdmin'];
-                        $email = $_POST['emailAdmin'];
-                        $senha = $_POST['senhaAdmin'];
+                //Código para cadastrar categoria
+                if (isset($_POST['salvar_categoria'])) {
+                    $nome_categoria = $_POST['nome_categoria'];
+                    $descricao_categoria = $_POST['descricao_categoria'];
+                    $produto_ativo_categoria = isset($_POST['produto_ativo_categoria']) ? 1 : 0;
 
-                        if($u->cadastrar($nome, $email, $senha)){
-                            echo '<script>setTimeout(function(){ window.location.href = "listarAdmins.php"; }, 0010);</script>';
-                        }else{
-                            echo '<div class="alert alert-danger" role="alert">
-                                    Usuario já Cadastado cadastrado no banco
-                                  </div>';
-                        }
+                    if ($p->adicionarCategoria($nome_categoria, $descricao_categoria, $produto_ativo_categoria)) {
+                        echo '<script>setTimeout(function(){ window.location.href = "categorias.php"; }, 1500);</script>';
+                        echo '<div class="alert alert-success" role="alert">Categoria cadastrada com sucesso!</div>';
                     }
+                }
                 ?>
-
 
                 <!--Tela central-->
                 <div class="col col-11 bg-light overflow-y-scroll" style="height: 60vh;">
@@ -210,67 +205,73 @@ $p = new Produto("charlie", "localhost", "root", "");
                         <thead class="align-middle">
                             <tr class="table-secondary">
                                 <th class="py-3" scope="col">ID</th>
-                                <th class="py-3" scope="col">Foto</th>
-                                <th class="py-3" scope="col">Nome</th>
-                                <th class="py-3" scope="col">E-mail</th>
-                                <th class="py-3" scope="col">Status</th>
-                                <th class="py-3" scope="col">Editar/Excluir</th>
+                                <th class="py-3" scope="col">Categoria</th>
+                                <th class="py-3" scope="col">Descrição</th>
+                                <th class="py-3" scope="col">Ativo/Inativo</th>
+                                <th class="py-3" scope="col">Operação</th>
                             </tr>
                         </thead>
 
                         <tbody class="align-middle">
                             <?php
 
-                            $admins = !isset($_GET['search']) ? $u->listarAdmins() : $u->pesquisarAdmin();
+                            $categorias = !isset($_GET['search']) ? $p->listarCategorias() : $p->pesquisarCategoria();
 
-                            if (isset($admins)) {
+                            if (isset($categorias)) {
+                                while ($categoria_data = $categorias->fetch()) {
 
-                                foreach ($admins as $admin) {
-                                    $admin['ADM_ATIVO'] = $admin['ADM_ATIVO'] == 1 ? 'Ativo' : 'Inativo';
+                                    $categoria_data['CATEGORIA_ATIVO'] = $categoria_data['CATEGORIA_ATIVO'] == 1 ? 'Ativo' : 'Inativo'; // Trocar os valores 0 e 1 para Ativo ou Não
 
-                                    $nome = $admin['ADM_NOME'];
-                                    $email = $admin['ADM_EMAIL'];
 
-                                    echo "<tr>";
-                                    echo "<td> " . $admin['ADM_ID'] . " </td>";
-                                    if ($admin['ADM_IMAGEM']) {
-                                        echo '<td> <img src="' . $admin['ADM_IMAGEM'] . '" alt="Imagem do Administrador" class="rounded-1 object-fit-contain" style="width: 60px; height:60px;"></td>';
-                                    } else {
-                                        echo '<td> <img src="../images\homem-usuario.png" width="34px"> </td>';
-                                    }
-                                    echo "<td> " . $admin['ADM_NOME'] . " </td>";
-                                    echo "<td> " . $admin['ADM_EMAIL'] . " </td>";
-                                    echo "<td> " . $admin['ADM_ATIVO'] . " </td>";
-
-                                    echo '<td>';
-                                    // botao atualizar 
+                                    echo '<tr>';
+                                    echo  '<th>' . $categoria_data['CATEGORIA_ID'] . '</th>';
+                                    echo    '<td>' . $categoria_data['CATEGORIA_NOME'] . '</td>';
+                                    echo    '<td>' . $categoria_data['CATEGORIA_DESC'] . '</td>';
+                                    echo '<td>' . $categoria_data['CATEGORIA_ATIVO'] . '</td>';
+                                    echo    '<td>';
                                     echo '<div class= "d-flex justify-content-center" >';
-                                    echo '<button type="button" name="edit" value="Edit" id="' . $admin['ADM_ID'] . '"
+
+                                    //Botão para editar categoria
+                                    echo '<button type="button" name="edit" value="Edit" id="' . $categoria_data['CATEGORIA_ID'] . '"
                                     class="btn btn-primary open-modal edit_data" data-bs-toggle="modal" data-bs-target="#add_data_Modal" style="border: none; outline: none; background: transparent; padding-top: 2px;">';
                                     echo '<img src="../images\pencilIcon.png" style="width:18px;" >';
                                     echo '</button>';
 
-                                    // botao excluir
+                                    //Botão para deletar categoria
                                     echo '<form action="" method="POST">';
-                                    echo '<input type="hidden" name="delete" value="' . $admin["ADM_ID"] . '">';
-                                    echo '<button type="submit" name="excluir_admin" style="border: none; outline: none; background: transparent;"  >
-                                    <img src="../images\trashCanIcon.png" style= "width:18px;" > </button>';
+                                    echo '<input type="hidden" name="deleteCategoria" value="' . $categoria_data['CATEGORIA_ID'] . '">'; // ícone de lixeira para deletar instâncias
+                                    echo '<button type="submit" class="ms-2" name="excluir_produto" style="border: none; outline: none; background: transparent;" >
+                                                <img src="../images/trashCanIcon.png" style= "width:18px;" > 
+                                            </button>';
                                     echo '</form>';
-                                    echo '</form>';
+
                                     echo '</div>';
                                     echo '</td>';
-
                                     echo '</tr>';
-                                };
-                            };
+                                }
+                            }
+
+
+                            if (isset($_POST['deleteCategoria'])) {  //Chama o método de excluir categoria
+
+                                $categoriaId = $_POST['deleteCategoria'];
+
+                                if ($p->excluirCategoria($categoriaId)) {
+                                    echo '<script>setTimeout(function(){ window.location.href = "categorias.php"; }, 0010);</script>';
+                                    exit;
+                                } else {
+                                    echo '<div class="alert alert-danger" role="alert">Não foi possível cadastrar a categoria!</div>';
+                                }
+                            }
+
                             ?>
 
-                            <!-- Modal att adm -->
+                            <!-- modal -->
                             <div class="modal fade" id="add_data_Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Administrador</h1>
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Categoria</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
@@ -280,8 +281,8 @@ $p = new Produto("charlie", "localhost", "root", "");
                                                     <input type="text" class="form-control" id="nome" name="nome">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="email" class="form-label">Email:</label>
-                                                    <input type="email" class="form-control" id="email" name="email">
+                                                    <label for="desc" class="form-label">Descrição:</label>
+                                                    <input type="text" class="form-control" id="desc" name="desc" value="<?php  ?>">
                                                 </div>
                                                 <div class="form-check">
                                                     <label class="form-check-label" for="status">Status</label>
@@ -290,7 +291,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ignorar</button>
 
-                                                    <input type="hidden" name="admId" id="admId">
+                                                    <input type="hidden" name="categoriaId" id="categoriaId">
                                                     <button type="submit" class="btn btn-primary" id="enviar" value="enviar" name="enviar">Salvar</button>
                                                 </div>
                                             </form>
@@ -299,30 +300,31 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 </div>
                             </div>
 
+
                             <!-- AJAX -->
 
                             <!-- Pegar dados do ADM com AJAX -->
                             <script>
                                 $(document).ready(function() { // isso diz que só sera executado o ajax apos a pagina estar totalmente carregada
 
-                                    var admId;
+                                    var categoriaId;
 
-                                    function carregarDadosAdm(admId) {
+                                    function carregarDadosCategoria(categoriaId) {
                                         $.ajax({
                                             url: "mostrarDadosModal_ajax.php", // Substitua pela URL correta do seu servidor
                                             method: "POST",
                                             data: {
-                                                admId: admId
+                                                categoriaId: categoriaId
                                             },
                                             dataType: "json",
                                             success: function(data) {
-                                                console.log("Dados do administrador:", data);
+                                                console.log("Dados da categoria:", data);
 
                                                 // Preencher os campos do modal com os dados recebidos
-                                                $('#nome').val(data.ADM_NOME);
-                                                $('#email').val(data.ADM_EMAIL);
-                                                $('#status').prop('checked', data.ADM_ATIVO == 1);
-                                                $('#admId').val(data.ADM_ID);
+                                                $('#nome').val(data.CATEGORIA_NOME);
+                                                $('#desc').val(data.CATEGORIA_DESC);
+                                                $('#status').prop('checked', data.CATEGORIA_ATIVO == 1);
+                                                $('#categoriaId').val(data.CATEGORIA_ID);
                                                 $('#enviar').val("Update");
 
                                                 // Exibir o modal
@@ -333,13 +335,13 @@ $p = new Produto("charlie", "localhost", "root", "");
                                             }
                                         });
                                     }
-                                    
+
                                     $(document).on('click', '.edit_data', function() {
                                         // ao clicar no botao com classe .edit_data é coletado o id
-                                        admId = $(this).attr("id"); // id do adm guardado nessa variável
+                                        categoriaId = $(this).attr("id"); // id do adm guardado nessa variável
 
-                                        console.log("Administrador ID:", admId);
-                                        carregarDadosAdm(admId);
+                                        console.log("Categoria ID:", categoriaId);
+                                        carregarDadosCategoria(categoriaId);
                                     });
 
 
@@ -349,7 +351,7 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                                         // Coletar os dados do formulário
                                         var nome = $('#nome').val();
-                                        var email = $('#email').val();
+                                        var desc = $('#desc').val();
                                         var status = $('#status').prop('checked') ? 1 : 0; // 1 se estiver marcado, 0 se não estiver
 
                                         // Executar a solicitação AJAX para atualizar os dados
@@ -357,9 +359,9 @@ $p = new Produto("charlie", "localhost", "root", "");
                                             url: "atualizar_modal_ajax.php",
                                             method: "POST",
                                             data: {
-                                                admId: admId, // Usando o valor já coletado
+                                                categoriaId: categoriaId, // Usando o valor já coletado
                                                 nome: nome,
-                                                email: email,
+                                                desc: desc,
                                                 status: status
                                             },
                                             dataType: "json",
@@ -379,25 +381,14 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 });
                             </script>
 
-                            <?php
-                            //deletar usuario                         
-                            if (isset($_POST['delete'])) {
 
-                                $admId = $_POST['delete'];
 
-                                if ($u->excluirAdmin($admId)) {
-                                    echo '<script>setTimeout(function(){ window.location.href = "listarAdmins.php"; }, 0010);</script>';
-                                    exit;
-                                } else {
-                                    echo 'Não foi possível excluir o administrador.';
-                                }
-                            }
-                            ?>
                         </tbody>
                     </table>
-                </div>
-                
-            </div>
+                </div><!--Fecha a tela central-->
+
+
+            </div> <!--Orienta a barra de pesquisa, o botão de categoria e a tabela-->
         </div> <!--Fecha a div do menu lateral-->
 
 

@@ -75,7 +75,7 @@ $u = new Usuario("charlie", "localhost", "root", "");
       </div>
     </div>
   </nav>
-
+ 
   <!--Menu lateral-->
   <div class="container-fluid">
     <div class="row flex-nowrap">
