@@ -242,8 +242,11 @@ $p = new Produto("charlie", "localhost", "root", "");
                             <div class="modal fade" id="add_data_Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-lg">
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Produto</h1>
+                                        <div class="modal-header d-flex align-items-center">
+                                            <h1 class="modal-title fs-5 me-1" id="staticBackdropLabel">Editar Produto:</h1>
+                                            <b>
+                                                <p class="fs-5 p-0 m-0" id="exibirProdutoId"></p>
+                                            </b>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
@@ -269,7 +272,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                                     <div>Imagem URL 2:</div>
                                                     <input type="url" class="form-control mb-2" id="url_img2" name="url_img2">
 
-                                                    <div>Imagem URL 2:</div>
+                                                    <div>Imagem URL 3:</div>
                                                     <input type="url" class="form-control" id="url_img3" name="url_img3">
                                                 </div>
                                                 <div class="mb-3">
@@ -331,6 +334,18 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 $(document).ready(function() {
                                     var produtoId;
 
+                                    function enableInput(nextInputId) {
+                                        var currentInput = document.getElementById(event.target.id);
+                                        var nextInput = document.getElementById(nextInputId);
+
+                                        if (currentInput.value.trim() !== "") {
+                                            nextInput.removeAttribute("disabled");
+                                        } else {
+                                            nextInput.value = "";
+                                            nextInput.setAttribute("disabled", "disabled");
+                                        }
+                                    }
+
                                     function carregarDadosProduto(produtoId) {
                                         $.ajax({
                                             url: "mostrarDadosModal_ajax.php",
@@ -342,25 +357,37 @@ $p = new Produto("charlie", "localhost", "root", "");
                                             success: function(data) {
                                                 console.log("Dados do produto:", data);
 
-                                                // Alterar as classes do elemento #container_imagens_produto
+                                                var exibirProdutoId = document.querySelector('#exibirProdutoId');
+                                                exibirProdutoId.innerHTML = produtoId;
+                                                // Altera as classes do elemento #container_imagens_produto
                                                 var containerImagens = $('#container_imagens_produto');
-                                                if (data.IMAGEM_URL !== null && data.IMAGEM_URL !== '') {
+                                                if (data.IMAGENS.length > 0) {
                                                     containerImagens.removeClass('d-flex justify-content-center').addClass('d-flex justify-content-between');
+
+                                                    // Limpar o conteúdo existente
+                                                    containerImagens.empty();
+
+                                                    // Criar elementos de imagem para cada URL no array
+                                                    for (var i = 0; i < data.IMAGENS.length; i++) {
+                                                        var imagemUrl = data.IMAGENS[i] || 'https://anest-iwata.com.br/wp-content/uploads/2016/10/Sem-imagem.png';
+                                                        var imagemElement = $('<img>').attr('src', imagemUrl);
+                                                        imagemElement.addClass('object-fit-contain mb-3');
+                                                        imagemElement.attr('width', 250);
+                                                        imagemElement.attr('height', 150);
+
+                                                        // Adicionar a imagem à div com id 'img_produto'+(i+1)
+                                                        var divId = 'img_produto' + (i + 1);
+                                                        var divElement = $('<div>').attr('id', divId).append(imagemElement);
+                                                        containerImagens.append(divElement);
+                                                    }
                                                 } else {
                                                     containerImagens.removeClass('d-flex justify-content-between').addClass('d-flex justify-content-center');
                                                 }
 
-                                                // Criar elemento de imagem e atribuir a URL
-                                                var imagemUrl = data.IMAGEM_URL || 'https://anest-iwata.com.br/wp-content/uploads/2016/10/Sem-imagem.png';
-                                                var imagemElement = $('<img>').attr('src', imagemUrl);
-                                                // Adicionar a imagem à div com id 'img_produto1'
-                                                $('#img_produto1').empty().append(imagemElement);
-                                                imagemElement.addClass('object-fit-contain mb-3');
-                                                imagemElement.attr('width', 250);
-                                                imagemElement.attr('height', 150);
-
                                                 // Preencher os campos do modal com os dados recebidos
-                                                $('#url_img1').val(imagemUrl); // Use a URL correta aqui
+                                                $('#url_img1').val(data.IMAGENS[0]);
+                                                $('#url_img2').val(data.IMAGENS[1]);
+                                                $('#url_img3').val(data.IMAGENS[2]);
                                                 $('#nome').val(data.PRODUTO_NOME);
                                                 $('#preco').val(data.PRODUTO_PRECO);
                                                 $('#desconto').val(data.PRODUTO_DESCONTO);
@@ -387,48 +414,53 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     });
 
 
-                                // ATUALIZAR DADOS COM AJAX //
-                                $('#insert_form').submit(function(e) {
-                                e.preventDefault(); // Evitar que o formulário seja enviado normalmente
+                                    // ATUALIZAR DADOS COM AJAX //
+                                    $('#insert_form').submit(function(e) {
+                                        e.preventDefault(); // Evitar que o formulário seja enviado normalmente
 
-                                // Coletar os dados do formulário
-                                var url_img = $('#url_img').val();
-                                var nome = $('#nome').val();
-                                var preco = $('#preco').val();
-                                var desconto = $('#desconto').val();
-                                var desc = $('#desc').val();
-                                var categoria = $('#categoria').val();
-                                var estoque = $('#estoque').val();
-                                var status = $('#status').prop('checked') ? 1 : 0; // 1 se estiver marcado, 0 se não estiver
+                                        // Coletar os dados do formulário
+                                        var url_img1 = $('#url_img1').val();
+                                        var url_img2 = $('#url_img2').val();
+                                        var url_img3 = $('#url_img3').val();
+                                        var nome = $('#nome').val();
+                                        var preco = $('#preco').val();
+                                        var desconto = $('#desconto').val();
+                                        var desc = $('#desc').val();
+                                        var categoria = $('#categoria').val();
+                                        var estoque = $('#estoque').val();
+                                        var status = $('#status').prop('checked') ? 1 : 0; // 1 se estiver marcado, 0 se não estiver
 
-                                // Executar a solicitação AJAX para atualizar os dados
-                                $.ajax({
-                                    url: "atualizar_modal_ajax.php",
-                                    method: "POST",
-                                    data: {
-                                        produtoId: produtoId, // Usando o valor já coletado
-                                        nome: nome,
-                                        preco: preco,
-                                        desconto: desconto,
-                                        desc: desc,
-                                        categoria: categoria,
-                                        estoque: estoque,
-                                        status: status,
-                                    },
-                                    dataType: "json",
-                                    success: function(data) {
-                                        console.log("Dados atualizados com sucesso:", data);
-                                        // Fechar o modal após a atualização
-                                        $('#add_data_Modal').modal('hide');
-                                        location.reload();
-                                    },
-                                    error: function(jqXHR, textStatus, errorThrown) {
-                                        $('#add_data_Modal').modal('hide');
-                                        console.error("Erro na solicitação Ajax:", textStatus, errorThrown);
-                                        console.log("Resposta do servidor:", jqXHR.responseText);
-                                    }
-                                });
-                                });
+                                        // Executar a solicitação AJAX para atualizar os dados
+                                        $.ajax({
+                                            url: "atualizar_modal_ajax.php",
+                                            method: "POST",
+                                            data: {
+                                                produtoId: produtoId, // Usando o valor já coletado
+                                                url_img1: url_img1,
+                                                url_img2: url_img2,
+                                                url_img3: url_img3,
+                                                nome: nome,
+                                                preco: preco,
+                                                desconto: desconto,
+                                                desc: desc,
+                                                categoria: categoria,
+                                                estoque: estoque,
+                                                status: status,
+                                            },
+                                            dataType: "json",
+                                            success: function(data) {
+                                                console.log("Dados atualizados com sucesso:", data);
+                                                // Fechar o modal após a atualização
+                                                $('#add_data_Modal').modal('hide');
+                                                location.reload();
+                                            },
+                                            error: function(jqXHR, textStatus, errorThrown) {
+                                                $('#add_data_Modal').modal('hide');
+                                                console.error("Erro na solicitação Ajax:", textStatus, errorThrown);
+                                                console.log("Resposta do servidor:", jqXHR.responseText);
+                                            }
+                                        });
+                                    });
                                 });
                             </script>
 
