@@ -185,8 +185,22 @@ class Produto
         $sql->execute();
     }
 }
-    
 
+
+public function getImagensProduto($produtoId) {
+    $sql = $this->pdo->prepare("SELECT IMAGEM_URL FROM PRODUTO_IMAGEM WHERE PRODUTO_ID = :produto_id");
+    try {
+        $sql->bindParam(':produto_id', $produtoId, PDO::PARAM_INT);
+        $sql->execute();
+
+        // Obter todas as URLs das imagens em um array
+        $imagens = $sql->fetchAll(PDO::FETCH_COLUMN);
+
+        return $imagens;
+    } catch (PDOException $e) {
+        die("Erro ao obter imagens do produto: " . $e->getMessage());
+    }
+}
 
 }
 
