@@ -205,7 +205,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                             </div>
 
 
-
+                                  <!--   BOTAO PARA ADICIONAR AS IMAGENS -->
                             <div class="col-md-6">
                                 
                                 <!-- Campo de url -->
@@ -215,11 +215,10 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 </div>
 
                                 <br>
-                                    
                                 <!-- Botao de adicionar mais campos -->
                                 <button type="button" class="btn btn-secondary" id="botaoAdicionarImagem" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Adicionar mais imagens</button>
 
-                            </div>
+                               </div>
 
                             <div class="col-md-6">
                                 <label for="descricao" class="form-label">Descrição</label>

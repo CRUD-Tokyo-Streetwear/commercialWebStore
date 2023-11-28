@@ -262,9 +262,6 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     
                                     </div>
 
-                                    <div class="modal-footer">
-
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -277,6 +274,8 @@ $p = new Produto("charlie", "localhost", "root", "");
             </div>
         </div> <!--Fecha a div do menu lateral-->
 
+
+        <!-- AJAX PARA EXIBIR AS FOTOS DO PRODUTO ESCOLHIDO -->
             <script>
                 $(document).ready(function() {
                     $('.abrir-modal').on('click', function() {
@@ -288,7 +287,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                             url: 'obter_imagens_ajax.php',
                             type: 'GET',
                             data: { produtoId: produtoId },
-                            dataType: 'json', // Especifica que estamos esperando uma resposta JSON
+                            dataType: 'json',
                             success: function(response) {
                                 exibirImagensNoModal(response);
                             },

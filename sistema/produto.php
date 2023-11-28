@@ -174,17 +174,34 @@ class Produto
     }
 
     public function cadastrarImagens($produtoId){
-    $imagemUrls = $_POST['imagem_url']; //imagens do formulario foram colocadas em um array
-
-    $sql = $this->pdo->prepare("INSERT INTO PRODUTO_IMAGEM (IMAGEM_ORDEM, PRODUTO_ID, IMAGEM_URL) VALUES (:imagemOrdem, :produtoId, :imagemUrl)");
-
-    foreach ($imagemUrls as $ordem => $imagemUrl) { //$imagemUrls é o array completo, $ordem é o indice do array, $imagemUrl é o conteudo da url
-        $sql->bindValue(':imagemOrdem', $ordem, PDO::PARAM_INT);
-        $sql->bindValue(':produtoId', $produtoId, PDO::PARAM_INT);
-        $sql->bindValue(':imagemUrl', $imagemUrl, PDO::PARAM_STR);
-        $sql->execute();
+        $imagemUrls = $_POST['imagem_url'];
+    
+        $sql = $this->pdo->prepare("INSERT INTO PRODUTO_IMAGEM (IMAGEM_ORDEM, PRODUTO_ID, IMAGEM_URL) VALUES (:imagemOrdem, :produtoId, :imagemUrl)");
+    
+        $urlValida = false;
+    
+        foreach ($imagemUrls as $ordem => $imagemUrl) {
+            if (!empty($imagemUrl) && filter_var($imagemUrl, FILTER_VALIDATE_URL)) {
+                $sql->bindValue(':imagemOrdem', $ordem, PDO::PARAM_INT);
+                $sql->bindValue(':produtoId', $produtoId, PDO::PARAM_INT);
+                $sql->bindValue(':imagemUrl', $imagemUrl, PDO::PARAM_STR);
+                $sql->execute();
+    
+                $urlValida = true;
+            } else {
+                // Se uma URL não válida ou vazia for encontrada, apenas ignore e continue para a próxima iteração
+                continue;
+            }
+        }
+    
+        // Se nenhuma URL válida foi encontrada, insira uma string vazia
+        if (!$urlValida) {
+            $sqlVazio = $this->pdo->prepare("INSERT INTO PRODUTO_IMAGEM (IMAGEM_ORDEM, PRODUTO_ID, IMAGEM_URL) VALUES (:imagemOrdem, :produtoId, '')");
+            $sqlVazio->bindValue(':imagemOrdem', 0, PDO::PARAM_INT); // Defina o valor desejado para IMAGEM_ORDEM
+            $sqlVazio->bindValue(':produtoId', $produtoId, PDO::PARAM_INT);
+            $sqlVazio->execute();
+        }
     }
-}
 
 
 public function getImagensProduto($produtoId) {
