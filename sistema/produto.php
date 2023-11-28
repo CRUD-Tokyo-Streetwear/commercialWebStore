@@ -32,9 +32,8 @@ class Produto
         }
     }
 
-    public function mostrarDadosProduto($produtoId) //Exibe o produto no modal de edição
+    public function mostrarDadosProduto($produtoId)
     {
-
         $sql = $this->pdo->prepare("SELECT P.PRODUTO_NOME, I.IMAGEM_URL, P.PRODUTO_DESC, P.PRODUTO_PRECO,
          P.PRODUTO_DESCONTO, P.PRODUTO_ATIVO, C.CATEGORIA_NOME, E.PRODUTO_QTD
         FROM PRODUTO P 
@@ -43,19 +42,34 @@ class Produto
         INNER JOIN PRODUTO_IMAGEM I ON P.PRODUTO_ID = I.PRODUTO_ID
         WHERE P.PRODUTO_ID = :id");
 
-
         $sql->bindValue(":id", $produtoId);
         $sql->execute();
 
-        if ($sql->rowCount() > 0) { // Verifique se a categoria existe no banco
+        if ($sql->rowCount() > 0) {
             $result = $sql->fetch(PDO::FETCH_ASSOC);
-            return $result; // Retorna um array associativo com todos os dados da categoria
+
+            // Inicializa um array para armazenar as URLs de imagem
+            $imagens = [];
+
+            // Adiciona a primeira URL de imagem
+            $imagens[] = $result['IMAGEM_URL'];
+
+            // Continua adicionando URLs de imagem enquanto houver mais resultados
+            while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
+                $imagens[] = $row['IMAGEM_URL'];
+            }
+
+            // Adiciona o array de URLs de imagem ao resultado final
+            $result['IMAGENS'] = $imagens;
+
+            return $result;
         }
-        return false; // Retorna falso se não encontrar a categoria
+
+        return false;
     }
 
 
-    public function atualizarProdutoModal($produtoId, $novoNome, $novaDesc, $novoPreco, $novoDesconto, $novaCategoria, $novoEstoque, $novaImagem ,$novoStatus)
+    public function atualizarProdutoModal($produtoId, $novoNome, $novaDesc, $novoPreco, $novoDesconto, $novaCategoria, $novoEstoque, $imgURLs, $novoStatus)
     {
 
         // Atualiza os dados do Produto na tabela PRODUTO
@@ -79,12 +93,18 @@ class Produto
         $sqlEstoque->bindValue(":id", $produtoId);
         $sqlEstoque->execute();
 
-        $sqlImagem = $this->pdo->prepare("UPDATE PRODUTO_IMAGEM
-        SET IMAGEM_URL = :novaImagem
-        WHERE PRODUTO_ID = :id");
-        $sqlImagem->bindValue(":novaImagem", $novaImagem);
-        $sqlImagem->bindValue(":id", $produtoId);
-        $sqlImagem->execute();
+        // Atualiza as imagens na tabela PRODUTO_IMAGEM
+
+        $sqlImagemUpdate = $this->pdo->prepare("UPDATE PRODUTO_IMAGEM
+        SET IMAGEM_URL = :imgURL
+        WHERE PRODUTO_ID = :id AND IMAGEM_ORDEM = :ordem");
+
+        foreach ($imgURLs as $ordem => $imgURL) {
+            $sqlImagemUpdate->bindValue(":ordem", $ordem);
+            $sqlImagemUpdate->bindValue(":imgURL", $imgURL);
+            $sqlImagemUpdate->bindValue(":id", $produtoId);
+            $sqlImagemUpdate->execute();
+        }
 
         return true; // Dados atualizados com sucesso
     }
