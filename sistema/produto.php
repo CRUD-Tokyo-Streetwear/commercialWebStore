@@ -93,17 +93,41 @@ class Produto
         $sqlEstoque->bindValue(":id", $produtoId);
         $sqlEstoque->execute();
 
-        // Atualiza as imagens na tabela PRODUTO_IMAGEM
+        //Verifica quantos campos de imagem_url tem um determinado produto
+        $sqlImagemSelect = $this->pdo->prepare("SELECT *
+        FROM PRODUTO_IMAGEM 
+        WHERE PRODUTO_ID = :id");
+        $sqlImagemSelect->bindValue(":id", $produtoId);
+        $sqlImagemSelect->execute();
 
+        $numeroDeLinhas = $sqlImagemSelect->rowCount();
+
+
+        // Atualiza as imagens na tabela PRODUTO_IMAGEM
         $sqlImagemUpdate = $this->pdo->prepare("UPDATE PRODUTO_IMAGEM
         SET IMAGEM_URL = :imgURL
         WHERE PRODUTO_ID = :id AND IMAGEM_ORDEM = :ordem");
 
-        foreach ($imgURLs as $ordem => $imgURL) {
+        $ordem = 0;
+        $limiteURLs = 3;
+
+        for ($ordem; $ordem < $numeroDeLinhas; $ordem++) {
             $sqlImagemUpdate->bindValue(":ordem", $ordem);
-            $sqlImagemUpdate->bindValue(":imgURL", $imgURL);
+            $sqlImagemUpdate->bindValue(":imgURL", $imgURLs[$ordem]);
             $sqlImagemUpdate->bindValue(":id", $produtoId);
             $sqlImagemUpdate->execute();
+        }
+
+        //Insere as imagens na tabela PRODUTO_IMAGEM
+        $sqlImagemInsert = $this->pdo->prepare("INSERT INTO PRODUTO_IMAGEM
+        (IMAGEM_ORDEM, PRODUTO_ID, IMAGEM_URL)
+        VALUES (:ordem, :id, :imgURL)");
+
+        for ($ordem; $ordem < $limiteURLs; $ordem++) {
+            $sqlImagemInsert->bindValue(":ordem", $ordem);
+            $sqlImagemInsert->bindValue(":imgURL", $imgURLs[$ordem]);
+            $sqlImagemInsert->bindValue(":id", $produtoId);
+            $sqlImagemInsert->execute();
         }
 
         return true; // Dados atualizados com sucesso
@@ -220,22 +244,31 @@ class Produto
         if ($sql->rowCount() > 0) {
             return $sql;
         } else {
-            echo "Nenhuma categoria encontrada!";
+            echo '<div class="fs-5" style="position: absolute; top: 53%; left: 58%; transform: translate(-50%, -50%);">Nenhuma categoria cadastrada...</div>';
         }
     }
 
     public function adicionarCategoria($nome_categoria, $descricao_categoria, $produto_ativo_categoria) //Inserindo nova categoria no banco de dados
     {
-        $sql = $this->pdo->prepare("INSERT INTO categoria (categoria_nome, categoria_desc, categoria_ativo)
-        VALUES (:n, :c, :a)");
+        $sqlSelect = $this->pdo->prepare("SELECT CATEGORIA_NOME, CATEGORIA_DESC
+        FROM CATEGORIA
+        WHERE CATEGORIA_NOME = '$nome_categoria' AND CATEGORIA_DESC = '$descricao_categoria'");
+        $sqlSelect->execute();
 
-        $sql->bindValue(":n", $nome_categoria);
-        $sql->bindValue(":c", $descricao_categoria);
-        $sql->bindValue(":a", $produto_ativo_categoria);
-        $sql->execute();
-        return true;
+        if ($sqlSelect->rowCount() > 0) {
+            echo '<div class="alert alert-danger" role="alert">
+        Categoria já cadastrada!
+        </div>';
+        } else {
+            $sql = $this->pdo->prepare("INSERT INTO CATEGORIA (CATEGORIA_NOME, CATEGORIA_DESC, CATEGORIA_ATIVO)
+            VALUES (:n, :c, :a)");
+            $sql->bindValue(":n", $nome_categoria);
+            $sql->bindValue(":c", $descricao_categoria);
+            $sql->bindValue(":a", $produto_ativo_categoria);
+            $sql->execute();
+            return true;
+        }
     }
-
 
     public function excluirCategoria($categoriaId)  //Exclui uma instância de produto do BD
     {
