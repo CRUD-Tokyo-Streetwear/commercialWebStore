@@ -317,7 +317,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                             </div>
 
 
-
+                                  <!--   BOTAO PARA ADICIONAR AS IMAGENS -->
                             <div class="col-md-6">
 
                                 <!-- Campo de url -->
