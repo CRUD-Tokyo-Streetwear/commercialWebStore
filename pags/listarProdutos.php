@@ -26,6 +26,8 @@ $p = new Produto("charlie", "localhost", "root", "");
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body class="bg-light overflow-y-hidden">
@@ -175,10 +177,13 @@ $p = new Produto("charlie", "localhost", "root", "");
                                         // Se não, adiciona o produto ao array
                                         $produtos[$product_data['PRODUTO_ID']] = $product_data;
                                     }
-                                }
+                            }
+                                
+
 
                                 // Agora, itera sobre os produtos únicos e exibe na tabela
                                 foreach ($produtos as $product_data) {
+
                                     $product_data['PRODUTO_ATIVO'] = $product_data['PRODUTO_ATIVO'] == 1 ? 'Ativo' : 'Inativo'; // Trocar os valores 0 e 1 para Ativo ou Não
 
                                     echo '<tr>';
@@ -186,11 +191,15 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                                     if (isset($product_data['IMAGEM_URL']) && $product_data['IMAGEM_URL'] !== "") {
 
-                                        // botao para aparecer carrossel de imagem
+                                        // Imagem do produto que ao clicar abre um carrossel com as demais imagens//
                                         echo '<td>';
-                                        echo '<button type="button" class="btn btn-link" data-toggle="modal" data-target="#carouselModal' . $product_data['PRODUTO_ID'] . '">
-                                                  <img src="' . $product_data['IMAGEM_URL'] . '" alt="Imagem do produto" class="rounded-4" style="width: 70px; height: 70px; object-fit: contain;">
-                                               </button>';
+                                        echo '<button type="button" class="btn btn-link abrir-modal" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#exampleModal" 
+                                        data-id="' . $product_data['PRODUTO_ID'] . '">';
+                                        echo '<img src="' . $product_data['IMAGEM_URL'] . '" 
+                                        alt="Imagem do produto" class="rounded-4" style="width: 70px; height: 70px; object-fit: contain;">';
+                                        echo '</button>';
                                         echo '</td>';
                                     } else {
                                         echo '<td><img src="../images/noProductImage.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>';
@@ -223,7 +232,6 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo '</tr>';
                                 }
                             }
-
                             if (isset($_POST['delete'])) {  //Chama o método de excluir produto se a pessoa clicar no ícone de lixeira
 
                                 $produtoId = $_POST['delete'];
@@ -235,7 +243,6 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo 'Não foi possível excluir o produto.';
                                 }
                             }
-
                             ?>
 
                             <!-- Modal att produto -->
@@ -465,18 +472,92 @@ $p = new Produto("charlie", "localhost", "root", "");
                             </script>
 
                         </tbody>
+
+
+                        <!-- Modal Ao apertar na imagem-->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Detalhes do Produto</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body" id="modal-content">
+                                        
+                                    
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
                     </table>
+
+
                 </div>
 
             </div>
         </div> <!--Fecha a div do menu lateral-->
 
-        <script>
-            $(document).ready(function() {
-                // Inicializa o carrossel quando a página é carregada
-                $('.carousel').carousel();
-            });
-        </script>
+
+        <!-- AJAX PARA EXIBIR AS FOTOS DO PRODUTO ESCOLHIDO -->
+            <script>
+                $(document).ready(function() {
+                    $('.abrir-modal').on('click', function() {
+                        var produtoId = $(this).data('id');
+                        console.log(produtoId)
+
+                        // Fazer a solicitação AJAX para obter as imagens do produto
+                        $.ajax({
+                            url: 'obter_imagens_ajax.php',
+                            type: 'GET',
+                            data: { produtoId: produtoId },
+                            dataType: 'json',
+                            success: function(response) {
+                                exibirImagensNoModal(response);
+                            },
+                            error: function(error) {
+                                console.error('Erro na solicitação AJAX:', error);
+                            }
+                        });
+                    });
+
+                    function exibirImagensNoModal(imagens) {
+                        // Limpar o conteúdo existente do modal
+                        $('#modal-content').empty();
+
+                        // Adicionar cada imagem ao modal com as classes para centralização
+                        imagens.forEach(function(imagemUrl) {
+                            var imagemElement = $('<img src="' + imagemUrl + '" class="img-fluid img-thumbnail imagem-aparencia" alt="Imagem do Produto">');
+                            var contenedorElement = $('<div class="imagem-flex"></div>').append(imagemElement);
+
+                            $('#modal-content').append(contenedorElement);
+                        });
+
+                        // Abrir o modal
+                        $('#exampleModal').modal('show');
+                    }
+                });
+            </script>
+
+        <style>
+            .imagem-flex {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .imagem-aparencia{
+                width: 60%;
+                margin-top: 20px;
+                background-color: #1e1e1e;
+            }
+        </style>
+           
+
+
+
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
