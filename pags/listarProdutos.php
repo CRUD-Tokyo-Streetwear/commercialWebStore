@@ -363,7 +363,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                                 var containerImagens = $('#container_imagens_produto');
                                                 if (data.IMAGENS.length > 0) {
                                                     containerImagens.removeClass('d-flex justify-content-center').addClass('d-flex justify-content-between');
-
+ 
                                                     // Limpar o conteúdo existente
                                                     containerImagens.empty();
 

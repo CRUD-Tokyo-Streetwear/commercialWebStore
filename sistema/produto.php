@@ -132,7 +132,7 @@ class Produto
 
         return true; // Dados atualizados com sucesso
     }
-
+ 
 
     public function pesquisarProduto() //Pesquisa instâncias de produto do BD
     {
