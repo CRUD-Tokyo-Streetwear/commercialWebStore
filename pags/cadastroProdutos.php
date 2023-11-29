@@ -280,21 +280,19 @@ $p = new Produto("Charlie", "144.22.157.228:3306", "Charlie", "Charlie");
 
                             <div class="col-md-6">
                                 <label for="nome" class="form-label">Nome</label>
-                                <input type="text" class="form-control" name="nome">
+                                <input type="text" placeholder="Nome do Produto" class="form-control" name="nome">
                             </div>
                             <div class="col-md-6">
                                 <label for="preco" class="form-label">Preço</label>
-                                <input type="text" class="form-control" name="preco" required>
+                                <input type="text" placeholder="R$ 0,00" class="form-control" name="preco" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="precoDesconto" class="form-label">Desconto</label>
-                                <input type="text" class="form-control" id="precoDesconto" name="preco_desconto">
+                                <input type="text" placeholder="0,00%" class="form-control" id="precoDesconto" name="preco_desconto">
                             </div>
                             <div class="col-md-6">
                                 <label for="Estoque" class="form-label">Estoque</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="estoque" name="produtoQtd">
-                                </div>
+                                <input type="text" placeholder="Quantidade" class="form-control" id="estoque" name="produtoQtd">
                             </div>
 
                             <div class="col-md-6 mt-5"><!--div da categoria-->
@@ -318,7 +316,7 @@ $p = new Produto("Charlie", "144.22.157.228:3306", "Charlie", "Charlie");
 
                             <div class="col-md-6">
                                 <label for="descricao" class="form-label">Descrição</label>
-                                <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
+                                <textarea class="form-control" placeholder="Camiseta preta..." id="descricao" name="descricao" rows="3" required></textarea>
                             </div>
 
                             <!--   BOTAO PARA ADICIONAR AS IMAGENS -->
