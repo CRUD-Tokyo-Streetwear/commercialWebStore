@@ -285,13 +285,13 @@ $p = new Produto("charlie", "localhost", "root", "");
                                                 </div>
                                                 <div class="form-check">
                                                     <label class="form-check-label" for="status">Status</label>
-                                                    <input type="checkbox" class="form-check-input" id="status" name="status">
+                                                    <input type="checkbox" class="form-check-input bg-danger border-0" id="status" name="status">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ignorar</button>
 
                                                     <input type="hidden" name="admId" id="admId">
-                                                    <button type="submit" class="btn btn-primary" id="enviar" value="enviar" name="enviar">Salvar</button>
+                                                    <button type="submit" class="btn btn-dark" id="enviar" value="enviar" name="enviar">Salvar</button>
                                                 </div>
                                             </form>
                                         </div>
