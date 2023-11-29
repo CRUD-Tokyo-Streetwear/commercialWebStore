@@ -55,7 +55,8 @@ $u = new Usuario("charlie", "localhost", "root", "");
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                   <p class="m-0 pe-1">
                     <?php
-                    echo $u->mostrarDadosAdmin()['ADM_NOME'];
+                    $admId = $_SESSION['ADM_ID'];
+                    echo $u->mostrarDadosAdmin($admId)['ADM_NOME'];
                     ?>
                   </p>
                 </a>
@@ -74,7 +75,7 @@ $u = new Usuario("charlie", "localhost", "root", "");
       </div>
     </div>
   </nav>
-
+ 
   <!--Menu lateral-->
   <div class="container-fluid">
     <div class="row flex-nowrap">

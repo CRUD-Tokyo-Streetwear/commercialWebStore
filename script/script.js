@@ -7,15 +7,9 @@ function exibirCaixaDeDialogo() {
     }, 2000);
 }
 
-exibirCaixaDeDialogo();
+exibirCaixaDeDialogo(); 
 
-// Adiciona um novo campo de imagem URL.
-function adicionarInputUrl() {
-    const containerImagens = document.getElementById('containerImagens');
-    const novoInput = document.createElement('input');
-    novoInput.type = 'text';
-    novoInput.name = 'imagem_url';
-    novoInput.className = 'form-control';
-    
-    containerImagens.appendChild(novoInput);
+//Atualiza a pág com o parâmetro passado em milimêtros
+function attPag(timeToAtt) {
+    setTimeout(function () { window.location.href = "cadastroProdutos.php"; }, timeToAtt);
 }
