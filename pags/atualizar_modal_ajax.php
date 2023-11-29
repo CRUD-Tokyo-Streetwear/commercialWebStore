@@ -2,8 +2,9 @@
 require_once('../sistema/usuario.php');
 require_once('../sistema/produto.php');
 
-$p = new Produto("charlie", "localhost", "root", "");
-$u = new Usuario("charlie", "localhost", "root", "");
+$p = new Produto("Charlie", "144.22.157.228:3306", "Charlie", "Charlie");
+$u = new Usuario("Charlie", "144.22.157.228:3306", "Charlie", "Charlie");
+
 
 
 // Coletar dados da solicitação AJAX ADMINISTRADOR

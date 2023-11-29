@@ -27,7 +27,7 @@ if (!isset($_SESSION['ADM_ID'])) {
 
   <?php
   require_once('../sistema/usuario.php');
-  $u = new Usuario("charlie", "localhost", "root", "");
+  $u = new Usuario("Charlie", "144.22.157.228:3306", "Charlie", "Charlie");
 
   //adicionar imagem de adm
   if (isset($_POST['submit']) && (isset($_FILES['upload']))) {

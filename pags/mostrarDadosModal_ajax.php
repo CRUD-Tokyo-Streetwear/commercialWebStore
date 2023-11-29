@@ -2,8 +2,8 @@
 require_once('../sistema/usuario.php');
 require_once('../sistema/produto.php');
 
-$u = new Usuario("charlie", "localhost", "root", "");
-$p = new Produto("charlie", "localhost", "root", "");
+$u = new Usuario("Charlie", "144.22.157.228:3306", "Charlie", "Charlie");
+$p = new Produto("Charlie", "144.22.157.228:3306", "Charlie", "Charlie");
 
 //Exibe administrador
 if (isset($_POST['admId'])) {

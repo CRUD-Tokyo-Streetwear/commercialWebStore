@@ -8,8 +8,8 @@ if (!isset($_SESSION['ADM_ID'])) {
 
 require_once('../sistema/usuario.php');
 require_once('../sistema/produto.php');
-$u = new Usuario("charlie", "localhost", "root", "");
-$p = new Produto("charlie", "localhost", "root", "");
+$u = new Usuario("Charlie", "144.22.157.228:3306", "Charlie", "Charlie");
+$p = new Produto("Charlie", "144.22.157.228:3306", "Charlie", "Charlie");
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +25,7 @@ $p = new Produto("charlie", "localhost", "root", "");
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
@@ -203,7 +203,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                         echo '<td><img src="../images/noProductImage.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>';
                                     }
                                     echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';
-                                    echo '<td>' . 'R$ ' . $product_data['PRODUTO_PRECO'] .',00'. '</td>';
+                                    echo '<td style="white-space: nowrap;">' . 'R$ ' . $product_data['PRODUTO_PRECO'] . '</td>';
                                     echo '<td>' . $product_data['PRODUTO_DESCONTO'] . '%' . '</td>';
                                     echo '<td>' . $product_data['CATEGORIA_NOME'] . '</td>';
                                     echo '<td>' . $product_data['PRODUTO_QTD'] . '</td>';
@@ -215,7 +215,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     //Botao para Atualizar produto
                                     echo '<button type="button" name="edit" value="Edit" id="' . $product_data['PRODUTO_ID'] . '"
                                     class="btn btn-primary open-modal edit_data" data-bs-toggle="modal" data-bs-target="#add_data_Modal" style="border: none; outline: none; background: transparent; padding-top: 2px;">';
-                                    echo '<img src="../images\pencilIcon.png" style="width:18px;" >';
+                                    echo '<img src="../images\pencilIcon.png" id="editPencil" style="width:18px;" >';
                                     echo '</button>';
 
                                     //Botao para Deletar produto
@@ -554,10 +554,6 @@ $p = new Produto("charlie", "localhost", "root", "");
                 background-color: #1e1e1e;
             }
         </style>
-
-
-
-
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

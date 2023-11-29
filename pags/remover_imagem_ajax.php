@@ -1,7 +1,7 @@
 <?php
 require_once('../sistema/usuario.php');
 
-$u = new Usuario("charlie", "localhost", "root", "");
+$u = new Usuario("Charlie", "144.22.157.228:3306", "Charlie", "Charlie");
 
 try {
     session_start();
