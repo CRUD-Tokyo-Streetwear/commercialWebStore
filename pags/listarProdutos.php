@@ -203,7 +203,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                         echo '<td><img src="../images/noProductImage.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>';
                                     }
                                     echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';
-                                    echo '<td>' . 'R$ ' . $product_data['PRODUTO_PRECO'] . '</td>';
+                                    echo '<td>' . 'R$ ' . $product_data['PRODUTO_PRECO'] .',00'. '</td>';
                                     echo '<td>' . $product_data['PRODUTO_DESCONTO'] . '%' . '</td>';
                                     echo '<td>' . $product_data['CATEGORIA_NOME'] . '</td>';
                                     echo '<td>' . $product_data['PRODUTO_QTD'] . '</td>';
@@ -258,9 +258,9 @@ $p = new Produto("charlie", "localhost", "root", "");
                                             <form method="POST" id="insert_form">
 
                                                 <div class="d-flex justify-content-around text-light">
-                                                    <label for="url_img1" class="form-label bg-primary text-center border border-black border-1" style="width: 25px; height: 25px;">1</label>
-                                                    <label for="url_img2" class="form-label bg-primary text-center border border-black border-1" style="width: 25px; height: 25px;">2</label>
-                                                    <label for="url_img3" class="form-label bg-primary text-center border border-black border-1" style="width: 25px; height: 25px;">3</label>
+                                                    <label for="url_img1" class="form-label bg-dark text-center border border-black border-1" style="width: 25px; height: 25px;">1</label>
+                                                    <label for="url_img2" class="form-label bg-dark text-center border border-black border-1" style="width: 25px; height: 25px;">2</label>
+                                                    <label for="url_img3" class="form-label bg-dark text-center border border-black border-1" style="width: 25px; height: 25px;">3</label>
 
                                                 </div>
 
