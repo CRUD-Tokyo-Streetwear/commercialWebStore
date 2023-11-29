@@ -25,7 +25,7 @@ $u = new Usuario("charlie", "localhost", "root", "");
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="bg-light overflow-y-hidden">
+<body class="overflow-y-hidden" style="background-color:#e5e3e3;">
 
   <!--Barra de navegação-->
   <nav class="navbar" style="background-color: black;">

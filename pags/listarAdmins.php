@@ -175,7 +175,7 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                        <button type="submit" class="btn btn-primary" name="cadastrarAdmin">Cadastrar</button>
+                                        <button type="submit" class="btn btn-dark" name="cadastrarAdmin">Cadastrar</button>
                                     </div>
 
                                 </form>
