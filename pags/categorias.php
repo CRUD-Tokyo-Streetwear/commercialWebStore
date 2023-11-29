@@ -135,11 +135,18 @@ $p = new Produto("charlie", "localhost", "root", "");
                     </form>
 
 
-                    <div class="col col-xl-3 d-flex justify-content-around align-items-center">
+                    <div class="col col-xl-5 d-flex justify-content-around align-items-center">
+
+
+                        <a href="cadastroProdutos.php" class="nav-link text-light">
+                            <div class="fs-5 p-2 rounded-2" style="background-color: #202020; font-weight: 600; white-space: nowrap;">
+                                Cadastrar produto
+                            </div>
+                        </a>
 
                         <!--Botão para add nova categoria-->
                         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            <div class="fs-5 p-2 text-light rounded-2" style="background-color: #202020; font-weight: 600;">
+                            <div class="fs-5 p-2 text-light rounded-2" style="background-color: #202020; font-weight: 600;white-space: nowrap;">
                                 adicionar categoria
                             </div>
                         </button>

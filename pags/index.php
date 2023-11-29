@@ -13,13 +13,20 @@ if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
       $email = addslashes($_POST['email']);
       $senha = addslashes($_POST['password']);
 
-      if ($u->logar($email, $senha)) { // Não houve erro e foi executado o método logar
-          header("location: pagInicio.php"); //direcionando para a area privada
-      } else {
-        echo '<div class="alert alert-danger" role="alert">
-        Email ou senha invalidos
-        </div>'; // nao foi possivel logar 
-      }
+      if ($u->logar($email, $senha)) {
+        header("location: pagInicio.php");
+    } else {
+        echo '<div id="mensagemErro" class="alert alert-danger" role="alert">
+            Email ou senha inválidos
+            </div>';
+        
+        echo '<script>
+            setTimeout(function() {
+                document.getElementById("mensagemErro").style.display = "none";
+            }, 3000);
+            </script>';
+    }
+
   } else {
       echo '<div class="alert alert-danger" role="alert">
       Preencha todos os campos!

@@ -316,26 +316,23 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 </select>
                             </div>
 
-
-                                  <!--   BOTAO PARA ADICIONAR AS IMAGENS -->
                             <div class="col-md-6">
+                                <label for="descricao" class="form-label">Descrição</label>
+                                <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
+                            </div>
 
+                            <!--   BOTAO PARA ADICIONAR AS IMAGENS -->
+                            <div class="col-md-6">
                                 <!-- Campo de url -->
                                 <div id="containerImagens" class="col-md-6">
                                     <label for="botaoAdicionarImagem" class="form-label">Imagem URL</label>
                                     <input type="text" class="form-control imagem-url" name="imagem_url[]">
                                 </div>
-
                                 <br>
-
                                 <!-- Botao de adicionar mais campos -->
                                 <button type="button" class="btn btn-dark" id="botaoAdicionarImagem" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Adicionar mais imagens</button>
                             </div>
 
-                            <div class="col-md-6">
-                                <label for="descricao" class="form-label">Descrição</label>
-                                <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
-                            </div>
                             <div class="d-flex mb-4 ms-3 mt-5 form-check">
                                 <input type="checkbox" class="form-check-input" id="produto_ativo" name="produto_ativo" checked>
                                 <label class="form-check-label ms-2" for="produto_Ativo">Produto Ativo</label>
