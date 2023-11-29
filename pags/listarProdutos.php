@@ -177,9 +177,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                         // Se não, adiciona o produto ao array
                                         $produtos[$product_data['PRODUTO_ID']] = $product_data;
                                     }
-                            }
-                                
-
+                                }
 
                                 // Agora, itera sobre os produtos únicos e exibe na tabela
                                 foreach ($produtos as $product_data) {
@@ -189,7 +187,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     echo '<tr>';
                                     echo '<th scope="row">' . $product_data['PRODUTO_ID'] . "</th>";
 
-                                    if (isset($product_data['IMAGEM_URL']) && $product_data['IMAGEM_URL'] !== "") {
+                                    if (isset($product_data['IMAGEM_URL']) && !empty($product_data['IMAGEM_URL'])) {
 
                                         // Imagem do produto que ao clicar abre um carrossel com as demais imagens//
                                         echo '<td>';
@@ -370,7 +368,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                                 var containerImagens = $('#container_imagens_produto');
                                                 if (data.IMAGENS.length > 0) {
                                                     containerImagens.removeClass('d-flex justify-content-center').addClass('d-flex justify-content-between');
- 
+
                                                     // Limpar o conteúdo existente
                                                     containerImagens.empty();
 
@@ -484,8 +482,8 @@ $p = new Produto("charlie", "localhost", "root", "");
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body" id="modal-content">
-                                        
-                                    
+
+
                                     </div>
 
                                 </div>
@@ -502,44 +500,46 @@ $p = new Produto("charlie", "localhost", "root", "");
 
 
         <!-- AJAX PARA EXIBIR AS FOTOS DO PRODUTO ESCOLHIDO -->
-            <script>
-                $(document).ready(function() {
-                    $('.abrir-modal').on('click', function() {
-                        var produtoId = $(this).data('id');
-                        console.log(produtoId)
+        <script>
+            $(document).ready(function() {
+                $('.abrir-modal').on('click', function() {
+                    var produtoId = $(this).data('id');
+                    console.log(produtoId)
 
-                        // Fazer a solicitação AJAX para obter as imagens do produto
-                        $.ajax({
-                            url: 'obter_imagens_ajax.php',
-                            type: 'GET',
-                            data: { produtoId: produtoId },
-                            dataType: 'json',
-                            success: function(response) {
-                                exibirImagensNoModal(response);
-                            },
-                            error: function(error) {
-                                console.error('Erro na solicitação AJAX:', error);
-                            }
-                        });
+                    // Fazer a solicitação AJAX para obter as imagens do produto
+                    $.ajax({
+                        url: 'obter_imagens_ajax.php',
+                        type: 'GET',
+                        data: {
+                            produtoId: produtoId
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            exibirImagensNoModal(response);
+                        },
+                        error: function(error) {
+                            console.error('Erro na solicitação AJAX:', error);
+                        }
+                    });
+                });
+
+                function exibirImagensNoModal(imagens) {
+                    // Limpar o conteúdo existente do modal
+                    $('#modal-content').empty();
+
+                    // Adicionar cada imagem ao modal com as classes para centralização
+                    imagens.forEach(function(imagemUrl) {
+                        var imagemElement = $('<img src="' + imagemUrl + '" class="img-fluid img-thumbnail imagem-aparencia" alt="Imagem do Produto">');
+                        var contenedorElement = $('<div class="imagem-flex"></div>').append(imagemElement);
+
+                        $('#modal-content').append(contenedorElement);
                     });
 
-                    function exibirImagensNoModal(imagens) {
-                        // Limpar o conteúdo existente do modal
-                        $('#modal-content').empty();
-
-                        // Adicionar cada imagem ao modal com as classes para centralização
-                        imagens.forEach(function(imagemUrl) {
-                            var imagemElement = $('<img src="' + imagemUrl + '" class="img-fluid img-thumbnail imagem-aparencia" alt="Imagem do Produto">');
-                            var contenedorElement = $('<div class="imagem-flex"></div>').append(imagemElement);
-
-                            $('#modal-content').append(contenedorElement);
-                        });
-
-                        // Abrir o modal
-                        $('#exampleModal').modal('show');
-                    }
-                });
-            </script>
+                    // Abrir o modal
+                    $('#exampleModal').modal('show');
+                }
+            });
+        </script>
 
         <style>
             .imagem-flex {
@@ -548,13 +548,13 @@ $p = new Produto("charlie", "localhost", "root", "");
                 align-items: center;
             }
 
-            .imagem-aparencia{
+            .imagem-aparencia {
                 width: 60%;
                 margin-top: 20px;
                 background-color: #1e1e1e;
             }
         </style>
-           
+
 
 
 
