@@ -75,7 +75,7 @@ $p = new Produto("charlie", "localhost", "root", "");
         </div>
     </nav>
 
-    <!--Menu lateral-->
+    <!--Menu laterall-->
     <div class="container-fluid">
         <div class="row flex-nowrap">
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 min-vh-100 bg-dark">
