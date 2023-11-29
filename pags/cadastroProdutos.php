@@ -25,7 +25,7 @@ $p = new Produto("charlie", "localhost", "root", "");
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="bg-light">
+<body style="background-color:#e5e3e3;">
 
     <!--Barra de navegação-->
     <nav class="navbar" style="background-color: black;">
@@ -76,7 +76,7 @@ $p = new Produto("charlie", "localhost", "root", "");
         </div>
     </nav>
 
-    <!--Menu lateral-->
+    <!--Menu laterall-->
     <div class="container-fluid">
         <div class="row flex-nowrap">
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 min-vh-100 bg-dark">
@@ -119,7 +119,7 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                 <div class="d-flex justify-content-end align-items-center">
                     <a href="categorias.php" class="nav-link text-light">
-                        <div class="fs-5 p-2 rounded-2" style="background-color: #202020; font-weight: 600">
+                        <div class="fs-5 p-2 rounded-2" style="background-color: #202020; font-weight: 500">
                             Categorias
                         </div>
                     </a>
@@ -338,7 +338,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 <label class="form-check-label ms-2" for="produto_Ativo">Produto Ativo</label>
                             </div>
 
-                            <!-- salvar alterações -->
+                            <!-- Salvar alterações -->
                             <div class="col-md-6 ms-2">
                                 <button type="submit" class="btn btn-dark" name="botao">Cadastrar</button>
                             </div>

@@ -23,7 +23,7 @@ if (!isset($_SESSION['ADM_ID'])) {
 
 </head>
 
-<body class="bg-light overflow-y-hidden">
+<body class="overflow-y-hidden" style="background-color:#e5e3e3;">
 
   <?php
   require_once('../sistema/usuario.php');
@@ -140,7 +140,7 @@ if (!isset($_SESSION['ADM_ID'])) {
 
       <!--Tela central-->
     <div class=" d-flex align-items-center col col-10 mt-4" style="height: 90vh;">
-      <div class="container d-flex flex-column align-items-center justify-content-center border rounded-4 mb-5" style="height: 80%;">
+      <div class="container d-flex flex-column align-items-center justify-content-center border rounded-4 mb-5" style="background:#f0f0f0; height: 80%;">
 
         <div class="imagem-perfil-container">
           <?php
