@@ -177,7 +177,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                         <textarea class="form-control" id="descricao" name="descricao_categoria" rows="3" required></textarea>
                                     </div>
                                     <div class="mt-3">
-                                        <input type="checkbox" class="form-check-input" id="produto_Ativo" name="produto_ativo_categoria" checked>
+                                        <input type="checkbox" class="form-check-input bg-danger border-0" id="produto_Ativo" name="produto_ativo_categoria" checked>
                                         <label class="form-check-label ms-2" for="produto_Ativo">Categoria ativo</label>
                                     </div>
                             </div>
@@ -293,13 +293,13 @@ $p = new Produto("charlie", "localhost", "root", "");
                                                 </div>
                                                 <div class="form-check">
                                                     <label class="form-check-label" for="status">Status</label>
-                                                    <input type="checkbox" class="form-check-input" id="status" name="status">
+                                                    <input type="checkbox" class="form-check-input bg-danger border-0" id="status" name="status">
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ignorar</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">fechar</button>
 
                                                     <input type="hidden" name="categoriaId" id="categoriaId">
-                                                    <button type="submit" class="btn btn-primary" id="enviar" value="enviar" name="enviar">Salvar</button>
+                                                    <button type="submit" class="btn btn-dark" id="enviar" value="enviar" name="enviar">Salvar</button>
                                                 </div>
                                             </form>
                                         </div>
