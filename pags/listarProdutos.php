@@ -8,8 +8,8 @@ if (!isset($_SESSION['ADM_ID'])) {
 
 require_once('../sistema/usuario.php');
 require_once('../sistema/produto.php');
-$u = new Usuario("charlie", "localhost", "root", "");
-$p = new Produto("charlie", "localhost", "root", "");
+$u = new Usuario("Charlie", "144.22.157.228:3306", "Charlie", "Charlie");
+$p = new Produto("Charlie", "144.22.157.228:3306", "Charlie", "Charlie");
 ?>
 
 <!DOCTYPE html>
@@ -207,7 +207,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                         echo '<td><img src="../images/noProductImage.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>';
                                     }
                                     echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';
-                                    echo '<td>' . 'R$ ' . $product_data['PRODUTO_PRECO'] . '</td>';
+                                    echo '<td style="white-space: nowrap;"> ' . 'R$ ' . $product_data['PRODUTO_PRECO'] . '</td>';
                                     echo '<td>' . $product_data['PRODUTO_DESCONTO'] . '%' . '</td>';
                                     echo '<td>' . $product_data['CATEGORIA_NOME'] . '</td>';
                                     echo '<td>' . $product_data['PRODUTO_QTD'] . '</td>';

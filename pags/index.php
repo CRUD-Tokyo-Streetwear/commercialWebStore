@@ -5,7 +5,8 @@ unset($_SESSION['ADM_ID']);
 
 require_once '../sistema/usuario.php'; // importando a classe do outro arquivo
 
-$u = new Usuario("charlie", "localhost", "root", ""); //instanciando classe 
+$u = new Usuario("Charlie", "144.22.157.228:3306", "Charlie", "Charlie");
+
 
 if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
   if (!empty($_POST['email']) && !empty($_POST['password'])) { // Verifica se os campos estão preenchidos

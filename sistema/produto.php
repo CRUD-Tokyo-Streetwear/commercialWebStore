@@ -20,7 +20,7 @@ class Produto
 
         $sql = $this->pdo->prepare("SELECT P.PRODUTO_ID, I.IMAGEM_URL, P.PRODUTO_NOME, P.PRODUTO_DESC, P.PRODUTO_PRECO, P.PRODUTO_DESCONTO, C.CATEGORIA_NOME, E.PRODUTO_QTD, P.PRODUTO_ATIVO  
         FROM PRODUTO P INNER JOIN CATEGORIA C ON P.CATEGORIA_ID = C.CATEGORIA_ID
-        INNER JOIN ESTOQUE E ON P.PRODUTO_ID = E.PRODUTO_ID
+        INNER JOIN PRODUTO_ESTOQUE E ON P.PRODUTO_ID = E.PRODUTO_ID
         INNER JOIN PRODUTO_IMAGEM I ON P.PRODUTO_ID = I.PRODUTO_ID
         ORDER BY P.PRODUTO_ID ASC");
         $sql->execute();
@@ -38,7 +38,7 @@ class Produto
          P.PRODUTO_DESCONTO, P.PRODUTO_ATIVO, C.CATEGORIA_NOME, E.PRODUTO_QTD
         FROM PRODUTO P 
         INNER JOIN CATEGORIA C ON P.CATEGORIA_ID = C.CATEGORIA_ID
-        INNER JOIN ESTOQUE E ON P.PRODUTO_ID = E.PRODUTO_ID
+        INNER JOIN PRODUTO_ESTOQUE E ON P.PRODUTO_ID = E.PRODUTO_ID
         INNER JOIN PRODUTO_IMAGEM I ON P.PRODUTO_ID = I.PRODUTO_ID
         WHERE P.PRODUTO_ID = :id");
 
@@ -82,11 +82,11 @@ class Produto
         $sqlProduto->bindValue(":novoPreco", $novoPreco);
         $sqlProduto->bindValue(":novoDesconto", $novoDesconto);
         $sqlProduto->bindValue(":novaCategoria", $novaCategoria);
-        $sqlProduto->bindValue(":novoStatus", $novoStatus);
+        $sqlProduto->bindValue(":novoStatus", $novoStatus, PDO::PARAM_INT);
         $sqlProduto->bindValue(":id", $produtoId);
         $sqlProduto->execute();
 
-        $sqlEstoque = $this->pdo->prepare("UPDATE ESTOQUE
+        $sqlEstoque = $this->pdo->prepare("UPDATE PRODUTO_ESTOQUE
         SET PRODUTO_QTD = :novoEstoque
         WHERE PRODUTO_ID = :id");
         $sqlEstoque->bindValue(":novoEstoque", $novoEstoque);
@@ -141,7 +141,7 @@ class Produto
         $sql = $this->pdo->prepare("SELECT P.PRODUTO_ID, I.IMAGEM_URL, P.PRODUTO_NOME, P.PRODUTO_DESC, P.PRODUTO_PRECO, P.PRODUTO_DESCONTO, C.CATEGORIA_NOME, E.PRODUTO_QTD, P.PRODUTO_ATIVO  
     FROM PRODUTO P 
     INNER JOIN CATEGORIA C ON P.CATEGORIA_ID = C.CATEGORIA_ID
-    INNER JOIN ESTOQUE E ON P.PRODUTO_ID = E.PRODUTO_ID
+    INNER JOIN PRODUTO_ESTOQUE E ON P.PRODUTO_ID = E.PRODUTO_ID
     INNER JOIN PRODUTO_IMAGEM I ON P.PRODUTO_ID = I.PRODUTO_ID
     WHERE P.PRODUTO_NOME LIKE :pesquisa OR P.PRODUTO_DESC LIKE :pesquisa
     ORDER BY P.PRODUTO_ID ASC"); //Pesquisa baseada no nome e na descrição do produto
@@ -168,27 +168,35 @@ class Produto
         $sqlProdutoImagem->bindValue(":id", $produtoId);
         $sqlProdutoImagem->execute();
 
-        $sqlEstoque = $this->pdo->prepare("DELETE FROM ESTOQUE WHERE PRODUTO_ID = :id");
+        $sqlEstoque = $this->pdo->prepare("DELETE FROM PRODUTO_ESTOQUE WHERE PRODUTO_ID = :id");
         $sqlEstoque->bindValue(":id", $produtoId);
         $sqlEstoque->execute();
 
         return true;
     }
 
-    public function cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo) //Cadastra o produto na tabela de produto
+    public function cadastrarProduto($nome, $descricao, $preco, $precoDesconto, $categoria, $produtoAtivo)
     {
         $sqlSelect = $this->pdo->prepare("SELECT PRODUTO_NOME, PRODUTO_DESC
         FROM PRODUTO
-        WHERE PRODUTO_NOME = '$nome' AND PRODUTO_DESC = '$descricao'");
+        WHERE PRODUTO_NOME = :nome AND PRODUTO_DESC = :descricao");
+        $sqlSelect->bindParam(':nome', $nome);
+        $sqlSelect->bindParam(':descricao', $descricao);
         $sqlSelect->execute();
-
+    
         if ($sqlSelect->rowCount() > 0) {
             echo '<div class="alert alert-danger" role="alert">
         Produto já cadastrado!
         </div>';
         } else {
             $sqlInsert = $this->pdo->prepare("INSERT INTO PRODUTO (PRODUTO_NOME, PRODUTO_DESC, PRODUTO_PRECO, PRODUTO_DESCONTO, CATEGORIA_ID, PRODUTO_ATIVO)
-            VALUES ('$nome', '$descricao', '$preco', '$precoDesconto', '$categoria', '$produtoAtivo')");
+            VALUES (:nome, :descricao, :preco, :precoDesconto, :categoria, :produtoAtivo)");
+            $sqlInsert->bindParam(':nome', $nome);
+            $sqlInsert->bindParam(':descricao', $descricao);
+            $sqlInsert->bindParam(':preco', $preco);
+            $sqlInsert->bindParam(':precoDesconto', $precoDesconto);
+            $sqlInsert->bindParam(':categoria', $categoria);
+            $sqlInsert->bindParam(':produtoAtivo', $produtoAtivo, PDO::PARAM_INT);
             $sqlInsert->execute();
             return true;
         }
@@ -198,7 +206,7 @@ class Produto
     {
         $produtoQtd = $_POST['produtoQtd'];
 
-        $sql = $this->pdo->prepare("INSERT INTO ESTOQUE
+        $sql = $this->pdo->prepare("INSERT INTO PRODUTO_ESTOQUE
         (PRODUTO_ID, PRODUTO_QTD)
         VALUES ('$produtoId', '$produtoQtd')");
         $sql->execute();
@@ -264,7 +272,7 @@ class Produto
             VALUES (:n, :c, :a)");
             $sql->bindValue(":n", $nome_categoria);
             $sql->bindValue(":c", $descricao_categoria);
-            $sql->bindValue(":a", $produto_ativo_categoria);
+            $sql->bindValue(":a", $produto_ativo_categoria, PDO::PARAM_INT); 
             $sql->execute();
             return true;
         }
@@ -322,7 +330,7 @@ class Produto
         $sql = $this->pdo->prepare("UPDATE CATEGORIA SET CATEGORIA_NOME = :novoNome, CATEGORIA_DESC = :novaDesc, CATEGORIA_ATIVO = :novoStatus WHERE CATEGORIA_ID = :id");
         $sql->bindValue(":novoNome", $novoNome);
         $sql->bindValue(":novaDesc", $novaDesc);
-        $sql->bindValue(":novoStatus", $novoStatus);
+        $sql->bindValue(":novoStatus", $novoStatus, PDO::PARAM_INT);
         $sql->bindValue(":id", $categoriaId);
         $sql->execute();
 
