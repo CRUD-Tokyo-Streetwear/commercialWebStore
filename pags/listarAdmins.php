@@ -83,44 +83,44 @@ $p = new Produto("charlie", "localhost", "root", "");
         </div>
     </nav>
 
-     <!--Menu lateral-->
-  <div class="container-fluid">
-    <div class="row flex-nowrap">
-      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 min-vh-100 bg-dark">
-        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
-          <span class="fs-5 pb-3 mb-md-0 d-none d-sm-inline">
-            Menu
-          </span>
-          <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
-            <li class="nav-item">
-              <a href="pagInicio.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="../images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
-              </a>
-            </li>
-            <li>
-              <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="../images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
-              </a>
-            </li>
-            <li>
-              <a href="listarAdmins.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="../images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
-              </a>
-            </li>
-            <li>
-              <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="../images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
-              </a>
-            </li>
-            <li>
-              <a href="cadastroProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
-                <img src="../images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
-              </a>
-            </li>
-          </ul>
-        </div>
+    <!--Menu lateral-->
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 min-vh-100 bg-dark">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+                    <span class="fs-5 pb-3 mb-md-0 d-none d-sm-inline">
+                        Menu
+                    </span>
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5" id="menu">
+                        <li class="nav-item">
+                            <a href="pagInicio.php" class="d-flex align-items-center nav-link px-0 text-light">
+                                <img src="../images\homeIcon.png" alt="Icone de Início" style="width: 20px;"><span class="ms-2 d-none d-sm-inline">Início</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="perfil.php" class="d-flex align-items-center nav-link px-0 text-light">
+                                <img src="../images\userIcon.png" alt="Icone de Administradores" style="width: 19px;"><span class="ms-2 d-none d-sm-inline">Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="listarAdmins.php" class="d-flex align-items-center nav-link px-0 text-light">
+                                <img src="../images\groupUserIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Administradores</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="listarProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
+                                <img src="../images\shirtIcon.png" alt="Icone de Administradores" style="width: 27px;"><span class="ms-2 d-none d-sm-inline">Listar Produtos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="cadastroProdutos.php" class="d-flex align-items-center nav-link px-0 text-light">
+                                <img src="../images\addIcon.png" alt="Icone de Administradores" style="width: 25px;filter:invert(1);"><span class="ms-2 d-none d-sm-inline">Cadastrar Produtos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
-      </div><!--Orienta na vertical a tela central, barra de pesquisa, add produto-->
+            </div><!--Orienta na vertical a tela central, barra de pesquisa, add produto-->
             <div class="col flex-wrap d-flex justify-content-start align-items-center flex-column" style="background-color: #d9d9d9;">
 
                 <!--Barra de pesquisa, add produto e exibir em icone grande produtos-->
@@ -184,21 +184,23 @@ $p = new Produto("charlie", "localhost", "root", "");
                     </div>
                 </div>
 
-                
-                <?php
-                    if(isset($_POST['cadastrarAdmin'])){
-                        $nome = $_POST['nomeAdmin'];
-                        $email = $_POST['emailAdmin'];
-                        $senha = $_POST['senhaAdmin'];
 
-                        if($u->cadastrar($nome, $email, $senha)){
-                            echo '<script>setTimeout(function(){ window.location.href = "listarAdmins.php"; }, 0010);</script>';
-                        }else{
-                            echo '<div class="alert alert-danger" role="alert">
-                                    Usuario já Cadastado cadastrado no banco
+                <?php
+                if (isset($_POST['cadastrarAdmin'])) {
+                    $nome = $_POST['nomeAdmin'];
+                    $email = $_POST['emailAdmin'];
+                    $senha = $_POST['senhaAdmin'];
+
+                    if ($u->cadastrar($nome, $email, $senha)) {
+                        echo '<script>setTimeout(function(){ window.location.href = "listarAdmins.php"; }, 0010);</script>';
+                    } else {
+                        echo '<div class="alert alert-danger" role="alert">
+                                    Usuario já cadastrado no banco!
                                   </div>';
-                        }
+                        echo '<script>setTimeout(function(){ window.location.href = "listarAdmins.php"; }, 2000);</script>';
+
                     }
+                }
                 ?>
 
 
@@ -232,7 +234,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     $email = $admin['ADM_EMAIL'];
 
                                     echo "<tr>";
-                                    echo "<td> " . $admin['ADM_ID'] . " </td>";
+                                    echo "<th> " . $admin['ADM_ID'] . " </th>";
                                     if ($admin['ADM_IMAGEM']) {
                                         echo '<td> <img src="' . $admin['ADM_IMAGEM'] . '" alt="Imagem do Administrador" class="rounded-1 object-fit-contain" style="width: 60px; height:60px;"></td>';
                                     } else {
@@ -333,7 +335,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                             }
                                         });
                                     }
-                                    
+
                                     $(document).on('click', '.edit_data', function() {
                                         // ao clicar no botao com classe .edit_data é coletado o id
                                         admId = $(this).attr("id"); // id do adm guardado nessa variável
@@ -396,7 +398,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
         </div> <!--Fecha a div do menu lateral-->
 

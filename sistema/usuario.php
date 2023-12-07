@@ -66,6 +66,7 @@ class Usuario
 
             if ($extensaoImagem != "jpg" && $extensaoImagem != "jpeg" && $extensaoImagem != "png" && $extensaoImagem != "gif") {
                 echo "tipo de arquivo inválido";
+                
             } else {
                 $imagemAdicionada = move_uploaded_file($upload["tmp_name"], $pastaImagem . $novoNomeImagem . "." . $extensaoImagem);
 

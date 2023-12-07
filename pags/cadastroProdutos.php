@@ -126,7 +126,7 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <div class="fs-5 p-2 text-light rounded-2" style="background-color: #202020; font-weight: 600;">
-                            adicionar categoria
+                            Adicionar categoria
                         </div>
                     </button>
                 </div>
@@ -279,28 +279,30 @@ $p = new Produto("charlie", "localhost", "root", "");
                         <form id="produtoForm" method="POST" class="row g-3">
 
                             <div class="col-md-6">
-                                <label for="nome" class="form-label">Nome</label>
-                                <input type="text" class="form-control" name="nome">
+                                <label for="nome" class="form-label"><b>Nome</b></label>
+                                <input placeholder="Nome do Produto" type="text" class="form-control" name="nome" id="nome">
                             </div>
                             <div class="col-md-6">
-                                <label for="preco" class="form-label">Preço</label>
-                                <input type="text" class="form-control" name="preco" required>
+                                <label for="preco" class="form-label"><b>Preço</b></label>
+                                <input placeholder="R$ 0,00" type="text" class="form-control" id="preco" name="preco" required>
                             </div>
                             <div class="col-md-6">
-                                <label for="precoDesconto" class="form-label">Desconto</label>
-                                <input type="text" class="form-control" id="precoDesconto" name="preco_desconto">
+                                <label for="precoDesconto" class="form-label"><b>Desconto</b></label>
+                                <input placeholder="0,00%" type="text" class="form-control" id="precoDesconto" name="preco_desconto">
                             </div>
                             <div class="col-md-6">
-                                <label for="Estoque" class="form-label">Estoque</label>
+                                <label for="estoque" class="form-label"><b>Estoque</b></label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="estoque" name="produtoQtd">
+                                    <input placeholder="Quantidade" type="text" class="form-control" id="estoque" name="produtoQtd">
                                 </div>
                             </div>
 
-                            <div class="col-md-6 mt-5"><!--div da categoria-->
-                                <select name="categoria" class="form-select" aria-label="Default select example">
+                            <div class="col-md-6"><!--div da categoria-->
 
-                                    <option>Categoria</option>
+                                <label for="categoria" class="form-label"><b>Categoria</b></label>
+                                <select id="categoria" name="categoria" class="form-select" aria-label="Default select example">
+
+                                    <option>Selecionar</option>
 
                                     <?php
                                     $result = $p->listarCategorias();
@@ -317,17 +319,21 @@ $p = new Produto("charlie", "localhost", "root", "");
                             </div>
 
                             <div class="col-md-6">
-                                <label for="descricao" class="form-label">Descrição</label>
-                                <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
+                                <label for="desc" class="form-label"><b>Descrição</b></label>
+                                <textarea id="desc" placeholder="Camiseta preta..." class="form-control" name="desc" rows="3" required></textarea>
                             </div>
 
-                            <!--   BOTAO PARA ADICIONAR AS IMAGENS -->
+                            <!-- BOTAO PARA ADICIONAR AS IMAGENS -->
                             <div class="col-md-6">
                                 <!-- Campo de url -->
-                                <div id="containerImagens" class="col-md-6">
-                                    <label for="botaoAdicionarImagem" class="form-label">Imagem URL</label>
-                                    <input type="text" class="form-control imagem-url" name="imagem_url[]">
+                                <div id="containerImagens" class="col-md-8">
+                                    <label for="imgUrl" class="form-label"><b>Imagem URL</b></label>
+                                    <input id="imgUrl" placeholder="https://www.exemplo.com" type="url" class="form-control imagem-url" name="imagem_url[]">
                                 </div>
+
+
+                                
+
                                 <br>
                                 <!-- Botao de adicionar mais campos -->
                                 <button type="button" class="btn btn-dark" id="botaoAdicionarImagem" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Adicionar mais imagens</button>
@@ -335,7 +341,7 @@ $p = new Produto("charlie", "localhost", "root", "");
 
                             <div class="d-flex mb-4 ms-3 mt-5 form-check">
                                 <input type="checkbox" class="form-check-input bg-danger border-0" id="produto_ativo" name="produto_ativo" checked>
-                                <label class="form-check-label ms-2" for="produto_Ativo">Produto Ativo</label>
+                                <label class="form-check-label ms-2" for="produto_Ativo"><b>Produto Ativo</b></label>
                             </div>
 
                             <!-- Salvar alterações -->
@@ -353,7 +359,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                 $nome = $_POST['nome'];
                                 $preco = floatval($_POST['preco']);
                                 $precoDesconto = floatval($_POST['preco_desconto']);
-                                $descricao = $_POST['descricao'];
+                                $descricao = $_POST['desc'];
                                 $categoria = $p->pegaIdCategoria($nomeCategoria);
                                 $produtoAtivo = isset($_POST['produto_ativo']) ? 1 : 0;
 
@@ -362,9 +368,13 @@ $p = new Produto("charlie", "localhost", "root", "");
                                     $produtoId = $p->pegaIdProduto($nome, $descricao);
                                     $p->cadastrarEstoque($produtoId);
                                     $p->cadastrarImagens($produtoId);
-                                    echo "Produto cadastrado com sucesso!";
-                                } else {
-                                    echo "Falha ao cadastrar produto... Verifique se todos os campos foram preenchidos";
+                                    echo '<div class="alert alert-success" role="alert">
+                                    Produto cadastrado com sucesso!
+                                    </div>';
+                                } else if(!isset($categoria)){
+                                    echo '<div class="alert alert-danger" role="alert">
+                                    Falha ao cadastrar produto... Verifique se todos os campos foram preenchidos
+                                    </div>';
                                 }
                             }
                             ?>

@@ -250,15 +250,22 @@ class Produto
 
     public function adicionarCategoria($nome_categoria, $descricao_categoria, $produto_ativo_categoria) //Inserindo nova categoria no banco de dados
     {
-        $sqlSelect = $this->pdo->prepare("SELECT CATEGORIA_NOME, CATEGORIA_DESC
+        $sqlSelect = $this->pdo->prepare("SELECT CATEGORIA_NOME
         FROM CATEGORIA
-        WHERE CATEGORIA_NOME = '$nome_categoria' AND CATEGORIA_DESC = '$descricao_categoria'");
+        WHERE CATEGORIA_NOME = '$nome_categoria'");
         $sqlSelect->execute();
 
         if ($sqlSelect->rowCount() > 0) {
-            echo '<div class="alert alert-danger" role="alert">
+            echo '<div id="mensagemErro" class="alert alert-danger" role="alert">
         Categoria já cadastrada!
         </div>';
+
+        echo '<script>
+            setTimeout(function() {
+                document.getElementById("mensagemErro").style.display = "none";
+            }, 2700);
+            </script>';
+
         } else {
             $sql = $this->pdo->prepare("INSERT INTO CATEGORIA (CATEGORIA_NOME, CATEGORIA_DESC, CATEGORIA_ATIVO)
             VALUES (:n, :c, :a)");
@@ -319,7 +326,9 @@ class Produto
     public function atualizarCategoriaModal($categoriaId, $novoNome, $novaDesc, $novoStatus)
     {
         // Atualizar os dados da categoria
-        $sql = $this->pdo->prepare("UPDATE CATEGORIA SET CATEGORIA_NOME = :novoNome, CATEGORIA_DESC = :novaDesc, CATEGORIA_ATIVO = :novoStatus WHERE CATEGORIA_ID = :id");
+        $sql = $this->pdo->prepare("UPDATE CATEGORIA 
+        SET CATEGORIA_NOME = :novoNome, CATEGORIA_DESC = :novaDesc, CATEGORIA_ATIVO = :novoStatus 
+        WHERE CATEGORIA_ID = :id");
         $sql->bindValue(":novoNome", $novoNome);
         $sql->bindValue(":novaDesc", $novaDesc);
         $sql->bindValue(":novoStatus", $novoStatus);

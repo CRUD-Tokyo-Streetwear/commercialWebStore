@@ -35,7 +35,9 @@ if (!isset($_SESSION['ADM_ID'])) {
     $admId = $_SESSION['ADM_ID'];
 
     if ($upload['error'] > 0) {
-      echo "falha ao enviar imagem";
+      echo '<div class="fs-5 alert alert-danger" style="position: absolute; top: 20%; left: 58%; transform: translate(-50%, -50%);">
+      falha ao enviar imagem
+    </div>';
     }
 
     if ($upload['size'] > 5242880) {
@@ -44,7 +46,9 @@ if (!isset($_SESSION['ADM_ID'])) {
     </div>';
     } else {
       $u->atualizarImagem($upload, $admId);
-      echo '<script>setTimeout(function(){ window.location.href = "perfil.php"; }, 0010);</script>';
+      echo '<div class="fs-5 alert alert-success mensagemSucesso" style="position: absolute; top: 20%; left: 58%; transform: translate(-50%, -50%);">
+          Imagem atualizada com sucesso!
+        </div>';
     }
   }
 
@@ -139,158 +143,165 @@ if (!isset($_SESSION['ADM_ID'])) {
       </div>
 
       <!--Tela central-->
-    <div class=" d-flex align-items-center col col-10 mt-4" style="height: 90vh;">
-      <div class="container d-flex flex-column align-items-center justify-content-center border rounded-4 mb-5" style="background:#f0f0f0; height: 80%;">
+      <div class=" d-flex align-items-center col col-10 mt-4" style="height: 90vh;">
+        <div class="container d-flex flex-column align-items-center justify-content-center border rounded-4 mb-5" style="background:#f0f0f0; height: 80%;">
 
-        <div class="imagem-perfil-container">
-          <?php
-          $admId = $_SESSION["ADM_ID"];
-          $imagemDefault = "images/userIcon.png";
-          $imagem = $u->mostrarImagemAdmin($admId);
+          <div class="imagem-perfil-container">
+            <?php
+            $admId = $_SESSION["ADM_ID"];
+            $imagemDefault = "images/userIcon.png";
+            $imagem = $u->mostrarImagemAdmin($admId);
 
-          if ($imagem) {
-            echo '<img id="profile-picture" class="imgPerfil rounded-circle object-fit-cover mb-3"
+            if ($imagem) {
+              echo '<img id="profile-picture" class="imgPerfil rounded-circle object-fit-cover mb-3"
             src="' . $imagem . '" width="250px" height="250px">';
-            echo '<span class="remove-image-text">Remover imagem</span>';
-          } else {
-            echo '<svg xmlns="http://www.w3.org/2000/svg" fill="dark" viewBox="0 0 16 16" class="mb-3" style="cursor: pointer;" width="250px">
+              echo '<span class="remove-image-text">Remover imagem</span>';
+            } else {
+              echo '<svg xmlns="http://www.w3.org/2000/svg" fill="dark" viewBox="0 0 16 16" class="mb-3" style="cursor: pointer;" width="250px">
                   <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                   <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                 </svg>';
-          }
-          ?>
-        </div>
-
-        <style>
-          .imagem-perfil-container {
-            position: relative;
-            display: inline-block;
-          }
-
-          #profile-picture:hover {
-            height: 220px;
-            width: 220px;
-            transition: ease-in-out 0.1s;
-            opacity: 0.7;
-          }
-
-          #profile-picture {
-            transition: ease-in-out 0.1s;
-          }
-
-          .remove-image-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 0px 1em;
-            border-radius: 5px;
-            display: none;
-          }
-
-          .imagem-perfil-container:hover .remove-image-text {
-            display: block;
-            color: white;
-            text-wrap: nowrap;
-            pointer-events: none;
-          }
-        </style>
-
-        <script>
-          document.getElementById('profile-picture').addEventListener('click', function() {
-            removerImagem();
-          });
-
-          function removerImagem() {
-            // Confirmação usando confirm
-            if (confirm("Tem certeza de que deseja remover a imagem do perfil?")) {
-              // Executar a solicitação AJAX para remover a imagem
-              $.ajax({
-                url: "remover_imagem_ajax.php",
-                method: "POST",
-                dataType: "json",
-                success: function(data) {
-                  if (data.success) {
-                    console.log("Imagem removida com sucesso");
-                    location.reload(); // Recarregue a página como exemplo
-                  } else {
-                    console.error("Erro ao remover imagem:", data.error);
-                    location.reload(); // Recarregue a página como exemplo
-                  }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                  console.error("Erro na solicitação Ajax:", textStatus, errorThrown);
-                  console.log("Resposta do servidor:", jqXHR.responseText);
-                }
-              });
             }
-          }
-        </script>
+            ?>
+          </div>
 
-        <!-- formulario de imagem -->
-        <div class="row mb-3">
-          <form action="perfil.php" enctype="multipart/form-data" method="POST">
-            <input type="file" class="form-control" name="upload" id="inputGroupFile04">
-            <input class="btn btn-dark" type="submit" name="submit" value="Salvar" style="width: 380px;">
+          <style>
+            .imagem-perfil-container {
+              position: relative;
+              display: inline-block;
+            }
+
+            #profile-picture:hover {
+              height: 220px;
+              width: 220px;
+              transition: ease-in-out 0.1s;
+              opacity: 0.7;
+            }
+
+            #profile-picture {
+              transition: ease-in-out 0.1s;
+            }
+
+            .remove-image-text {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              background-color: rgba(0, 0, 0, 0.7);
+              padding: 0px 1em;
+              border-radius: 5px;
+              display: none;
+            }
+
+            .imagem-perfil-container:hover .remove-image-text {
+              display: block;
+              color: white;
+              text-wrap: nowrap;
+              pointer-events: none;
+            }
+          </style>
+
+          <script>
+            document.getElementById('profile-picture').addEventListener('click', function() {
+              removerImagem();
+            });
+
+            function removerImagem() {
+              // Confirmação usando confirm
+              if (confirm("Tem certeza de que deseja remover a imagem do perfil?")) {
+                // Executar a solicitação AJAX para remover a imagem
+                $.ajax({
+                  url: "remover_imagem_ajax.php",
+                  method: "POST",
+                  dataType: "json",
+                  success: function(data) {
+                    if (data.success) {
+                      console.log("Imagem removida com sucesso");
+                      location.reload(); // Recarregue a página como exemplo
+                    } else {
+                      console.error("Erro ao remover imagem:", data.error);
+                      location.reload(); // Recarregue a página como exemplo
+                    }
+                  },
+                  error: function(jqXHR, textStatus, errorThrown) {
+                    console.error("Erro na solicitação Ajax:", textStatus, errorThrown);
+                    console.log("Resposta do servidor:", jqXHR.responseText);
+                  }
+                });
+              }
+            }
+          </script>
+
+          <!-- formulario de imagem -->
+          <div class="row mb-3">
+            <form action="perfil.php" enctype="multipart/form-data" method="POST">
+              <input type="file" class="form-control" name="upload" id="inputGroupFile04">
+              <input class="btn btn-dark" type="submit" name="submit" value="Salvar" style="width: 380px;">
+            </form>
+          </div>
+
+          <!-- formulario dados perfil -->
+          <form action="" method="POST">
+
+            <div class="row mb-3">
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Nome</label>
+              <div class="col-sm-10">
+                <input required type="text" name="nome" class="form-control" id="inputEmail3" style="width: 500px;" value="<?php
+                                                                                                                            $admId = $_SESSION['ADM_ID'];
+                                                                                                                            echo $u->mostrarDadosAdmin($admId)['ADM_NOME'];
+                                                                                                                            ?> ">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-10">
+                <input required type="email" name="email" class="form-control" id="inputEmail3" style="width: 500px;" value="<?php
+                                                                                                                              $admId = $_SESSION['ADM_ID'];
+                                                                                                                              echo $u->mostrarDadosAdmin($admId)['ADM_EMAIL'];
+                                                                                                                              ?>">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+              <div class="col-sm-10">
+                <input required type="password" name="senha" class="form-control" id="inputPassword3" style="width: 500px;">
+              </div>
+            </div>
+
+            <input type="submit" name="enviarDados" class="btn btn-dark" style="width: 100px;">
+
           </form>
         </div>
-
-        <!-- formulario dados perfil -->
-        <form action="" method="POST">
-
-          <div class="row mb-3">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Nome</label>
-            <div class="col-sm-10">
-              <input required type="text" name="nome" class="form-control" id="inputEmail3" style="width: 500px;" value="<?php
-                                                                                                                          $admId = $_SESSION['ADM_ID'];
-                                                                                                                          echo $u->mostrarDadosAdmin($admId)['ADM_NOME'];
-                                                                                                                          ?> ">
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Email</label>
-            <div class="col-sm-10">
-              <input required type="email" name="email" class="form-control" id="inputEmail3" style="width: 500px;" value="<?php
-                                                                                                                            $admId = $_SESSION['ADM_ID'];
-                                                                                                                            echo $u->mostrarDadosAdmin($admId)['ADM_EMAIL'];
-                                                                                                                            ?>">
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-            <div class="col-sm-10">
-              <input required type="password" name="senha" class="form-control" id="inputPassword3" style="width: 500px;">
-            </div>
-          </div>
-
-          <input type="submit" name="enviarDados" class="btn btn-dark" style="width: 100px;">
-
-        </form>
       </div>
-    </div>
 
 
-    <?php
+      <?php
 
-    if (isset($_POST['enviarDados'])) {
+      if (isset($_POST['enviarDados'])) {
 
-      $admId = $_SESSION['ADM_ID'];
-      $novoNome = $_POST['nome'];
-      $novoEmail = $_POST['email'];
-      $novaSenha = $_POST['senha'];
+        $admId = $_SESSION['ADM_ID'];
+        $novoNome = $_POST['nome'];
+        $novoEmail = $_POST['email'];
+        $novaSenha = $_POST['senha'];
 
-      if ($u->atualizarDadosAdmin($admId, $novoNome, $novoEmail, $novaSenha)) {
-        echo '<script>setTimeout(function(){ window.location.href = "perfil.php"; }, 0010);</script>';
-      } else {
-        echo '<div class="alert alert-danger" role="alert">
-        Não foi possível atualizar pois este e-mail já está em uso
+        if ($u->atualizarDadosAdmin($admId, $novoNome, $novoEmail, $novaSenha)) {
+          echo '<script>setTimeout(function(){ window.location.href = "perfil.php"; }, 2000);</script>';
+
+          echo '<div class="fs-5 alert alert-success d-flex justify-content-center" style="position: absolute; top: 20%; left: 58%; transform: translate(-50%, -50%); width: 23%;">
+          Perfil editado com sucesso!
         </div>';
+
+        } else {
+          echo '<script>setTimeout(function(){ window.location.href = "perfil.php"; }, 2000);</script>';
+
+          echo '<div class="fs-5 alert alert-danger d-flex justify-content-center" style="position: absolute; top: 20%; left: 58%; transform: translate(-50%, -50%); width: 23%;">
+          Não foi possível atualizar pois este e-mail já está em uso
+          </div>';
+        }
       }
-    }
-    ?>
+      ?>
 
     </div>
   </div> <!--Fecha a div do menu lateral-->

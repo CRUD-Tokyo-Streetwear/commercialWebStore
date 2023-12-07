@@ -26,7 +26,7 @@ if (isset($_POST['admId'])) {
 if (isset($_POST['categoriaId'])) {
     $categoriaId = filter_var($_POST['categoriaId'], FILTER_SANITIZE_STRING);
     $nome = filter_var($_POST['nome'], FILTER_SANITIZE_STRING);
-    $desc = filter_var($_POST['desc'], FILTER_SANITIZE_EMAIL);
+    $desc = filter_var($_POST['desc'], FILTER_SANITIZE_STRING);
     $status = filter_var($_POST['status'], FILTER_VALIDATE_INT);
 
     // Realizar a atualização no banco de dados
@@ -48,24 +48,16 @@ if (isset($_POST['produtoId'])) {
     $status = filter_var($_POST['status'], FILTER_VALIDATE_INT);
     $estoque = filter_var($_POST['estoque'], FILTER_SANITIZE_STRING);
 
-    $imagensURL = array();
+    $imagensURL = [];
 
-    if (isset($_POST['url_img1']) && !empty($_POST['url_img1'])) {
-        $imagensURL[] = filter_var($_POST['url_img1'], FILTER_SANITIZE_URL);
-    } else {
-        $imagensURL[] = null;
-    }
+    for ($i = 1; $i <= 3; $i++) {
+        $inputName = "url_img{$i}";
 
-    if (isset($_POST['url_img2']) && !empty($_POST['url_img2'])) {
-        $imagensURL[] = filter_var($_POST['url_img2'], FILTER_SANITIZE_URL);
-    } else {
-        $imagensURL[] = null;
-    }
-
-    if (isset($_POST['url_img3']) && !empty($_POST['url_img3'])) {
-        $imagensURL[] = filter_var($_POST['url_img3'], FILTER_SANITIZE_URL);
-    } else {
-        $imagensURL[] = null;
+        if (isset($_POST[$inputName]) && !empty($_POST[$inputName])) {
+            $imagensURL[] = filter_var($_POST[$inputName], FILTER_SANITIZE_URL);
+        } else {
+            $imagensURL[] = null;
+        }
     }
 
     //Recebe o nome da categoria capturado pela tag SECTION e busca pelo ID correspondente aquele nome

@@ -147,7 +147,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                         <!--Botão para add nova categoria-->
                         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <div class="fs-5 p-2 text-light rounded-2" style="background-color: #202020; font-weight: 600; white-space: nowrap;">
-                                adicionar categoria
+                                Adicionar categoria
                             </div>
                         </button>
 
@@ -289,7 +289,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="desc" class="form-label">Descrição:</label>
-                                                    <input type="text" class="form-control" id="desc" name="desc" value="<?php  ?>">
+                                                    <input type="text" class="form-control" id="desc" name="desc">
                                                 </div>
                                                 <div class="form-check">
                                                     <label class="form-check-label" for="status">Status</label>

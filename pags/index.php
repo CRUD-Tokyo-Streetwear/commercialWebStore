@@ -46,16 +46,7 @@ if (isset($_POST['submit'])) { // Verifica se o formulário foi submetido
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
-<body class="overflow-hidden">
-
-<style>
-  body {
-    background-image: url(../images/wallpaper/wal8.jpg), url(../images/wallpaper/wal3.jpg);
-    background-repeat: no-repeat, no-repeat;
-    background-size: auto, auto;
-    background-position: top left, top right;
-}
-</style>
+<body class="bg-black overflow-hidden">
 
   <!--Imagem da Logo Principal-->
   <div class="d-flex justify-content-center mt-5">
