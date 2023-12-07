@@ -203,7 +203,7 @@ $p = new Produto("charlie", "localhost", "root", "");
                                         echo '<td><img src="../images/noProductImage.jpg" alt="Imagem do produto" class="rounded-4" style="width: 70px;"></td>';
                                     }
                                     echo '<td>' . $product_data['PRODUTO_NOME'] . '</td>';
-                                    echo '<td>' . 'R$ ' . $product_data['PRODUTO_PRECO'] . '</td>';
+                                    echo '<td>' . 'R$ ' . number_format($product_data['PRODUTO_PRECO'], 2, ',', '.') . '</td>';
                                     echo '<td>' . $product_data['PRODUTO_DESCONTO'] . '%' . '</td>';
                                     echo '<td>' . $product_data['CATEGORIA_NOME'] . '</td>';
                                     echo '<td>' . $product_data['PRODUTO_QTD'] . '</td>';
